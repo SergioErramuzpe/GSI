@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gsigr05;
+package BTesting;
 
 /**
  *
- * @author Usuario
+ * @author Manuel José Rodríguez Güiza
  */
-public class GSIGR05 {
+public class P01Tester {
 
     /**
      * @param args the command line arguments
@@ -17,5 +17,4 @@ public class GSIGR05 {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
 }

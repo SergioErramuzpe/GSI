@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GSILabs.BModel;
-
+package BModel;
+import java.util.Date;
 /**
  *
  * @author Usuario
  */
-public class Bar {
-
+public class Review {
+    private String comentario;
+    private int estrellas;
+    private Date fechaReview;
 }
