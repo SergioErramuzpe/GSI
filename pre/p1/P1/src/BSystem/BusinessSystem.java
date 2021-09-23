@@ -28,7 +28,17 @@ public class BusinessSystem implements LeisureOffice {
 
     @Override
     public boolean nuevoUsuario(Usuario u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
+        if (edad < 14) {
+            return false;
+        }
+        if (u.getNick().length() < 3) {
+            return false;
+        }
+        if (u.getPassword().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     @Override

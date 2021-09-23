@@ -5,7 +5,7 @@
  */
 package BModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Cliente extends Usuario {
      * @param password
      * @param fechaNacimiento
      */
-    public Cliente(String nick, String password, Date fechaNacimiento) {
+    public Cliente(String nick, String password, LocalDate fechaNacimiento) {
         super(nick, password, fechaNacimiento);
     }
 

@@ -5,7 +5,7 @@
  */
 package BModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -16,7 +16,7 @@ public class Usuario {
 
     private String nick;
     private String password;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     /**
      *
@@ -24,7 +24,7 @@ public class Usuario {
      * @param password
      * @param fechaNacimiento
      */
-    public Usuario(String nick, String password, Date fechaNacimiento) {
+    public Usuario(String nick, String password, LocalDate fechaNacimiento) {
         this.nick = nick;
         this.password = password;
         this.fechaNacimiento = fechaNacimiento;
@@ -79,6 +79,30 @@ public class Usuario {
             return false;
         }
         return true;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
 }
