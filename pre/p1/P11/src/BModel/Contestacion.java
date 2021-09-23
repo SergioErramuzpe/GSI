@@ -11,4 +11,9 @@ package BModel;
  */
 public class Contestacion {
 
+    private Usuario propietario;
+    private Review review;
+    
+    //GetDueño from Review from Local ???
+    
 }

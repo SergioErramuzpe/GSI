@@ -25,6 +25,8 @@ public class Usuario {
      * @param fechaNacimiento
      */
     public Usuario(String nick, String password, LocalDate fechaNacimiento) {
+        //Posible try catch por no cumplir el nick > 2 caracteres
+        //Posible try catch por no cumplir que la edad sea >= 14 años
         this.nick = nick;
         this.password = password;
         this.fechaNacimiento = fechaNacimiento;

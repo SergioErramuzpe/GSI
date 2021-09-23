@@ -5,7 +5,10 @@
  */
 package BModel;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Local {
     private String nombreLocal;
     private Direccion mDireccion;
     private String descripcion;
+    private Set<Propietario> listaPropietarios = new HashSet<Propietario>();
 
     /**
      *
@@ -27,6 +31,12 @@ public class Local {
         this.nombreLocal = nombreLocal;
         this.mDireccion = mDireccion;
         this.descripcion = descripcion;
+    }
+    
+    public addPropietario (Usuario propietario) {
+        //try catch para añadir un propietario y en el caso de que 
+        //se superen los 3 propietarios
+        listaPropietarios.add(propietario);
     }
 
     /**
