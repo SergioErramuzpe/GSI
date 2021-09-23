@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GSILabs.BModel;
+package BModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author Usuario
  */
-public class Dueño extends Usuario {
+public class Propietario extends Usuario {
 
     /**
      *
@@ -19,7 +19,7 @@ public class Dueño extends Usuario {
      * @param password
      * @param fechaNacimiento
      */
-    public Dueño(String nick, String password, Date fechaNacimiento) {
+    public Propietario(String nick, String password, LocalDate fechaNacimiento) {
         super(nick, password, fechaNacimiento);
     }
 
