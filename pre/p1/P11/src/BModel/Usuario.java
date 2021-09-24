@@ -18,6 +18,8 @@ public class Usuario {
     private String password;
     private LocalDate fechaNacimiento;
 
+    public Usuario() {}
+
     /**
      *
      * @param nick
@@ -25,13 +27,35 @@ public class Usuario {
      * @param fechaNacimiento
      */
     public Usuario(String nick, String password, LocalDate fechaNacimiento) {
-        //Posible try catch por no cumplir el nick > 2 caracteres
-        //Posible try catch por no cumplir que la edad sea >= 14 años
         this.nick = nick;
         this.password = password;
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
     /**
      *
      * @return
@@ -83,28 +107,5 @@ public class Usuario {
         return true;
     }
 
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
+    
 }
