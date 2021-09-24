@@ -165,12 +165,12 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean nuevaReview(Review r) {
         boolean creada = false;
         try {
-            if(existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())){
+            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new Exception("La review ya existe.");
-            }else{
-                if(listaReviews.add(r)){
+            } else {
+                if (listaReviews.add(r)) {
                     creada = true;
-                }else{
+                } else {
                     throw new Exception("Error al añadir la review.");
                 }
             }
@@ -194,7 +194,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean existeRewiew(Usuario u, Local l, LocalDate ld) {
         boolean existe = false;
         try {
-            if(!existeNick(u.getNick())){
+            if (!existeNick(u.getNick())) {
                 throw new Exception("El usuario de la review no existe.");
             }
             for (Review iterReview : listaReviews) {
@@ -202,7 +202,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     existe = true;
                 }
             }
-            if(!existe){
+            if (!existe) {
                 throw new Exception("La review no existe.");
             }
         } catch (Exception e) {
@@ -263,18 +263,37 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean nuevoLocal(Local l) {
+        boolean creado = false;
         try {
+            if (listaLocal.contains(l)) {
+                throw new Exception("El local ya existe");
+            } else {
+                if (!listaLocal.add(l)) {
+                    throw new Exception("Error al añadir el local");
+                } else {
+                    creado = true;
+                }
 
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return true;
+        return creado;
     }
 
     @Override
     public boolean eliminarLocal(Local l) {
+        boolean eliminado = false;
         try {
-
+            if (!listaLocal.contains(l)) {
+                throw new Exception("No se puede eliminar un local que no existe.");
+            } else {
+                if (!listaLocal.remove(l)) {
+                    throw new Exception("Error al eliminar el local.");
+                } else {
+                    eliminado = true;
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -283,12 +302,20 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public Local obtenerLocal(Direccion d) {
+        Local pLocal = null;
         try {
-
+            for (Local local : listaLocal) {
+                if(local.getmDireccion().equals(d)){
+                    pLocal = local;
+                }
+            }
+            if(pLocal == null){
+                throw new Exception("No se ha podido encontrar el local.");
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return pLocal;
     }
 
     @Override
@@ -314,7 +341,11 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean actualizarLocal(Local viejoL, Local nuevoL) {
         try {
-
+            if(obtenerLocal(viejoL.getmDireccion()).equals(viejoL)){
+                
+            }else{
+                throw new Exception("El local a modificar no existe.");
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
