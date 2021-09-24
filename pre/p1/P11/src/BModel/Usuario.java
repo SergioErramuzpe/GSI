@@ -78,11 +78,6 @@ public class Usuario {
         return hash;
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -98,14 +93,10 @@ public class Usuario {
         if (!Objects.equals(this.nick, other.nick)) {
             return false;
         }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        if (!Objects.equals(this.fechaNacimiento, other.fechaNacimiento)) {
-            return false;
-        }
         return true;
     }
+
+    
 
     
 }

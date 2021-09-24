@@ -26,7 +26,7 @@ import java.time.LocalTime;
  * @author Usuario
  */
 public class BusinessSystem implements LeisureOffice {
-
+    
     @Override
     public boolean nuevoUsuario(Usuario u) {
         
