@@ -18,7 +18,8 @@ public class Usuario {
     private String password;
     private LocalDate fechaNacimiento;
 
-    public Usuario() {}
+    public Usuario() {
+    }
 
     /**
      *
@@ -55,7 +56,7 @@ public class Usuario {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    
+
     /**
      *
      * @return
@@ -65,16 +66,10 @@ public class Usuario {
         return "Usuario{" + "nick=" + nick + ", password=" + password + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.nick);
-        hash = 79 * hash + Objects.hashCode(this.password);
-        hash = 79 * hash + Objects.hashCode(this.fechaNacimiento);
+        hash = 37 * hash + Objects.hashCode(this.nick);
         return hash;
     }
 
@@ -96,7 +91,4 @@ public class Usuario {
         return true;
     }
 
-    
-
-    
 }
