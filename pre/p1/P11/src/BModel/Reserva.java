@@ -21,14 +21,14 @@ public class Reserva {
     private Float descuento;
     private LocalDate ld;
     private Usuario cliente;
-    private Local local;
+    private Reservable reservable;
     private LocalTime lt;
     
-    public Reserva(Float descuento, LocalDate ld, Usuario cliente, Local local, LocalTime lt) {
+    public Reserva(Float descuento, LocalDate ld, Usuario cliente, Reservable reservable, LocalTime lt) {
         this.descuento = descuento;
-        this.ld = ld;
         this.cliente = cliente;
-        this.local = local;
+        this.reservable = reservable;
+        this.ld = ld;
         this.lt = lt;
     }
     
@@ -59,12 +59,12 @@ public class Reserva {
         this.cliente = cliente;
     }
 
-    public Local getLocal() {
-        return local;
+    public Local getReservable() {
+        return reservable;
     }
 
-    public void setLocal(Local local) {
-        this.local = local;
+    public void setReservable(Reservable reservable) {
+        this.reservable = reservable;
     }
 
     public LocalTime getLt() {
@@ -81,7 +81,7 @@ public class Reserva {
         hash = 79 * hash + Objects.hashCode(this.descuento);
         hash = 79 * hash + Objects.hashCode(this.ld);
         hash = 79 * hash + Objects.hashCode(this.cliente);
-        hash = 79 * hash + Objects.hashCode(this.local);
+        hash = 79 * hash + Objects.hashCode(this.reservable);
         hash = 79 * hash + Objects.hashCode(this.lt);
         return hash;
     }
@@ -104,7 +104,7 @@ public class Reserva {
         if (!Objects.equals(this.cliente, other.cliente)) {
             return false;
         }
-        if (!Objects.equals(this.local, other.local)) {
+        if (!Objects.equals(this.reservable, other.reservable)) {
             return false;
         }
         if (!Objects.equals(this.lt, other.lt)) {

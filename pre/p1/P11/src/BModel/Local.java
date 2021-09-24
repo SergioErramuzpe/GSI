@@ -33,7 +33,7 @@ public class Local {
         this.descripcion = descripcion;
     }
     
-    public addPropietario (Usuario propietario) {
+    public addPropietario (Propietario propietario) {
         //try catch para añadir un propietario y en el caso de que 
         //se superen los 3 propietarios
         listaPropietarios.add(propietario);

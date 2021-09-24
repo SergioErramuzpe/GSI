@@ -19,5 +19,12 @@ public class Contestacion {
     private Date fechaContestacion;
     
     //GetDueño from Review from Local ???
+
+    public Contestacion(Usuario propietario, Review review, String comentario, Date fechaContestacion) {
+        this.propietario = propietario;
+        this.review = review;
+        this.comentario = comentario;
+        this.fechaContestacion = fechaContestacion;
+    }
     
 }
