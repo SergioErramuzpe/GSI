@@ -9,6 +9,10 @@ package BModel;
  *
  * @author Usuario
  */
-public class Reservable {
+public class Reservable extends Local {
 
+    public Reservable(String nombreLocal, Direccion mDireccion, String descripcion) {
+        super(nombreLocal, mDireccion, descripcion);
+    }
+  
 }

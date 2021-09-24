@@ -5,6 +5,8 @@
  */
 package BModel;
 
+import java.util.Date;
+
 /**
  *
  * @author Usuario
@@ -13,6 +15,8 @@ public class Contestacion {
 
     private Usuario propietario;
     private Review review;
+    private String comentario;
+    private Date fechaContestacion;
     
     //GetDueño from Review from Local ???
     

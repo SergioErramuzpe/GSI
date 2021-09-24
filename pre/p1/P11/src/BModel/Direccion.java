@@ -19,6 +19,11 @@ public class Direccion {
     private String calle;
     private int numero;
 
+    public Direccion() {
+    }
+
+    
+    
     /**
      * Constructor de la clase Dirección.
      *

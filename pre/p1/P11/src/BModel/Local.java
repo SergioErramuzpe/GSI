@@ -47,6 +47,8 @@ public class Local {
     public String toString() {
         return "Local{" + "nombre del local=" + nombreLocal + ", dirección=" + mDireccion + ", descripción=" + descripcion + '}';
     }
+    
+    
 
     /**
      *
