@@ -6,7 +6,6 @@
 package BModel;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,13 +31,41 @@ public class Local {
         this.mDireccion = mDireccion;
         this.descripcion = descripcion;
     }
-    
-    public addPropietario (Usuario propietario) {
-        //try catch para añadir un propietario y en el caso de que 
-        //se superen los 3 propietarios
-        listaPropietarios.add(propietario);
+
+    public String getNombreLocal() {
+        return nombreLocal;
     }
 
+    public void setNombreLocal(String nombreLocal) {
+        this.nombreLocal = nombreLocal;
+    }
+
+    public Direccion getmDireccion() {
+        return mDireccion;
+    }
+
+    public void setmDireccion(Direccion mDireccion) {
+        this.mDireccion = mDireccion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Set<Propietario> getListaPropietarios() {
+        return listaPropietarios;
+    }
+
+    public void setListaPropietarios(Set<Propietario> listaPropietarios) {
+        this.listaPropietarios = listaPropietarios;
+    }
+    
+    
+    
     /**
      *
      * @return
@@ -47,8 +74,6 @@ public class Local {
     public String toString() {
         return "Local{" + "nombre del local=" + nombreLocal + ", dirección=" + mDireccion + ", descripción=" + descripcion + '}';
     }
-    
-    
 
     /**
      *

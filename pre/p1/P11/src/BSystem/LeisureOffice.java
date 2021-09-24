@@ -186,7 +186,7 @@ public interface LeisureOffice {
      * @return True si y solo si la operacion fue completada.
      */
     public boolean asociarLocal(Local l, Propietario p);
-
+    
     /**
      * Desliga un local de un propietario, en caso de que ambos existan y estén
      * ya relacionados
