@@ -27,6 +27,17 @@ import java.time.LocalTime;
  */
 public class BusinessSystem implements LeisureOffice {
     
+    private BusinessSystem () {}
+    
+    public static BusinessSystem getBusinessSystem () {
+        return new BusinessSystem();
+    }
+    
+    public void generarBBDD () {
+        
+    }
+    
+    
     @Override
     public boolean nuevoUsuario(Usuario u) {
         
