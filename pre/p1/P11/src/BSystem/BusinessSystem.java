@@ -30,6 +30,7 @@ import java.util.HashSet;
 public class BusinessSystem implements LeisureOffice, LookupService {
 
     private HashSet<Usuario> listaUsuarios;
+    private ArrayList<Contestacion> listaContestacion;
     private ArrayList<Review> listaReviews;
     private ArrayList<Reserva> listaReserva;
     private ArrayList<Bar> listaBar;
@@ -45,6 +46,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         listaLocal = new ArrayList<Local>();
         listaRestaurante = new ArrayList<Restaurante>();
         listaPub = new ArrayList<Pub>();
+        listaContestacion = new ArrayList<>();
     }
 
     public static BusinessSystem getBusinessSystem() {
@@ -165,6 +167,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean nuevaReview(Review r) {
         try {
+            if (r.getComentario().length() > 500) {
+                throw new Exception("El comentario de la review supera el límite de caracteres.");
+            }
             if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new Exception("La review ya existe.");
             } else {
@@ -174,8 +179,8 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     throw new Exception("Error al añadir la review.");
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -183,7 +188,22 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean eliminaReview(Review r) {
         //Excepción review no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
+                if (tieneContestacion(r)) {
+                    throw new Exception("No se puede eliminar una review con contestación.");
+                } else {
+                    if (listaReviews.remove(r)) {
+                        return true;
+                    } else {
+                        throw new Exception("Error al eliminar.");
+                    }
+                }
+            }
+            throw new Exception("La review no existe.");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -198,34 +218,76 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 }
             }
             throw new Exception("La review no existe.");
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
 
     @Override
     public boolean nuevaContestacion(Contestacion c, Review r) {
-        //Excepción de 500 char --> se pueden añadir nuevas excepciones como la de que existe ya una contestación a la misma review por el mismo dueño y puede ser que no exista el dueño     
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (c.getComentario().length() > 500) {
+                throw new Exception("La contestación supera el límite de carácteres.");
+            }
+            if (!tieneContestacion(r)) {
+                for (Review itemReview : listaReviews) {
+                    if (itemReview.equals(r)) {
+                        if (listaContestacion.add(c)) {
+                            return true;
+                        } else {
+                            throw new Exception("Error al añadir la contestación.");
+                        }
+                    }
+                }
+            }
+            throw new Exception("No se ha encontrado la review.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean tieneContestacion(Review r) {
-        //Excepción contestación no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            for (Contestacion contestacion : listaContestacion) {
+                if (contestacion.getReview().equals(r)) {
+                    throw new Exception("Esta review ya tiene una contestación.");
+                }
+
+            }
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     @Override
     public Contestacion obtenerContestacion(Review r) {
-        //Excepción contestación no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            for (Contestacion contestacion : listaContestacion) {
+                if (contestacion.getReview().equals(r)) {
+                    return contestacion;
+                }
+            }
+            throw new Exception("No existe la review.");
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public boolean eliminaContestacion(Contestacion c) {
-        //Excepción contestación no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (listaContestacion.remove(c)) {
+                return true;
+            } else {
+                throw new Exception("Error al eliminar la contestación-");
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -241,8 +303,8 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 }
 
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -259,8 +321,8 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     return true;
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
@@ -274,22 +336,49 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 }
             }
             throw new Exception("No se ha podido encontrar el local.");
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
-        //mas de 3 propietarios
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if(!l.propietariosLleno()){
+                if(listaLocal.contains(l)){
+                    if(existeNick(p.getNick())){
+                        l.addPropietario(p);
+                        return true;
+                    }else{
+                        throw new Exception("El usuario no existe.");
+                    }
+                }else{
+                    throw new Exception("El local no existe.");
+                }
+            }
+            throw new Exception("No se puede añadir más propietarios al local.");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public boolean desasociarLocal(Local l, Propietario p) {
-        //Excepción propietario no dueño del local ***
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if(listaLocal.contains(l)){
+                    if(existeNick(p.getNick())){
+                        //TODO
+                        return true;
+                    }else{
+                        throw new Exception("El usuario no existe.");
+                    }
+                }else{
+                    throw new Exception("El local no existe.");
+                }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
