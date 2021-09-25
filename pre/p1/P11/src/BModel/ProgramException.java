@@ -44,9 +44,9 @@ public class ProgramException extends Exception {
                 return "Error: La review no existe";
             case 11: //Usuario no existe 
                 return "Error: Review ya contestada";
-            case 9: //Usuario no existe 
+            case 12: //Usuario no existe 
                 return "Error: Ya hay tres propietarios";
-            case 9: //Usuario no existe 
+            case 13: //Usuario no existe 
                 return "Error: El usuario ya existe";
             default:
                 return null; 
