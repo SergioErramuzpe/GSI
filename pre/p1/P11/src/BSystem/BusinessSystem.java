@@ -33,9 +33,7 @@ public class BusinessSystem implements LeisureOffice {
         return new BusinessSystem();
     }
     
-    public void generarBBDD () {
-        
-    }
+    public void generarBBDD () {}
     
     
     @Override
