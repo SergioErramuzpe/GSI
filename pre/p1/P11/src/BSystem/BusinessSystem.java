@@ -270,7 +270,6 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminarReserva(Reserva r) {
-        //Excepcion No existe reserva
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -296,7 +295,6 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminaContestacion(Review r) {
-        //Excepcion No existe la contestacion
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

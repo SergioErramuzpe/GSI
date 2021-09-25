@@ -71,6 +71,11 @@ public class Review {
     }
 
     @Override
+    public String toString() {
+        return "Review{" + "comentario=" + comentario + ", estrellas=" + estrellas + ", fechaReview=" + fechaReview + ", cliente=" + cliente + ", local=" + local + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 31 * hash + Objects.hashCode(this.fechaReview);

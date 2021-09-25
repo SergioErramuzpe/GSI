@@ -63,6 +63,14 @@ public class Local {
     public void setListaPropietarios(Set<Propietario> listaPropietarios) {
         this.listaPropietarios = listaPropietarios;
     }
+    
+    public void addPropietario (Propietario p) {
+        this.listaPropietarios.add(p);
+    }
+    
+    public boolean propietariosLleno () {
+        return this.listaPropietarios.size() == 3;
+    }
 
     /**
      *

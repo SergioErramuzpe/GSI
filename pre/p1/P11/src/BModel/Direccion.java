@@ -19,11 +19,8 @@ public class Direccion {
     private String calle;
     private int numero;
 
-    public Direccion() {
-    }
+    public Direccion() {}
 
-    
-    
     /**
      * Constructor de la clase Dirección.
      *
@@ -38,6 +35,40 @@ public class Direccion {
         this.calle = calle;
         this.numero = numero;
     }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    
+    
 
     /**
      * Método para imprimir por pantalla la clase Dirección.
