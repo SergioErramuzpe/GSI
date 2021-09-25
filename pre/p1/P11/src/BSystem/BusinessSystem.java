@@ -10,6 +10,7 @@ import BModel.Cliente;
 import BModel.Contestacion;
 import BModel.Direccion;
 import BModel.Local;
+import BModel.ProgramException;
 import BModel.Propietario;
 import BModel.Pub;
 import BModel.Reserva;
@@ -19,516 +20,208 @@ import BModel.Review;
 import BModel.Usuario;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  *
  * @author Usuario
  */
-public class BusinessSystem implements LeisureOffice, LookupService {
-
-    private HashSet<Usuario> listaUsuarios;
-    private ArrayList<Review> listaReviews;
-    private ArrayList<Reserva> listaReserva;
-    private ArrayList<Bar> listaBar;
-    private ArrayList<Restaurante> listaRestaurante;
-    private ArrayList<Local> listaLocal;
-    private ArrayList<Pub> listaPub;
-
-    public BusinessSystem() {
-        listaUsuarios = new HashSet<Usuario>();
-        listaReviews = new ArrayList<Review>();
-        listaReserva = new ArrayList<Reserva>();
-        listaBar = new ArrayList<Bar>();
-        listaLocal = new ArrayList<Local>();
-        listaRestaurante = new ArrayList<Restaurante>();
-        listaPub = new ArrayList<Pub>();
+public class BusinessSystem implements LeisureOffice {
+    
+    private BusinessSystem () {}
+    
+    public static BusinessSystem getBusinessSystem () {
+        return new BusinessSystem();
     }
-
+    
+    public void generarBBDD () {
+        
+    }
+    
+    
     @Override
     public boolean nuevoUsuario(Usuario u) {
+        
+        //Podría faltar la excepción de usuario existente
         int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
-        boolean creado = false;
+        
         try {
-            if (edad < 18) {
-                throw new Exception("El usuario debe ser mayor de edad.");
+            if (edad < 14) {
+                throw new ProgramException(3);
             } else if (u.getNick().length() < 3) {
-                throw new Exception("El nick debe tener más de tres caŕacteres.");
-            } else if (existeNick(u.getNick())) {
-                throw new Exception("El nick del usuario ya existe.");
+                throw new ProgramException(2);
             } else if (u.getPassword().isEmpty()) {
-                throw new Exception("La contraseña está en blanco.");
-            } else if (!listaUsuarios.add(u)) {
-                throw new Exception("Error al añadir el usuario.");
-            } else {
-                creado = true;
+                throw new ProgramException(7);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+            
+            //Add a la lista
+            return true;
+            
+        } catch (Exception ex) {
+            
+            System.out.println(ex.getMessage());
+            return false;
         }
-        return creado;
-
     }
 
     @Override
     public boolean eliminaUsuario(Usuario u) {
-        boolean eliminado = false;
-        try {
-            if (existeNick(u.getNick())) {
-                if (listaUsuarios.remove(u)) {
-                    eliminado = true;
-                } else {
-                    throw new Exception("No se ha podido eliminar.");
-                }
-            } else {
-                throw new Exception("No se puede eliminar un usuario que no existe.");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return eliminado;
-
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean modificaUsuario(Usuario u, Usuario nuevoU) {
-        boolean exito = false;
-        int edad = LocalDate.now().getYear() - nuevoU.getFechaNacimiento().getYear();
-        try {
-            if (existeNick(u.getNick())) {
-                if (edad < 18) {
-                    throw new Exception("El usuario no puede ser menor de edad.");
-                } else {
-                    if (nuevoU.getNick().length() < 3) {
-                        throw new Exception("El nuevo nick tiene menos de 3 carácteres.");
-                    } else {
-                        if (existeNick(nuevoU.getNick())) {
-                            throw new Exception("El nuevo nick ya existe.");
-                        } else {
-                            u = nuevoU;
-                            exito = true;
-                        }
-                    }
-                }
-            } else {
-                throw new Exception("El usuario a modificar no existe.");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return exito;
-
+        //Mismo try catch de nuevo usuario
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean existeNick(String nick) {
-        boolean existe = false;
-        try {
-            for (Usuario userIter : listaUsuarios) {
-                if (userIter.getNick().equals(nick)) {
-                    existe = true;
-
-                }
-            }
-            if (!existe) {
-                throw new Exception("El nombre del usuario ya existe");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return existe;
-
+        //Excepcion usuario inexistente
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Usuario obtenerUsuario(String nick) {
-        Usuario retorno = null;
-        try {
-            if (!existeNick(nick)) {
-                throw new Exception("El usuario no existe.");
-            } else {
-                for (Usuario userIter : listaUsuarios) {
-                    if (userIter.getNick().equals(nick)) {
-                        retorno = userIter;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return retorno;
-
+        //Excepcion usuario inexistente
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean nuevaReview(Review r) {
-        boolean creada = false;
-        try {
-            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
-                throw new Exception("La review ya existe.");
-            } else {
-                if (listaReviews.add(r)) {
-                    creada = true;
-                } else {
-                    throw new Exception("Error al añadir la review.");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return creada;
+        //Excepción de 500 char y de estrellas --> se pueden añadir nuevas excepciones como la de que existe ya una review al mismo local/usuario/fecha
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean eliminaReview(Review r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción review no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean existeRewiew(Usuario u, Local l, LocalDate ld) {
-        boolean existe = false;
-        try {
-            if (!existeNick(u.getNick())) {
-                throw new Exception("El usuario de la review no existe.");
-            }
-            for (Review iterReview : listaReviews) {
-                if (iterReview.getCliente().equals(u) && iterReview.getLocal().equals(l) && iterReview.getFechaReview().equals(ld)) {
-                    existe = true;
-                }
-            }
-            if (!existe) {
-                throw new Exception("La review no existe.");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return existe;
+        //Excepción review no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean nuevaContestacion(Contestacion c, Review r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción de 500 char --> se pueden añadir nuevas excepciones como la de que existe ya una contestación a la misma review por el mismo dueño y puede ser que no exista el dueño     
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean tieneContestacion(Review r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción contestación no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Contestacion obtenerContestacion(Review r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        //Excepción contestación no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean eliminaContestacion(Contestacion c) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean eliminaContestacion(Review r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción contestación no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean nuevoLocal(Local l) {
-        boolean creado = false;
-        try {
-            if (listaLocal.contains(l)) {
-                throw new Exception("El local ya existe");
-            } else {
-                if (!listaLocal.add(l)) {
-                    throw new Exception("Error al añadir el local");
-                } else {
-                    creado = true;
-                }
-
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return creado;
+        //Excepciones por no cumplimiento de introducción correcta de datos y el local ==> hay un local en la misma dirección
+        //Se realiza un equals con Bar y restaurante --> en el caso de que se cumpla, se añade un new Reservable a la lista, ya que se pueden reservar
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean eliminarLocal(Local l) {
-        boolean eliminado = false;
-        try {
-            if (!listaLocal.contains(l)) {
-                throw new Exception("No se puede eliminar un local que no existe.");
-            } else {
-                if (!listaLocal.remove(l)) {
-                    throw new Exception("Error al eliminar el local.");
-                } else {
-                    eliminado = true;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Local obtenerLocal(Direccion d) {
-        Local pLocal = null;
-        try {
-            for (Local local : listaLocal) {
-                if(local.getmDireccion().equals(d)){
-                    pLocal = local;
-                }
-            }
-            if(pLocal == null){
-                throw new Exception("No se ha podido encontrar el local.");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return pLocal;
+        //Excepción local no esiste
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //mas de 3 propietarios
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean desasociarLocal(Local l, Propietario p) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción propietario no dueño del local ***
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean actualizarLocal(Local viejoL, Local nuevoL) {
-        try {
-            if(obtenerLocal(viejoL.getmDireccion()).equals(viejoL)){
-                
-            }else{
-                throw new Exception("El local a modificar no existe.");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepción de que el nuevo local no cumple nombre, dirección....
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Review[] verReviews(Local l) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
+        //Excepcion reservable no existe/la fecha es anterior a ahora/cliente no es cliente o no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Reserva[] obtenerReservas(Cliente c) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        //Excepcion cliente no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Reserva[] obtenerReservas(Reservable r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        //Excepcion Reservable no existe
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Reserva[] obtenerReservas(LocalDate ld) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        //Excepcion no existe fecha
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean eliminarReserva(Reserva r) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
+        //Excepcion No existe reserva
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Local[] listarLocales(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Bar[] listarBares(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Restaurante[] listarRestaurantes(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Pub[] listarPubs(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public float obtenerValoracionMedia(Local l) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    @Override
-    public float obtenerValoracionMedia(Propietario p) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    @Override
-    public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    @Override
-    public Local[] obtenerLocalesOrdenados(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    @Override
-    public Local[] obtenerLocalesOrdenados(String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    @Override
-    public Bar[] obtenerBaresOrdenados(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    @Override
-    public Restaurante[] obtenerRestaurantesOrdenados(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    @Override
-    public Pub[] obtenerPubOrdenados(String ciudad, String provincia) {
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
+    public boolean eliminaContestacion(Review r) {
+        //Excepcion No existe la contestacion
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
