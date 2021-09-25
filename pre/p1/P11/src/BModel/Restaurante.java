@@ -31,6 +31,30 @@ public class Restaurante extends Local {
         this.capacidadMesa = capacidadMesa;
     }
 
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public int getCapacidadTotal() {
+        return capacidadTotal;
+    }
+
+    public void setCapacidadTotal(int capacidadTotal) {
+        this.capacidadTotal = capacidadTotal;
+    }
+
+    public int getCapacidadMesa() {
+        return capacidadMesa;
+    }
+
+    public void setCapacidadMesa(int capacidadMesa) {
+        this.capacidadMesa = capacidadMesa;
+    }
+
     /**
      *
      * @return

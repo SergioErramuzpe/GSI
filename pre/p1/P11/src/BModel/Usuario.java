@@ -18,8 +18,7 @@ public class Usuario {
     private String password;
     private LocalDate fechaNacimiento;
 
-    public Usuario() {
-    }
+    public Usuario() {}
 
     /**
      *

@@ -17,7 +17,6 @@ import java.util.Objects;
  */
 public class Reserva {
 
-    //Igual falta la hora
     private Float descuento;
     private LocalDate ld;
     private Usuario cliente;
@@ -76,13 +75,17 @@ public class Reserva {
     }
 
     @Override
+    public String toString() {
+        return "Reserva{" + "descuento=" + descuento + ", ld=" + ld + ", cliente=" + cliente + ", reservable=" + reservable + ", lt=" + lt + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.descuento);
-        hash = 79 * hash + Objects.hashCode(this.ld);
-        hash = 79 * hash + Objects.hashCode(this.cliente);
-        hash = 79 * hash + Objects.hashCode(this.reservable);
-        hash = 79 * hash + Objects.hashCode(this.lt);
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.ld);
+        hash = 67 * hash + Objects.hashCode(this.cliente);
+        hash = 67 * hash + Objects.hashCode(this.reservable);
+        hash = 67 * hash + Objects.hashCode(this.lt);
         return hash;
     }
 
@@ -112,8 +115,5 @@ public class Reserva {
         }
         return true;
     }
-
-    
-    
     
 }
