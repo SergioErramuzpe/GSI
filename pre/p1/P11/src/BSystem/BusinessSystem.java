@@ -20,70 +20,145 @@ import BModel.Review;
 import BModel.Usuario;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
  * @author Usuario
  */
-public class BusinessSystem implements LeisureOffice {
-    
-    private BusinessSystem () {}
-    
-    public static BusinessSystem getBusinessSystem () {
+public class BusinessSystem implements LeisureOffice, LookupService {
+
+    private HashSet<Usuario> listaUsuarios;
+    private ArrayList<Review> listaReviews;
+    private ArrayList<Reserva> listaReserva;
+    private ArrayList<Bar> listaBar;
+    private ArrayList<Restaurante> listaRestaurante;
+    private ArrayList<Local> listaLocal;
+    private ArrayList<Pub> listaPub;
+
+    private BusinessSystem() {
+        listaUsuarios = new HashSet<Usuario>();
+        listaReviews = new ArrayList<Review>();
+        listaReserva = new ArrayList<Reserva>();
+        listaBar = new ArrayList<Bar>();
+        listaLocal = new ArrayList<Local>();
+        listaRestaurante = new ArrayList<Restaurante>();
+        listaPub = new ArrayList<Pub>();
+    }
+
+    public static BusinessSystem getBusinessSystem() {
         return new BusinessSystem();
     }
-    
-    public void generarBBDD () {
-        
+
+    public void generarBBDD() {
+
     }
-    
-    
+
     @Override
     public boolean nuevoUsuario(Usuario u) {
-        
-        //Podría faltar la excepción de usuario existente
         int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
-        
         try {
-            if (edad < 14) {
+            if (edad < 18) {
                 throw new ProgramException(3);
             } else if (u.getNick().length() < 3) {
                 throw new ProgramException(2);
+            } else if (existeNick(u.getNick())) {
+                throw new ProgramException(7);
             } else if (u.getPassword().isEmpty()) {
                 throw new ProgramException(7);
+            } else if (!listaUsuarios.add(u)) {
+                throw new ProgramException(7);
+            } else {
+                return true;
             }
-            
-            //Add a la lista
-            return true;
-            
         } catch (Exception ex) {
-            
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean eliminaUsuario(Usuario u) {
+        try {
+            if (existeNick(u.getNick())) {
+                if (listaUsuarios.remove(u)) {
+                    return true;
+                } else {
+                    throw new Exception("No se ha podido eliminar.");
+                }
+            } else {
+                throw new Exception("No se puede eliminar un usuario que no existe.");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean modificaUsuario(Usuario u, Usuario nuevoU) {
+        boolean exito = false;
+        int edad = LocalDate.now().getYear() - nuevoU.getFechaNacimiento().getYear();
+        try {
+            if (existeNick(u.getNick())) {
+                if (edad < 18) {
+                    throw new Exception("El usuario no puede ser menor de edad.");
+                } else {
+                    if (nuevoU.getNick().length() < 3) {
+                        throw new Exception("El nuevo nick tiene menos de 3 carácteres.");
+                    } else {
+                        if (existeNick(nuevoU.getNick())) {
+                            throw new Exception("El nuevo nick ya existe.");
+                        } else {
+                            u = nuevoU;
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                throw new Exception("El usuario a modificar no existe.");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean existeNick(String nick) {
+        try {
+            for (Usuario userIter : listaUsuarios) {
+                if (userIter.getNick().equals(nick)) {
+                    return true;
+                }
+            }
+            throw new Exception("El nombre del usuario no existe");
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
 
     @Override
-    public boolean eliminaUsuario(Usuario u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean modificaUsuario(Usuario u, Usuario nuevoU) {
-        //Mismo try catch de nuevo usuario
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean existeNick(String nick) {
-        //Excepcion usuario inexistente
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Usuario obtenerUsuario(String nick) {
-        //Excepcion usuario inexistente
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (!existeNick(nick)) {
+                throw new Exception("El nombre del usuario no existe.");
+            } else {
+                for (Usuario userIter : listaUsuarios) {
+                    if (userIter.getNick().equals(nick)) {
+                        return userIter;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -222,6 +297,46 @@ public class BusinessSystem implements LeisureOffice {
     @Override
     public boolean eliminaContestacion(Review r) {
         //Excepcion No existe la contestacion
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public float obtenerValoracionMedia(Local l) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public float obtenerValoracionMedia(Propietario p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Local[] obtenerLocalesOrdenados(String ciudad, String provincia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Local[] obtenerLocalesOrdenados(String provincia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Bar[] obtenerBaresOrdenados(String ciudad, String provincia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Restaurante[] obtenerRestaurantesOrdenados(String ciudad, String provincia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Pub[] obtenerPubOrdenados(String ciudad, String provincia) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
