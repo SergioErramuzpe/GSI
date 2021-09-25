@@ -154,6 +154,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                         return userIter;
                     }
                 }
+                throw new Exception("No se ha podido encontrar el usuario.");
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -163,8 +164,20 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean nuevaReview(Review r) {
-        //Excepción de 500 char y de estrellas --> se pueden añadir nuevas excepciones como la de que existe ya una review al mismo local/usuario/fecha
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
+                throw new Exception("La review ya existe.");
+            } else {
+                if (listaReviews.add(r)) {
+                    return true;
+                } else {
+                    throw new Exception("Error al añadir la review.");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
@@ -175,8 +188,20 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean existeRewiew(Usuario u, Local l, LocalDate ld) {
-        //Excepción review no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (!existeNick(u.getNick())) {
+                throw new Exception("El usuario de la review no existe.");
+            }
+            for (Review iterReview : listaReviews) {
+                if (iterReview.getCliente().equals(u) && iterReview.getLocal().equals(l) && iterReview.getFechaReview().equals(ld)) {
+                    return true;
+                }
+            }
+            throw new Exception("La review no existe.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
@@ -205,20 +230,54 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean nuevoLocal(Local l) {
-        //Excepciones por no cumplimiento de introducción correcta de datos y el local ==> hay un local en la misma dirección
-        //Se realiza un equals con Bar y restaurante --> en el caso de que se cumpla, se añade un new Reservable a la lista, ya que se pueden reservar
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (listaLocal.contains(l)) {
+                throw new Exception("El local ya existe");
+            } else {
+                if (!listaLocal.add(l)) {
+                    throw new Exception("Error al añadir el local");
+                } else {
+                    return true;
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean eliminarLocal(Local l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (!listaLocal.contains(l)) {
+                throw new Exception("No se puede eliminar un local que no existe.");
+            } else {
+                if (!listaLocal.remove(l)) {
+                    throw new Exception("Error al eliminar el local.");
+                } else {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public Local obtenerLocal(Direccion d) {
-        //Excepción local no esiste
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().equals(d)) {
+                    return local;
+                }
+            }
+            throw new Exception("No se ha podido encontrar el local.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     @Override
