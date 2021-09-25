@@ -33,7 +33,9 @@ public class BusinessSystem implements LeisureOffice {
         return new BusinessSystem();
     }
     
-    public void generarBBDD () {}
+    public void generarBBDD () {
+        
+    }
     
     
     @Override
@@ -63,7 +65,6 @@ public class BusinessSystem implements LeisureOffice {
 
     @Override
     public boolean eliminaUsuario(Usuario u) {
-        //Excepcion usuario inexistente 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
