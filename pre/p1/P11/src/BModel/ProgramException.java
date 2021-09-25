@@ -40,6 +40,14 @@ public class ProgramException extends Exception {
                 return "Error: El usuario no existe";
             case 9: //Usuario no existe 
                 return "Error: El usuario ya existe";
+            case 10: //Usuario no existe 
+                return "Error: La review no existe";
+            case 11: //Usuario no existe 
+                return "Error: Review ya contestada";
+            case 9: //Usuario no existe 
+                return "Error: Ya hay tres propietarios";
+            case 9: //Usuario no existe 
+                return "Error: El usuario ya existe";
             default:
                 return null; 
         }
