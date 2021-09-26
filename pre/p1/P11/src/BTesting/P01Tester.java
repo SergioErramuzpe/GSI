@@ -21,8 +21,11 @@ public class P01Tester {
         //Creacion
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
         bs.generarBBDD();
-    
+        
+        //Llenar BBDD con elementos
+        
+        
         //Prueba
-    
+        
     }
 }
