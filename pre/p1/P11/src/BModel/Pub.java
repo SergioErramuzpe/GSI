@@ -22,35 +22,6 @@ public class Pub extends Local {
         this.clausura = clausura;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.apertura);
-        hash = 71 * hash + Objects.hashCode(this.clausura);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Pub other = (Pub) obj;
-        if (!Objects.equals(this.apertura, other.apertura)) {
-            return false;
-        }
-        if (!Objects.equals(this.clausura, other.clausura)) {
-            return false;
-        }
-        return true;
-    }
-
     public Time getApertura() {
         return apertura;
     }

@@ -63,8 +63,14 @@ public class Local {
     public void setListaPropietarios(Set<Propietario> listaPropietarios) {
         this.listaPropietarios = listaPropietarios;
     }
-
-
+    
+    public void addPropietario (Propietario p) {
+        this.listaPropietarios.add(p);
+    }
+    
+    public boolean propietariosLleno () {
+        return this.listaPropietarios.size() == 3;
+    }
 
     /**
      *
@@ -75,24 +81,13 @@ public class Local {
         return "Local{" + "nombre del local=" + nombreLocal + ", dirección=" + mDireccion + ", descripción=" + descripcion + '}';
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.nombreLocal);
-        hash = 97 * hash + Objects.hashCode(this.mDireccion);
-        hash = 97 * hash + Objects.hashCode(this.descripcion);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.mDireccion);
         return hash;
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -105,12 +100,6 @@ public class Local {
             return false;
         }
         final Local other = (Local) obj;
-        if (!Objects.equals(this.nombreLocal, other.nombreLocal)) {
-            return false;
-        }
-        if (!Objects.equals(this.descripcion, other.descripcion)) {
-            return false;
-        }
         if (!Objects.equals(this.mDireccion, other.mDireccion)) {
             return false;
         }

@@ -6,6 +6,7 @@
 package BModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Contestacion {
     private String comentario;
     private Date fechaContestacion;
     
-    //GetDueño from Review from Local ???
+    public Contestacion() {}
 
     public Contestacion(Usuario propietario, Review review, String comentario, Date fechaContestacion) {
         this.propietario = propietario;
@@ -26,5 +27,74 @@ public class Contestacion {
         this.comentario = comentario;
         this.fechaContestacion = fechaContestacion;
     }
+
+    public Usuario getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Usuario propietario) {
+        this.propietario = propietario;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public Date getFechaContestacion() {
+        return fechaContestacion;
+    }
+
+    public void setFechaContestacion(Date fechaContestacion) {
+        this.fechaContestacion = fechaContestacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Contestacion{" + "propietario=" + propietario + ", review=" + review + ", comentario=" + comentario + ", fechaContestacion=" + fechaContestacion + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.propietario);
+        hash = 37 * hash + Objects.hashCode(this.review);
+        hash = 37 * hash + Objects.hashCode(this.fechaContestacion);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contestacion other = (Contestacion) obj;
+        if (!Objects.equals(this.review, other.review)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaContestacion, other.fechaContestacion)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

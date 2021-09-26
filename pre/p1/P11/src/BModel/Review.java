@@ -4,28 +4,30 @@
  * and open the template in the editor.
  */
 package BModel;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Objects;
+
 /**
  *
  * @author Usuario
  */
 public class Review {
-    
+
     //Posible try catch de incumplimiento de estrellas between 0 y 5 ?
     //Posible try catch de incumplimiento de 500 caracteres
     private String comentario;
     private int estrellas;
-    private Date fechaReview;
+    private LocalDate fechaReview;
     private Usuario cliente;
     private Local local;
-    
-    public Review (String comentario, int estrellas, Date fechaReview, Cliente cliente, Local local){
+
+    public Review(String comentario, int estrellas, LocalDate fechaReview, Cliente cliente, Local local) {
         this.comentario = comentario;
         this.estrellas = estrellas;
         this.fechaReview = fechaReview;
         this.cliente = cliente;
-        this.local = local;     
+        this.local = local;
     }
 
     public String getComentario() {
@@ -44,11 +46,11 @@ public class Review {
         this.estrellas = estrellas;
     }
 
-    public Date getFechaReview() {
+    public LocalDate getFechaReview() {
         return fechaReview;
     }
 
-    public void setFechaReview(Date fechaReview) {
+    public void setFechaReview(LocalDate fechaReview) {
         this.fechaReview = fechaReview;
     }
 
@@ -67,12 +69,21 @@ public class Review {
     public void setLocal(Local local) {
         this.local = local;
     }
-    
-    /**
-     *
-     * @param obj
-     * @return
-     */
+
+    @Override
+    public String toString() {
+        return "Review{" + "comentario=" + comentario + ", estrellas=" + estrellas + ", fechaReview=" + fechaReview + ", cliente=" + cliente + ", local=" + local + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + Objects.hashCode(this.fechaReview);
+        hash = 31 * hash + Objects.hashCode(this.cliente);
+        hash = 31 * hash + Objects.hashCode(this.local);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -96,6 +107,5 @@ public class Review {
         }
         return true;
     }
-    
-    
+
 }
