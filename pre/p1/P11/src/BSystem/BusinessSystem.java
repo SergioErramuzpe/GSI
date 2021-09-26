@@ -345,15 +345,15 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
         try {
-            if(!l.propietariosLleno()){
-                if(listaLocal.contains(l)){
-                    if(existeNick(p.getNick())){
+            if (!l.propietariosLleno()) {
+                if (listaLocal.contains(l)) {
+                    if (existeNick(p.getNick())) {
                         l.addPropietario(p);
                         return true;
-                    }else{
+                    } else {
                         throw new Exception("El usuario no existe.");
                     }
-                }else{
+                } else {
                     throw new Exception("El local no existe.");
                 }
             }
@@ -366,16 +366,19 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean desasociarLocal(Local l, Propietario p) {
         try {
-            if(listaLocal.contains(l)){
-                    if(existeNick(p.getNick())){
-                        //TODO
+            if (listaLocal.contains(l)) {
+                if (existeNick(p.getNick())) {
+                    if (l.getListaPropietarios().remove(p)) {
                         return true;
-                    }else{
-                        throw new Exception("El usuario no existe.");
+                    } else {
+                        throw new Exception("Error al eliminar el propietario");
                     }
-                }else{
-                    throw new Exception("El local no existe.");
+                } else {
+                    throw new Exception("El usuario no existe.");
                 }
+            } else {
+                throw new Exception("El local no existe.");
+            }
         } catch (Exception e) {
             return false;
         }
@@ -384,12 +387,43 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean actualizarLocal(Local viejoL, Local nuevoL) {
         //Excepción de que el nuevo local no cumple nombre, dirección....
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (nuevoL.getDescripcion().length() <= 500) {
+                if (listaLocal.contains(viejoL)) {
+                    viejoL = nuevoL;
+                    return true;
+                } else {
+                    throw new Exception("El viejo local no existe.");
+                }
+            } else {
+                throw new Exception("La descripción del nuevo local...");
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Review[] verReviews(Local l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            ArrayList<Review> pReviews = new ArrayList<>();
+            if (listaLocal.contains(l)) {
+                for (Review itemReview : listaReviews) {
+                    if (itemReview.getLocal().equals(l)) {
+                        pReviews.add(itemReview);
+                    }
+                }
+                if(pReviews.isEmpty()){
+                    throw new Exception("Lista vacía...");
+                }else{
+                    return pReviews.toArray(new Review[pReviews.size()]);
+                }
+            } else {
+                throw new Exception("El local...");
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
