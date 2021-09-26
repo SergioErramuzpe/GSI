@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class Direccion {
 
-    private String localidad;
+    private String localidad; //ciudad
     private String provincia;
     private String calle;
     private int numero;

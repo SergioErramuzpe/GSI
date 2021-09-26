@@ -30,23 +30,17 @@ import java.util.HashSet;
 public class BusinessSystem implements LeisureOffice, LookupService {
 
     private HashSet<Usuario> listaUsuarios;
-    private ArrayList<Contestacion> listaContestacion;
-    private ArrayList<Review> listaReviews;
-    private ArrayList<Reserva> listaReserva;
-    private ArrayList<Bar> listaBar;
-    private ArrayList<Restaurante> listaRestaurante;
-    private ArrayList<Local> listaLocal;
-    private ArrayList<Pub> listaPub;
+    private HashSet<Contestacion> listaContestacion;
+    private HashSet<Review> listaReviews;
+    private HashSet<Reserva> listaReserva;
+    private HashSet<Local> listaLocal;
 
     private BusinessSystem() {
-        listaUsuarios = new HashSet<Usuario>();
-        listaReviews = new ArrayList<Review>();
-        listaReserva = new ArrayList<Reserva>();
-        listaBar = new ArrayList<Bar>();
-        listaLocal = new ArrayList<Local>();
-        listaRestaurante = new ArrayList<Restaurante>();
-        listaPub = new ArrayList<Pub>();
-        listaContestacion = new ArrayList<>();
+        listaUsuarios = new HashSet<>();
+        listaReviews = new HashSet<>();
+        listaReserva = new HashSet<>();
+        listaLocal = new HashSet<>();
+        listaContestacion = new HashSet<>();
     }
 
     public static BusinessSystem getBusinessSystem() {
@@ -74,7 +68,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             } else {
                 return true;
             }
-        } catch (Exception ex) {
+        } catch (ProgramException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
@@ -202,6 +196,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             }
             throw new Exception("La review no existe.");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -259,6 +254,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             }
             return false;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return true;
         }
     }
@@ -273,6 +269,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             }
             throw new Exception("No existe la review.");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -280,12 +277,17 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean eliminaContestacion(Contestacion c) {
         try {
-            if (listaContestacion.remove(c)) {
-                return true;
+            if (listaContestacion.contains(c)) {
+                if (listaContestacion.remove(c)) {
+                    return true;
+                } else {
+                    throw new Exception("Error al eliminar la contestación.");
+                }
             } else {
-                throw new Exception("Error al eliminar la contestación-");
+                throw new Exception("No se ha encontrado la contestación a eliminar.");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -301,7 +303,6 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 } else {
                     return true;
                 }
-
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -359,6 +360,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             }
             throw new Exception("No se puede añadir más propietarios al local.");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -380,6 +382,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 throw new Exception("El local no existe.");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -399,6 +402,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 throw new Exception("La descripción del nuevo local...");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -413,15 +417,16 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                         pReviews.add(itemReview);
                     }
                 }
-                if(pReviews.isEmpty()){
+                if (pReviews.isEmpty()) {
                     throw new Exception("Lista vacía...");
-                }else{
+                } else {
                     return pReviews.toArray(new Review[pReviews.size()]);
                 }
             } else {
                 throw new Exception("El local...");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -429,7 +434,17 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
         //Excepcion reservable no existe/la fecha es anterior a ahora/cliente no es cliente o no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (existeNick(c.getNick())) {
+                //TODO
+                return true;
+            } else {
+                throw new Exception("El cliente no existe");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -447,7 +462,22 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public Reserva[] obtenerReservas(LocalDate ld) {
         //Excepcion no existe fecha
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Reserva> pReservas = new ArrayList<>();
+        try {
+            for (Reserva reserva : listaReserva) {
+                if (reserva.getLd().equals(ld)) {
+                    pReservas.add(reserva);
+                }
+            }
+            if (pReservas.isEmpty()) {
+                throw new Exception("No se han podido encontrar reservas.");
+            } else {
+                return pReservas.toArray(new Reserva[pReservas.size()]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -457,27 +487,115 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public Local[] listarLocales(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            ArrayList<Local> pLocal = new ArrayList<>();
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
+                    pLocal.add(local);
+                }
+            }
+            if (pLocal.isEmpty()) {
+                throw new Exception("No se han encontrado locales.");
+            } else {
+                return pLocal.toArray(new Local[pLocal.size()]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Bar[] listarBares(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            ArrayList<Bar> pBar = new ArrayList<>();
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
+                    if (local.getClass() == Bar.class) {
+                        pBar.add(Bar.class.cast(local));
+                    }
+                }
+            }
+            if (pBar.isEmpty()) {
+                throw new Exception("No se han encontrado locales.");
+            } else {
+                return pBar.toArray(new Bar[pBar.size()]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Restaurante[] listarRestaurantes(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            ArrayList<Restaurante> pRestaurante = new ArrayList<>();
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
+                    if (local.getClass() == Restaurante.class) {
+                        pRestaurante.add(Restaurante.class.cast(local));
+                    }
+                }
+            }
+            if (pRestaurante.isEmpty()) {
+                throw new Exception("No se han encontrado locales.");
+            } else {
+                return pRestaurante.toArray(new Restaurante[pRestaurante.size()]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Pub[] listarPubs(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            ArrayList<Pub> pPub = new ArrayList<>();
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
+                    if (local.getClass() == Pub.class) {
+                        pPub.add(Pub.class.cast(local));
+                    }
+                }
+            }
+            if (pPub.isEmpty()) {
+                throw new Exception("No se han encontrado locales.");
+            } else {
+                return pPub.toArray(new Pub[pPub.size()]);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public boolean eliminaContestacion(Review r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
+                for (Contestacion contestacion : listaContestacion) {
+                    if (contestacion.getReview().equals(r)) {
+                        if (listaContestacion.remove(contestacion)) {
+                            return true;
+                        } else {
+                            throw new Exception("Error al eliminar.");
+                        }
+                    }
+                }
+                throw new Exception("No se ha encontado la con...");
+            } else {
+                throw new Exception("No se ha encontrado la review.");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override

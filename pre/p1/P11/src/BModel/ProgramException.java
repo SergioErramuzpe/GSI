@@ -48,6 +48,10 @@ public class ProgramException extends Exception {
                 return "Error: Ya hay tres propietarios";
             case 13: //Usuario no existe 
                 return "Error: El usuario ya existe";
+            case 14:
+                return "No se ha podido eliminar";
+            case 15:
+                return "No se ha podido añadir";
             default:
                 return null; 
         }
