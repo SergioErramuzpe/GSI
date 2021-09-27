@@ -9,7 +9,7 @@ package BModel;
  * Clase hija de Local correspondiente a la respresentación de un Bar.
  * @author Usuario
  */
-public class Bar extends Local {
+public class Bar extends Reservable {
 
     private String[] tags;
 

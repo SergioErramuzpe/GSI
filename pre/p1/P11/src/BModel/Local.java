@@ -171,4 +171,8 @@ public class Local {
         return true;
     }
 
+    public boolean deletePropietario(Propietario p) {
+        return listaPropietarios.remove(p);      
+    }
+
 }

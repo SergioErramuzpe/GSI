@@ -33,7 +33,7 @@ public interface LeisureOffice {
     public boolean nuevoUsuario(Usuario u);
 
     /**
-     * Elimina al usuario que se pase como argument.
+     * Elimina al usuario que se pase como argumento.
      *
      * @param u El usuario
      * @return True si y solo si el usuario existia y pudo ser eliminado.
@@ -99,7 +99,7 @@ public interface LeisureOffice {
      * @param ld la fecha de visita
      * @return True si y solo si la review existe.
      */
-    public boolean existeRewiew(Usuario u, Local l, LocalDate ld);
+    public boolean existeReview(Usuario u, Local l, LocalDate ld);
 
     /**
      * Contestaciones *

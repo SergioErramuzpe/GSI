@@ -9,7 +9,7 @@ package BModel;
  * Clase hija de Local correspondiente a la respresentación de un Restaurante.
  * @author Usuario
  */
-public class Restaurante extends Local {
+public class Restaurante extends Reservable {
 
     private int precio;
     private int capacidadTotal;
