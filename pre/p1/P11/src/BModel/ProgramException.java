@@ -6,7 +6,9 @@
 package BModel;
 
 /**
- *
+ * Clase en la que se guardan todos los ProgramException que se usan en la 
+ * clase BusinessSystem. Dependiendo del error que dan nos saltará el case
+ * correspondiente. 
  * @author Erra
  */
 public class ProgramException extends Exception {
