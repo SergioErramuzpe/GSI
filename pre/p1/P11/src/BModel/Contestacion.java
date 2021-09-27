@@ -5,7 +5,7 @@
  */
 package BModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,11 +17,11 @@ public class Contestacion {
     private Usuario propietario;
     private Review review;
     private String comentario;
-    private Date fechaContestacion;
+    private LocalDate fechaContestacion;
     
     public Contestacion() {}
 
-    public Contestacion(Usuario propietario, Review review, String comentario, Date fechaContestacion) {
+    public Contestacion(Usuario propietario, Review review, String comentario, LocalDate fechaContestacion) {
         this.propietario = propietario;
         this.review = review;
         this.comentario = comentario;
@@ -52,11 +52,11 @@ public class Contestacion {
         this.comentario = comentario;
     }
 
-    public Date getFechaContestacion() {
+    public LocalDate getFechaContestacion() {
         return fechaContestacion;
     }
 
-    public void setFechaContestacion(Date fechaContestacion) {
+    public void setFechaContestacion(LocalDate fechaContestacion) {
         this.fechaContestacion = fechaContestacion;
     }
 
