@@ -51,7 +51,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean nuevoUsuario(Usuario u) {
         
-        int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
+        int edad = u.obtenerEdad();
         
         try {
             
@@ -749,7 +749,33 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            float media=0;
+            ArrayList<Review> pReview = new ArrayList<>();
+            ArrayList<Local>  locales = new ArrayList<>();
+            
+            if (!listaLocal.contains(l))
+                    throw new ProgramException(27);
+                    //return -1;
+            else{
+                for (Review review : listaReviews) {
+                    if (l.equals(review.getLocal())){
+                        if(review.getCliente().obtenerEdad() > edadEntre && review.getCliente().obtenerEdad() < edadHasta)
+                            media=media+review.getEstrellas();
+                    }
+                }
+                if (pReview.isEmpty()) {
+                    throw new Exception("No se han encontrado reviews del local.");
+                    //return 0;
+                }else {
+                    media=media/pReview.size();
+                    return media;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;//Hay que cambiar para que distinga si falla el local o la review
+        }
     }
 
     @Override

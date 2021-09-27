@@ -87,6 +87,10 @@ public class Usuario {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+    
+    public int obtenerEdad() {
+        return (LocalDate.now().getYear() - this.fechaNacimiento.getYear());
+    }
 
     /**
      * Método toString reescrito sobre la clase Usuario
