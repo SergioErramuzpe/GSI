@@ -88,6 +88,16 @@ public class ProgramException extends Exception {
                 return "Error: No se ha podido añadir un nuevo propietario";
             case 31:
                 return "Error: No se ha podido eliminar un propietario";
+            case 32:
+                return "Error: Fecha y Hora anterior a la actual";
+            case 33:
+                return "Error: No se ha podido añadir una Reserva";
+            case 34:
+                return "Error: La fecha es posterior a la actual";
+            case 35:
+                return "Error: La Reserva no existe";
+            case 36:
+                return "Error: No se ha podido eliminar una Reserva";
             default:
                 return null; 
         }

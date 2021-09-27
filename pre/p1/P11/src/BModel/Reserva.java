@@ -31,6 +31,12 @@ public class Reserva {
         this.lt = lt;
     }
     
+    public Reserva(LocalDate ld, Usuario cliente, Reservable reservable, LocalTime lt) {
+        this.cliente = cliente;
+        this.reservable = reservable;
+        this.ld = ld;
+        this.lt = lt;
+    }
     
     public Reserva () {}
 

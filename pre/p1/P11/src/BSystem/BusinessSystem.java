@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  *
@@ -321,6 +322,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         
         try {
             
+            /*Se hace una busqueda con for y no contains, porque lo interesante es
+            saber si hay un local en la misma direccion*/
+          
             for (Local local:listaLocal) 
                 if (local.equals(l))
                     throw new ProgramException(25);
@@ -331,7 +335,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             return true;
             
 
-        } catch (Exception ex) {
+        } catch (ProgramException ex) {
             
             System.out.println(ex.getMessage());
             return false;
@@ -449,80 +453,130 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     
     @Override
     public Review[] verReviews(Local l) {
+        
         try {
-            ArrayList<Review> pReviews = new ArrayList<>();
-            if (listaLocal.contains(l)) {
-                for (Review itemReview : listaReviews) {
-                    if (itemReview.getLocal().equals(l)) {
-                        pReviews.add(itemReview);
-                    }
-                }
-                if (pReviews.isEmpty()) {
-                    throw new Exception("Lista vacía...");
-                } else {
-                    return pReviews.toArray(new Review[pReviews.size()]);
-                }
-            } else {
-                throw new Exception("El local...");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!listaLocal.contains(l)) 
+                throw new ProgramException(27);
+            
+            List<Review> localReviews = new ArrayList<>();
+            
+            for (Review review: listaReviews) 
+                if (review.getLocal().equals(l))
+                    localReviews.add(review);
+            
+            return localReviews.toArray(new Review[localReviews.size()]);
+          
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
-        //Excepcion reservable no existe/la fecha es anterior a ahora/cliente no es cliente o no existe
+
         try {
-            if (existeNick(c.getNick())) {
-                //TODO
-                return true;
-            } else {
-                throw new Exception("El cliente no existe");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!existeNick(c.getNick())) 
+                throw new ProgramException(8);
+            else if (!listaLocal.contains((Local) r))
+                throw new ProgramException(27);
+            else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now())))
+                throw new ProgramException(32);
+            else if (!listaReserva.add(new Reserva(ld,c,r,lt)))
+                throw new ProgramException(33);
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() != 8)
+                System.out.println(ex.getMessage());
+            
             return false;
         }
     }
 
     @Override
     public Reserva[] obtenerReservas(Cliente c) {
-        //Excepcion cliente no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            
+            if (!existeNick(c.getNick())) 
+                throw new ProgramException(8);
+            
+            List<Reserva> reservasCliente = new ArrayList();
+            
+            for (Reserva reserva: listaReserva) 
+                if (reserva.getCliente().equals(c))
+                    reservasCliente.add(reserva);
+            
+            return reservasCliente.toArray(new Reserva[reservasCliente.size()]);
+          
+        
+        } catch (ProgramException ex) {
+            
+            return null;
+        }
+
     }
 
     @Override
     public Reserva[] obtenerReservas(Reservable r) {
-        //Excepcion Reservable no existe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            
+            if (!listaLocal.contains((Local)r)) 
+                throw new ProgramException(27);
+            
+            List<Reserva> reservasLocal = new ArrayList();
+            
+            for (Reserva reserva: listaReserva) 
+                if (reserva.getReservable().equals(r))
+                    reservasLocal.add(reserva);
+            
+            return reservasLocal.toArray(new Reserva[reservasLocal.size()]);
+          
+        
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    
     }
 
     @Override
     public Reserva[] obtenerReservas(LocalDate ld) {
-        //Excepcion no existe fecha
-        ArrayList<Reserva> pReservas = new ArrayList<>();
-        try {
-            for (Reserva reserva : listaReserva) {
-                if (reserva.getLd().equals(ld)) {
-                    pReservas.add(reserva);
-                }
-            }
-            if (pReservas.isEmpty()) {
-                throw new Exception("No se han podido encontrar reservas.");
-            } else {
-                return pReservas.toArray(new Reserva[pReservas.size()]);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+    
+        List<Reserva> reservasFecha = new ArrayList();
+            
+        for (Reserva reserva: listaReserva) 
+            if (reserva.getLd().equals(ld))
+                reservasFecha.add(reserva);
+            
+        return reservasFecha.toArray(new Reserva[reservasFecha.size()]);
+        
     }
 
     @Override
     public boolean eliminarReserva(Reserva r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            if (!listaReserva.contains(r))
+                throw new ProgramException(35);
+            else if (!listaReserva.remove(r))
+                throw new ProgramException(36);
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
+            return false;
+        }     
     }
 
     @Override
