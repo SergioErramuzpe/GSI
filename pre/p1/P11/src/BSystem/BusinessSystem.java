@@ -694,7 +694,30 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public float obtenerValoracionMedia(Local l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            float media=0;
+            ArrayList<Review> pReview = new ArrayList<>();
+            ArrayList<Local>  locales = new ArrayList<>();
+            
+            if (!listaLocal.contains(l))
+                    throw new ProgramException(27);
+            else{
+                for (Review review : listaReviews) {
+                    if (l.equals(review.getLocal())){
+                        media=media+review.getEstrellas();
+                    }
+                }
+                if (pReview.isEmpty()) {
+                    throw new Exception("No se han encontrado reviews del local.");
+                }else {
+                    media=media/pReview.size();
+                    return media;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;//Hay que cambiar para que distinga si falla el local o la review
+        }
     }
 
     @Override
