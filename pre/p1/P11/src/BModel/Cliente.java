@@ -8,13 +8,14 @@ package BModel;
 import java.time.LocalDate;
 
 /**
- *
+ * Clase hija de Usuario correspondiente a la respresentación de un Cliente.
  * @author Usuario
  */
 public class Cliente extends Usuario {
 
     /**
-     *
+     * Cada propietario tendrá un nick único, contraseña y su fecha de 
+     * nacimiento.
      * @param nick
      * @param password
      * @param fechaNacimiento
