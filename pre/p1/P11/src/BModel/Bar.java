@@ -39,7 +39,7 @@ public class Bar extends Local {
 
 
     /**
-     * 
+     * Método toString reescrito sobre la clase Bar
      * @return
      */
     @Override
