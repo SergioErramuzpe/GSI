@@ -71,7 +71,7 @@ public class ProgramException extends Exception {
             case 21:
                 return "Error: Review no contestada";
             case 22:
-                return "Error: No se puede obtener la Contestacion de la review";
+                return "Error: No se puede obtener la Contestacion de la Review";
             case 23: 
                 return "Error: No se encuentra la Contestacion";
             case 24: 
@@ -104,6 +104,8 @@ public class ProgramException extends Exception {
                 return "Error: No existen Locales con esos datos";
             case 38:
                 return "Error: No se ha podido eliminar la Contestacion";
+            case 39:
+                return "Error: No hay Reviews para este Local";
             default:
                 return null; 
         }

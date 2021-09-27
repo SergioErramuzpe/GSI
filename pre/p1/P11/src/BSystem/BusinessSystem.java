@@ -721,91 +721,97 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public float obtenerValoracionMedia(Local l) {
+        
         try {
+            
             float media=0;
+            
             ArrayList<Review> pReview = new ArrayList<>();
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
-                    throw new ProgramException(27);
-                    //return -1;
-            else{
-                for (Review review : listaReviews) {
-                    if (l.equals(review.getLocal())){
-                        media=media+review.getEstrellas();
-                    }
-                }
-                if (pReview.isEmpty()) {
-                    throw new Exception("No se han encontrado reviews del local.");
-                    //return 0;
-                }else {
-                    media=media/pReview.size();
-                    return media;
-                }
-            }
-        } catch (Exception e) {
+                throw new ProgramException(27);
+
+            for (Review review : listaReviews) 
+                if (l.equals(review.getLocal()))
+                    media=media+review.getEstrellas();
+  
+            if (pReview.isEmpty()) 
+                throw new ProgramException(39);
+
+            return (float)(media/pReview.size());
+                
+        } catch (ProgramException ex) {
             
+            System.out.println(ex.getMessage());
             
+            if (ex.getCode() == 27)
+                return -1;
             
-            System.out.println(e.getMessage());
-            return 0;//Hay que cambiar para que distinga si falla el local o la review
+            return 0;
         }
     }
 
     @Override
     public float obtenerValoracionMedia(Propietario p) {
+        
         try {
+            
             if (!existeNick(p.getNick()))
                 throw new ProgramException(8);
-            else{
-                float media=0;
-                ArrayList<Local>  locales = new ArrayList<>();
+            
+            float media=0;
+            
+            ArrayList<Local>  locales = new ArrayList<>();
 
-                for (Local local : listaLocal) {
-                        if (local.getListaPropietarios().contains(p)){
-                            media=obtenerValoracionMedia(local);
-                        }                
-                }
+            for (Local local : listaLocal) 
+                if (local.getListaPropietarios().contains(p))
+                    media=obtenerValoracionMedia(local);
+
+            return media/locales.size();
                 
-                media=media/locales.size();
-                return media;
-                
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return 0;//Hay que cambiar para que distinga si falla el local o la review
+        } catch (ProgramException ex) {
+            
+            return -1;
         }
+        
     }
 
     @Override
     public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta) {
+        
         try {
+            
             float media=0;
+            
             ArrayList<Review> pReview = new ArrayList<>();
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
-                    throw new ProgramException(27);
-                    //return -1;
-            else{
-                for (Review review : listaReviews) {
-                    if (l.equals(review.getLocal())){
-                        if(review.getCliente().obtenerEdad() > edadEntre && review.getCliente().obtenerEdad() < edadHasta)
-                            media=media+review.getEstrellas();
-                    }
-                }
-                if (pReview.isEmpty()) {
-                    throw new Exception("No se han encontrado reviews del local.");
-                    //return 0;
-                }else {
-                    media=media/pReview.size();
-                    return media;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return -1;//Hay que cambiar para que distinga si falla el local o la review
+                throw new ProgramException(27);
+ 
+
+            for (Review review : listaReviews) 
+                if (l.equals(review.getLocal()))
+                    if(review.getCliente().obtenerEdad() > edadEntre && review.getCliente().obtenerEdad() < edadHasta)
+                        media=media+review.getEstrellas();
+
+                
+            if (pReview.isEmpty()) 
+                throw new ProgramException(39);
+
+            return media/pReview.size();
+
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
+            
+            if (ex.getCode() == 27)
+                return -1;
+            
+            return 0;
         }
+        
     }
 
     @Override
@@ -926,4 +932,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         
         return pubs.toArray(new Pub[pubs.size()]);
     }
+    
+    
+    //FLOAT EN COMPARATORS, TOSTRING EN CLASES, PROBAR TODO
 }
