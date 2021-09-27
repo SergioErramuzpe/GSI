@@ -21,6 +21,8 @@ import BModel.Usuario;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -574,6 +576,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean eliminarReserva(Reserva r) {
         
         try {
+            
             if (!listaReserva.contains(r))
                 throw new ProgramException(35);
             else if (!listaReserva.remove(r))
@@ -589,116 +592,131 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     }
 
     @Override
-    public Local[] listarLocales(String ciudad, String provincia) {
+    public Local[] listarLocales (String ciudad, String provincia) {
+        
         try {
-            ArrayList<Local> pLocal = new ArrayList<>();
-            for (Local local : listaLocal) {
+            
+            List<Local> localesFiltrados = new ArrayList<>();
+            
+            for (Local local : listaLocal) 
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
-                    pLocal.add(local);
-                }
-            }
-            if (pLocal.isEmpty()) {
-                throw new Exception("No se han encontrado locales.");
-            } else {
-                return pLocal.toArray(new Local[pLocal.size()]);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) 
+                    localesFiltrados.add(local);
+
+            if (localesFiltrados.isEmpty()) 
+                throw new ProgramException(37);
+
+                
+            return localesFiltrados.toArray(new Local[localesFiltrados.size()]);
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
         }
     }
 
     @Override
     public Bar[] listarBares(String ciudad, String provincia) {
+        
         try {
-            ArrayList<Bar> pBar = new ArrayList<>();
-            for (Local local : listaLocal) {
+            
+            List<Bar> bares = new ArrayList<>();
+            
+            for (Local local : listaLocal) 
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
-                    if (local.getClass() == Bar.class) {
-                        pBar.add(Bar.class.cast(local));
-                    }
-                }
-            }
-            if (pBar.isEmpty()) {
-                throw new Exception("No se han encontrado locales.");
-            } else {
-                return pBar.toArray(new Bar[pBar.size()]);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
+                        local.getClass().equals(Bar.class)) 
+                   
+                    bares.add((Bar)local);
+            
+            if (bares.isEmpty()) 
+                throw new ProgramException(37);
+            
+            return bares.toArray(new Bar[bares.size()]);
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
         }
     }
 
     @Override
     public Restaurante[] listarRestaurantes(String ciudad, String provincia) {
+        
         try {
-            ArrayList<Restaurante> pRestaurante = new ArrayList<>();
-            for (Local local : listaLocal) {
+            
+            List<Restaurante> restaurantes = new ArrayList<>();
+            
+            for (Local local : listaLocal) 
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
-                    if (local.getClass() == Restaurante.class) {
-                        pRestaurante.add(Restaurante.class.cast(local));
-                    }
-                }
-            }
-            if (pRestaurante.isEmpty()) {
-                throw new Exception("No se han encontrado locales.");
-            } else {
-                return pRestaurante.toArray(new Restaurante[pRestaurante.size()]);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
+                        local.getClass().equals(Restaurante.class)) 
+                    restaurantes.add((Restaurante)local);
+
+            if (restaurantes.isEmpty())
+                throw new ProgramException(37);
+
+            return restaurantes.toArray(new Restaurante[restaurantes.size()]);
+
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
         }
+        
     }
 
     @Override
     public Pub[] listarPubs(String ciudad, String provincia) {
+        
         try {
-            ArrayList<Pub> pPub = new ArrayList<>();
-            for (Local local : listaLocal) {
+            
+            List<Pub> pubs = new ArrayList<>();
+            
+            for (Local local : listaLocal) 
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
-                    if (local.getClass() == Pub.class) {
-                        pPub.add(Pub.class.cast(local));
-                    }
-                }
-            }
-            if (pPub.isEmpty()) {
-                throw new Exception("No se han encontrado locales.");
-            } else {
-                return pPub.toArray(new Pub[pPub.size()]);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
+                        local.getClass().equals(Pub.class)) 
+                    pubs.add((Pub)local);
+
+            if (pubs.isEmpty())
+                throw new ProgramException(37);
+
+            return pubs.toArray(new Pub[pubs.size()]);
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean eliminaContestacion(Review r) {
+        
         try {
-            if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
-                for (Contestacion contestacion : listaContestacion) {
-                    if (contestacion.getReview().equals(r)) {
-                        if (listaContestacion.remove(contestacion)) {
-                            return true;
-                        } else {
-                            throw new Exception("Error al eliminar.");
-                        }
-                    }
+            
+            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
+                throw new ProgramException(10);
+            
+            for (Contestacion contestacion : listaContestacion) 
+                if (contestacion.getReview().equals(r)) {
+                    if (!listaContestacion.remove(contestacion))
+                        throw new ProgramException(38);
+                    return true;
                 }
-                throw new Exception("No se ha encontado la con...");
-            } else {
-                throw new Exception("No se ha encontrado la review.");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+           
+            throw new ProgramException(22);
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() != 10)
+                System.out.println(ex.getMessage());
             return false;
         }
+        
     }
 
     @Override
@@ -726,6 +744,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 }
             }
         } catch (Exception e) {
+            
+            
+            
             System.out.println(e.getMessage());
             return 0;//Hay que cambiar para que distinga si falla el local o la review
         }
@@ -789,26 +810,120 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public Local[] obtenerLocalesOrdenados(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Local> locales = new ArrayList<>();
+        
+        for (Local local : listaLocal) 
+            if (local.getmDireccion().getProvincia().equals(provincia) &&
+                    local.getmDireccion().getLocalidad().equals(ciudad))
+                locales.add(local);
+        
+        class OrdenAscendenteValoracion implements Comparator<Local> {
+            @Override
+            public int compare(Local L1, Local L2) {
+                return (int) (obtenerValoracionMedia(L2)-obtenerValoracionMedia(L1));
+            }
+        }
+
+        Collections.sort(locales, new OrdenAscendenteValoracion());
+        
+        return locales.toArray(new Local[locales.size()]);
     }
 
     @Override
     public Local[] obtenerLocalesOrdenados(String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Local> locales = new ArrayList<>();
+        
+        for (Local local : listaLocal) 
+            if (local.getmDireccion().getProvincia().equals(provincia))
+                locales.add(local);
+        
+        class OrdenAscendenteValoracion implements Comparator<Local> {
+            @Override
+            public int compare(Local L1, Local L2) {
+                return (int) (obtenerValoracionMedia(L2)-obtenerValoracionMedia(L1));
+            }
+        }
+
+        Collections.sort(locales, new OrdenAscendenteValoracion());
+        
+        return locales.toArray(new Local[locales.size()]);
     }
 
     @Override
     public Bar[] obtenerBaresOrdenados(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Bar> bares = new ArrayList<>();
+        
+        for (Local local : listaLocal) 
+            if (local.getmDireccion().getProvincia().equals(provincia) && 
+                    local.getmDireccion().getLocalidad().equals(ciudad) &&
+                    local.getClass().equals(Bar.class))
+                bares.add((Bar)local);
+        
+        class OrdenAscendenteValoracion implements Comparator<Bar> {
+            @Override
+            public int compare(Bar b1, Bar b2) {
+                return (int) (obtenerValoracionMedia(b2)-obtenerValoracionMedia(b1));
+            }
+            
+            /*
+            public Float compareFloat (Bar b1, Bar b2) {
+                return (Float) (obtenerValoracionMedia(b2)-obtenerValoracionMedia(b1));
+            }*/
+        }
+
+        Collections.sort(bares, new OrdenAscendenteValoracion());
+        
+        return bares.toArray(new Bar[bares.size()]);
+        
     }
 
     @Override
     public Restaurante[] obtenerRestaurantesOrdenados(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Restaurante> restaurantes = new ArrayList<>();
+        
+        for (Local local : listaLocal) 
+            if (local.getmDireccion().getProvincia().equals(provincia) && 
+                    local.getmDireccion().getLocalidad().equals(ciudad) &&
+                    local.getClass().equals(Restaurante.class))
+                restaurantes.add((Restaurante)local);
+        
+        class OrdenAscendenteValoracion implements Comparator<Restaurante> {
+            @Override
+            public int compare(Restaurante r1, Restaurante r2) {
+                return (int) (obtenerValoracionMedia(r2)-obtenerValoracionMedia(r1));
+            }
+        }
+
+        Collections.sort(restaurantes, new OrdenAscendenteValoracion());
+        
+        return restaurantes.toArray(new Restaurante[restaurantes.size()]);
+        
     }
 
     @Override
     public Pub[] obtenerPubOrdenados(String ciudad, String provincia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        List<Pub> pubs = new ArrayList<>();
+        
+        for (Local local : listaLocal) 
+            if (local.getmDireccion().getProvincia().equals(provincia) && 
+                    local.getmDireccion().getLocalidad().equals(ciudad) &&
+                    local.getClass().equals(Pub.class))
+                pubs.add((Pub)local);
+        
+        class OrdenAscendenteValoracion implements Comparator<Pub> {
+            @Override
+            public int compare(Pub p1, Pub p2) {
+                return (int) (obtenerValoracionMedia(p2)-obtenerValoracionMedia(p1));
+            }
+        }
+
+        Collections.sort(pubs, new OrdenAscendenteValoracion());
+        
+        return pubs.toArray(new Pub[pubs.size()]);
     }
 }

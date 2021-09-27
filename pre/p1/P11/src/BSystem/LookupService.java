@@ -47,7 +47,7 @@ public interface LookupService {
      * @return
      */
     public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta);
-
+    
     /**
      * Obtiene los locales de una ciudad y provincia ordenados por su valoración
      * media en las reviews asociadas. Los locales que no tienen reviews serán

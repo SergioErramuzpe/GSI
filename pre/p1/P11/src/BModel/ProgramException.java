@@ -100,6 +100,10 @@ public class ProgramException extends Exception {
                 return "Error: La Reserva no existe";
             case 36:
                 return "Error: No se ha podido eliminar una Reserva";
+            case 37:
+                return "Error: No existen Locales con esos datos";
+            case 38:
+                return "Error: No se ha podido eliminar la Contestacion";
             default:
                 return null; 
         }
