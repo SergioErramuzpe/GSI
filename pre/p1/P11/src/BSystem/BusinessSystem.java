@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *
+ * Clase BusinessSystem
  * @author Usuario
  */
 public class BusinessSystem implements LeisureOffice, LookupService {
@@ -44,27 +44,36 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         listaContestacion = new HashSet<>();
     }
 
+    /**
+     * Getter de la clase BussinessSystem
+     * @return
+     */
+
     public static BusinessSystem getBusinessSystem() {
         return new BusinessSystem();
     }
-
+    
+    // Función para crear un nuevoUsuario
     @Override
     public boolean nuevoUsuario(Usuario u) {
         
         int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
         
         try {
+            /*Para eso se creo la clase ProgramException. Para simplificar esta
+            clase además de que es más estético
+            */
             
             if (edad < 14) {
-                throw new ProgramException(3);
+                throw new ProgramException(3); //Error si menor de 14 años 
             } else if (u.getNick().length() < 3) {
-                throw new ProgramException(2);
+                throw new ProgramException(2); //Error si nick con menos de 3 caracteres
             } else if (existeNick(u.getNick())) {
-                throw new ProgramException(8);
+                throw new ProgramException(9); //Error si el usuario ya existe
             } else if (u.getPassword().isEmpty()) {
-                throw new ProgramException(7);
+                throw new ProgramException(7); //Error si la contaseña esta vacía
             } else if (!listaUsuarios.add(u)) {
-                throw new ProgramException(15);
+                throw new ProgramException(15); //Error si no se ha podido añadir el usuario a la lista
             }
                 
             return true;
@@ -83,7 +92,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             if (existeNick(u.getNick())) 
                 if (!listaUsuarios.remove(u)) 
-                    throw new ProgramException(13);
+                    throw new ProgramException(13);//Si no se ha podido eliminar el usuario
                 
             return true;
                         
@@ -143,7 +152,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public Usuario obtenerUsuario(String nick) {
         try {
             if (!existeNick(nick)) {
-                throw new ProgramException(18);
+                throw new ProgramException(18); //Si no se ha podido verificar el nick
                 
             } else {
                 
@@ -167,13 +176,13 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean nuevaReview(Review r) {
         try {
             if (r.getComentario().length() > 500) 
-                throw new ProgramException(5);
+                throw new ProgramException(5); //Si supera los 500 caracteres da error
                 
             else if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) 
-                throw new ProgramException(14);
+                throw new ProgramException(14); //Salta el error si existe la review
                 
             else if (!listaReviews.add(r)) 
-                throw new ProgramException(16);
+                throw new ProgramException(16); //Error si no se puede añadir la review
 
             return true;
            
@@ -189,10 +198,10 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
-                throw new ProgramException(10);
+                throw new ProgramException(10); //Error si no existe la review
             
             else if (!listaReviews.remove(r))
-                throw new ProgramException(17);
+                throw new ProgramException(17); //Si no se ha podido eliminar la review
                 
             return true;
              
@@ -211,12 +220,12 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeNick(u.getNick())) 
-                throw new ProgramException(18);
+                throw new ProgramException(18);//Salta si no se puede verificar el Nick
             
             if (listaReviews.stream().anyMatch((review) -> (review.getCliente().equals(u) && review.getLocal().equals(l) && review.getFechaReview().equals(ld)))) 
                 return true;
             
-            throw new ProgramException(10);
+            throw new ProgramException(10); // Si no existe la review da error
             
         } catch (ProgramException ex) {
             
@@ -233,20 +242,20 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (c.getComentario().length() > 500) 
-                throw new ProgramException(5);
+                throw new ProgramException(5); //Error s la contestacion supera los 500 caracteres
             else if (tieneContestacion(r))
-                throw new ProgramException(11);
+                throw new ProgramException(11);//Error si la review ya esta contestada
             
             for (Review review : listaReviews) 
                 if (review.equals(r) && listaContestacion.add(c)) 
                     return true;
                     
-            throw new ProgramException(20);
+            throw new ProgramException(20); //Error si no se ha podido añadir la contestacion
             
         } catch (ProgramException ex) {
             
             if (ex.getCode() != 11)
-                System.out.println(ex.getMessage());
+                System.out.println(ex.getMessage()); //Se crea la contestacion si la review no esta contestada
             
             return false;
         }
@@ -258,18 +267,18 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeReview(r.getCliente(),r.getLocal(),r.getFechaReview()))
-                throw new ProgramException(10);
+                throw new ProgramException(10);//Error si no existe la review
           
             for (Contestacion contestacion : listaContestacion) 
                 if (contestacion.getReview().equals(r))     
-                    throw new ProgramException(11);
+                    throw new ProgramException(11);//Error de que ya esta contestada
    
             return false;
             
         } catch (ProgramException ex) {
             
             if (ex.getCode() == 11)
-                System.out.println(ex.getMessage());
+                System.out.println(ex.getMessage());//Solo si sí tiene una contestacion
             
             return true;
         }
@@ -280,13 +289,13 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!tieneContestacion(r))
-                throw new ProgramException(21);
+                throw new ProgramException(21); //Review no contestada
             
             for (Contestacion contestacion : listaContestacion) 
                 if (contestacion.getReview().equals(r)) 
                     return contestacion;
           
-            throw new ProgramException(22);
+            throw new ProgramException(22);//No se puede obtener la contestacion de la review
             
         } catch (ProgramException ex) {
             
@@ -302,9 +311,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaContestacion.contains(c))
-                throw new ProgramException(23);
+                throw new ProgramException(23);//Error de que no se encuentra la contestacion
             else if (!listaContestacion.remove(c))
-                throw new ProgramException(24);
+                throw new ProgramException(24);//Si no se ha podido eliminar la contestacion, salta error
             
             return true;
             
@@ -327,10 +336,10 @@ public class BusinessSystem implements LeisureOffice, LookupService {
           
             for (Local local:listaLocal) 
                 if (local.equals(l))
-                    throw new ProgramException(25);
+                    throw new ProgramException(25);//Error de que ya existe un local en la misma direccion
             
             if (!listaLocal.add(l))
-                throw new ProgramException(26);
+                throw new ProgramException(26); //No se puede añadir el local
             
             return true;
             
@@ -349,9 +358,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaLocal.contains(l)) 
-                throw new ProgramException(27);
+                throw new ProgramException(27);//No existe el local
             else if (!listaLocal.remove(l))
-                throw new ProgramException(29);
+                throw new ProgramException(29);//Error si no se puede eliminar el local
              
             return true;
             
@@ -372,7 +381,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 if (local.getmDireccion().equals(d)) 
                     return local;
                 
-            throw new ProgramException(27);
+            throw new ProgramException(27); //El local no existe
             
         } catch (ProgramException ex) {
             
