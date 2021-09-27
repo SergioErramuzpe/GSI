@@ -5,33 +5,43 @@
  */
 package BModel;
 
-import java.util.Arrays;
-
 /**
- *
+ * Clase hija de Local correspondiente a la respresentación de un Bar.
  * @author Usuario
  */
 public class Bar extends Local {
 
     private String[] tags;
 
+    /**/
     public Bar(String[] tags, String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);
         this.tags = tags;
     }
 
+
     /**
-     *
+     * 
      * @return
      */
     public String[] getTags() {
         return tags;
     }
 
+    /**
+     * 
+     * @param tags
+     */
     public void setTags(String[] tags) {
         this.tags = tags;
     }
 
+
+
+    /**
+     * 
+     * @return
+     */
     @Override
     public String toString() {
         return "Bar{nombreLocal="+super.getNombreLocal() + "mDireccion="+super.getmDireccion()+"tags=" + tags + '}';
