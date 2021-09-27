@@ -33,7 +33,7 @@ public interface LeisureOffice {
     public boolean nuevoUsuario(Usuario u);
 
     /**
-     * Elimina al usuario que se pase como argument.
+     * Elimina al usuario que se pase como argumento.
      *
      * @param u El usuario
      * @return True si y solo si el usuario existia y pudo ser eliminado.

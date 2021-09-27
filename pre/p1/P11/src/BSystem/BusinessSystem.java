@@ -49,21 +49,25 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean nuevoUsuario(Usuario u) {
+        
         int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
+        
         try {
+            
             if (edad < 14) {
                 throw new ProgramException(3);
             } else if (u.getNick().length() < 3) {
                 throw new ProgramException(2);
             } else if (existeNick(u.getNick())) {
-                throw new ProgramException(7);
+                throw new ProgramException(8);
             } else if (u.getPassword().isEmpty()) {
                 throw new ProgramException(7);
             } else if (!listaUsuarios.add(u)) {
-                throw new ProgramException(7);
-            } else {
-                return true;
+                throw new ProgramException(15);
             }
+                
+            return true;
+            
         } catch (ProgramException ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -73,48 +77,42 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminaUsuario(Usuario u) {
+        
         try {
-            if (existeNick(u.getNick())) {
-                if (listaUsuarios.remove(u)) {
-                    return true;
-                } else {
-                    throw new Exception("No se ha podido eliminar.");
-                }
-            } else {
-                throw new Exception("No se puede eliminar un usuario que no existe.");
-            }
-        } catch (Exception ex) {
+            
+            if (existeNick(u.getNick())) 
+                if (!listaUsuarios.remove(u)) 
+                    throw new ProgramException(13);
+                
+            return true;
+                        
+        } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return false;
+            
         }
 
     }
 
     @Override
     public boolean modificaUsuario(Usuario u, Usuario nuevoU) {
-        boolean exito = false;
-        int edad = LocalDate.now().getYear() - nuevoU.getFechaNacimiento().getYear();
+        
+        /*Si no se elimina usuario, falla, si no se añade el nuevo, falla, y 
+        en el caso de que se haya borrado el antiguo usuario, pero no se haya
+        podido introducir el nuevo, en la clausula catch se vuelve a añadir al
+        hash el antiguo usuario*/
         try {
-            if (existeNick(u.getNick())) {
-                if (edad < 18) {
-                    throw new Exception("El usuario no puede ser menor de edad.");
-                } else {
-                    if (nuevoU.getNick().length() < 3) {
-                        throw new Exception("El nuevo nick tiene menos de 3 carácteres.");
-                    } else {
-                        if (existeNick(nuevoU.getNick())) {
-                            throw new Exception("El nuevo nick ya existe.");
-                        } else {
-                            u = nuevoU;
-                            return true;
-                        }
-                    }
-                }
-            } else {
-                throw new Exception("El usuario a modificar no existe.");
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            if (!eliminaUsuario(u))
+                throw new ProgramException(13);
+            else if (!nuevoUsuario(nuevoU))
+                throw new ProgramException(15);
+
+            return true;
+        
+        } catch (ProgramException ex) {
+                
+            nuevoUsuario(u); 
             return false;
         }
 
@@ -122,18 +120,19 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean existeNick(String nick) {
+        
+        /*En el caso de no encontrar el nick salta la excepcion*/
+        
         try {
-            boolean eq = true;
-            for (Usuario userIter : listaUsuarios) {
-                if (userIter.getNick().equals(nick)) {
-                    eq = false;
-                } 
-            }
-            if (eq)
-                throw new Exception("El nombre del usuario no existe");
-            else
+            
+            if (listaUsuarios.stream().anyMatch((user) -> (nick.equals(user.getNick())))) {
                 return true;
-        } catch (Exception ex) {
+            }
+            
+            throw new ProgramException(18);
+            
+        } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return false;
         }
@@ -143,17 +142,22 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public Usuario obtenerUsuario(String nick) {
         try {
             if (!existeNick(nick)) {
-                throw new Exception("El nombre del usuario no existe.");
+                throw new ProgramException(18);
+                
             } else {
-                for (Usuario userIter : listaUsuarios) {
-                    if (userIter.getNick().equals(nick)) {
-                        return userIter;
-                    }
+                
+                for (Usuario user : listaUsuarios) {
+                    if (user.getNick().equals(nick)) 
+                        return user;
                 }
-                throw new Exception("No se ha podido encontrar el usuario.");
+                
+                throw new ProgramException(19);
             }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() == 19)
+                System.out.println(ex.getMessage());
+            
             return null;
         }
     }
@@ -161,19 +165,19 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean nuevaReview(Review r) {
         try {
-            if (r.getComentario().length() > 500) {
-                throw new Exception("El comentario de la review supera el límite de caracteres.");
-            }
-            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
-                throw new Exception("La review ya existe.");
-            } else {
-                if (listaReviews.add(r)) {
-                    return true;
-                } else {
-                    throw new Exception("Error al añadir la review.");
-                }
-            }
-        } catch (Exception ex) {
+            if (r.getComentario().length() > 500) 
+                throw new ProgramException(5);
+                
+            else if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) 
+                throw new ProgramException(14);
+                
+            else if (!listaReviews.add(r)) 
+                throw new ProgramException(16);
+
+            return true;
+           
+        } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return false;
         }
@@ -181,46 +185,50 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminaReview(Review r) {
-        //Excepción review no existe
         try {
-            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
-                if (tieneContestacion(r)) {
-                    throw new Exception("No se puede eliminar una review con contestación.");
-                } else {
-                    if (listaReviews.remove(r)) {
-                        return true;
-                    } else {
-                        throw new Exception("Error al eliminar.");
-                    }
-                }
-            }
-            throw new Exception("La review no existe.");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview()))
+                throw new ProgramException(10);
+            
+            else if (!listaReviews.remove(r))
+                throw new ProgramException(17);
+                
+            return true;
+             
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() == 17)
+                System.out.println(ex.getMessage());
+            
             return false;
         }
     }
 
     @Override
     public boolean existeRewiew(Usuario u, Local l, LocalDate ld) {
+        
         try {
-            if (!existeNick(u.getNick())) {
-                throw new Exception("El usuario de la review no existe.");
-            }
-            for (Review iterReview : listaReviews) {
-                if (iterReview.getCliente().equals(u) && iterReview.getLocal().equals(l) && iterReview.getFechaReview().equals(ld)) {
-                    return true;
-                }
-            }
-            throw new Exception("La review no existe.");
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            
+            if (!existeNick(u.getNick())) 
+                throw new ProgramException(18);
+            
+            if (listaReviews.stream().anyMatch((review) -> (review.getCliente().equals(u) && review.getLocal().equals(l) && review.getFechaReview().equals(ld)))) 
+                return true;
+            
+            throw new ProgramException(10);
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() == 10)
+                System.out.println(ex.getMessage());
+            
             return false;
         }
     }
 
     @Override
     public boolean nuevaContestacion(Contestacion c, Review r) {
+        
         try {
             if (c.getComentario().length() > 500) {
                 throw new Exception("La contestación supera el límite de carácteres.");
