@@ -6,10 +6,18 @@
 package BModel;
 
 /**
- *
+ * Clase hija de Local correspondiente a la respresentación de Reservable.
  * @author Usuario
  */
 public class Reservable extends Local {
+
+    /**
+     * Constructor de la clase Reservable
+     * 
+     * @param nombreLocal
+     * @param mDireccion
+     * @param descripcion
+     */
 
     public Reservable(String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);

@@ -36,33 +36,73 @@ public class Direccion {
         this.numero = numero;
     }
 
+    /**
+     * Getter de la localidad
+     * @return
+     */
+
     public String getLocalidad() {
         return localidad;
     }
+
+    /**
+     * Setter de la localidad
+     * @param localidad
+     */
 
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
     }
 
+    /**
+     * Getter de la provincia
+     * @return
+     */
+
     public String getProvincia() {
         return provincia;
     }
+
+    /**
+     * Setter de la provincia
+     * @param provincia
+     */
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
+    /**
+     * Getter de la calle
+     * @return
+     */
+
     public String getCalle() {
         return calle;
     }
+
+    /**
+     * Setter de la calle
+     * @param calle
+     */
 
     public void setCalle(String calle) {
         this.calle = calle;
     }
 
+    /**
+     * Getter del nº de calle de la dirección
+     * @return
+     */
+
     public int getNumero() {
         return numero;
     }
+
+    /**
+     * Setter del nº de calle de la dirección
+     * @param numero
+     */
 
     public void setNumero(int numero) {
         this.numero = numero;
@@ -71,7 +111,8 @@ public class Direccion {
     
 
     /**
-     * Método para imprimir por pantalla la clase Dirección.
+     * Método toString reescrito sobre la clase Dirección 
+     * Sirve para imprimir por pantalla la clase Dirección.
      *
      * @return
      */
@@ -79,6 +120,13 @@ public class Direccion {
     public String toString() {
         return "Direccion{" + "Localidad=" + localidad + ", Provincia=" + provincia + ", Calle=" + calle + ", Numero=" + numero + '}';
     }
+
+    /**
+     * Override de la función hashCode que nos genera un hashCode hechos 
+     * con los atributos de esta clase (en este caso localidad, provincia
+     * calle y nº)
+     * @return
+     */
 
     @Override
     public int hashCode() {
