@@ -109,8 +109,8 @@ public class Local {
      * @param p
      */
 
-    public void addPropietario (Propietario p) {
-        this.listaPropietarios.add(p);
+    public boolean addPropietario (Propietario p) {
+        return this.listaPropietarios.add(p);
     }
 
     /**
