@@ -170,6 +170,13 @@ public class Local {
         }
         return true;
     }
+    /**/
+
+    /**
+     * Función que nos elimina a un propietario de nuestra lista de propietarios
+     * @param p
+     * @return 
+     */
 
     public boolean deletePropietario(Propietario p) {
         return listaPropietarios.remove(p);      
