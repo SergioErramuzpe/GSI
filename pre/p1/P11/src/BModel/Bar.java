@@ -13,7 +13,13 @@ public class Bar extends Local {
 
     private String[] tags;
 
-    /**/
+   
+
+    /**
+     * Cada bar tendrá un nombre, dirección y una breve descripción de esta
+     * @param tags
+     */
+
     public Bar(String[] tags, String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);
         this.tags = tags;
@@ -21,7 +27,7 @@ public class Bar extends Local {
 
 
     /**
-     * 
+     * Getter de los tags de los bares
      * @return
      */
     public String[] getTags() {
