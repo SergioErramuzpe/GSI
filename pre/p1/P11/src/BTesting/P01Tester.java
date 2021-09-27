@@ -31,8 +31,6 @@ public class P01Tester {
         
         //Creacion
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
-        bs.generarBBDD();
-        
         
         Direccion dir1 = new Direccion ("Prueblo 1", "Provincia 1", "Calle 1", 1);
         Direccion dir2 = new Direccion ("Prueblo 2", "Provincia 2", "Calle 2", 2);
@@ -72,15 +70,18 @@ public class P01Tester {
         bs.nuevoUsuario(cliente2);
         Cliente cliente3 = new Cliente("nick10", "pw10", LocalDate.parse("2000-01-01"));
         bs.nuevoUsuario(cliente3);
+        
         //Prueba 1: obtener usuario mediante nick
-        bs.obtenerUsuario("Usuario 1");
+        Usuario usuario = bs.obtenerUsuario("nick1");
+        System.out.println("Nombre de usuario: " + usuario.getNick());
         
         //Prueba 2: usuario nulo
-        bs.obtenerUsuario("Usuario null");
+        System.out.println(bs.obtenerUsuario("Usuario null"));
         
         //Prueba 3: dirección repetida
         Local localNulo = new Local("localnulo", dir1, "");
         bs.nuevoLocal(localNulo);
+        
         //Prueba 4: realojar dirección
         bs.eliminarLocal(local3);
         Local localPrueba = new Local("Local Prueba", dir3, "");
@@ -92,13 +93,15 @@ public class P01Tester {
         
         //Prueba 6 y 7:
         Reservable reservableNulo = new Reservable("Reservable nulo", dir5, "");
-        bs.nuevaReserva(cliente1, reservableNulo, LocalDate.MIN, LocalTime.MIN);
+        Local local = bs.obtenerLocal(dir5);
+        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
         
         //Prueba 8:
         Review reviewPrueba = new Review("", 1, LocalDate.now(), cliente1, local1);
         bs.nuevaReview(reviewPrueba);
+        Review reviewPrueba2 = new Review("", 1, LocalDate.now(), cliente2, local2);
         Contestacion contestacion = new Contestacion(propietario1, reviewPrueba, ".", LocalDate.now());
-        bs.nuevaContestacion(contestacion, reviewPrueba);
+        bs.nuevaContestacion(contestacion, reviewPrueba2);
         
         //Prueba 9:
         bs.asociarLocal(local1, propietario1);

@@ -47,15 +47,11 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         return new BusinessSystem();
     }
 
-    public void generarBBDD() {
-
-    }
-
     @Override
     public boolean nuevoUsuario(Usuario u) {
         int edad = LocalDate.now().getYear() - u.getFechaNacimiento().getYear();
         try {
-            if (edad < 18) {
+            if (edad < 14) {
                 throw new ProgramException(3);
             } else if (u.getNick().length() < 3) {
                 throw new ProgramException(2);
@@ -127,12 +123,16 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean existeNick(String nick) {
         try {
+            boolean eq = true;
             for (Usuario userIter : listaUsuarios) {
                 if (userIter.getNick().equals(nick)) {
-                    return true;
-                }
+                    eq = false;
+                } 
             }
-            throw new Exception("El nombre del usuario no existe");
+            if (eq)
+                throw new Exception("El nombre del usuario no existe");
+            else
+                return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -406,7 +406,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             return false;
         }
     }
-
+    
     @Override
     public Review[] verReviews(Local l) {
         try {
