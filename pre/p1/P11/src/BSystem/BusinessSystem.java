@@ -168,7 +168,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             if (r.getComentario().length() > 500) 
                 throw new ProgramException(5);
                 
-            else if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) 
+            else if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) 
                 throw new ProgramException(14);
                 
             else if (!listaReviews.add(r)) 
@@ -187,7 +187,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean eliminaReview(Review r) {
         try {
             
-            if (!existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview()))
+            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
                 throw new ProgramException(10);
             
             else if (!listaReviews.remove(r))
@@ -205,7 +205,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     }
 
     @Override
-    public boolean existeRewiew(Usuario u, Local l, LocalDate ld) {
+    public boolean existeReview(Usuario u, Local l, LocalDate ld) {
         
         try {
             
@@ -230,39 +230,46 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean nuevaContestacion(Contestacion c, Review r) {
         
         try {
-            if (c.getComentario().length() > 500) {
-                throw new Exception("La contestación supera el límite de carácteres.");
-            }
-            if (!tieneContestacion(r)) {
-                for (Review itemReview : listaReviews) {
-                    if (itemReview.equals(r)) {
-                        if (listaContestacion.add(c)) {
-                            return true;
-                        } else {
-                            throw new Exception("Error al añadir la contestación.");
-                        }
-                    }
-                }
-            }
-            throw new Exception("No se ha encontrado la review.");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (c.getComentario().length() > 500) 
+                throw new ProgramException(5);
+            else if (tieneContestacion(r))
+                throw new ProgramException(11);
+            
+            for (Review review : listaReviews) 
+                if (review.equals(r) && listaContestacion.add(c)) 
+                    return true;
+                    
+            throw new ProgramException(20);
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() != 11)
+                System.out.println(ex.getMessage());
+            
             return false;
         }
+        
     }
 
     @Override
     public boolean tieneContestacion(Review r) {
         try {
-            for (Contestacion contestacion : listaContestacion) {
-                if (contestacion.getReview().equals(r)) {
-                    throw new Exception("Esta review ya tiene una contestación.");
-                }
-
-            }
+            
+            if (!existeReview(r.getCliente(),r.getLocal(),r.getFechaReview()))
+                throw new ProgramException(10);
+          
+            for (Contestacion contestacion : listaContestacion) 
+                if (contestacion.getReview().equals(r))     
+                    throw new ProgramException(11);
+   
             return false;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() == 11)
+                System.out.println(ex.getMessage());
+            
             return true;
         }
     }
@@ -270,82 +277,101 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public Contestacion obtenerContestacion(Review r) {
         try {
-            for (Contestacion contestacion : listaContestacion) {
-                if (contestacion.getReview().equals(r)) {
+            
+            if (!tieneContestacion(r))
+                throw new ProgramException(21);
+            
+            for (Contestacion contestacion : listaContestacion) 
+                if (contestacion.getReview().equals(r)) 
                     return contestacion;
-                }
-            }
-            throw new Exception("No existe la review.");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+          
+            throw new ProgramException(22);
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return null;
+            
         }
     }
 
     @Override
     public boolean eliminaContestacion(Contestacion c) {
+        
         try {
-            if (listaContestacion.contains(c)) {
-                if (listaContestacion.remove(c)) {
-                    return true;
-                } else {
-                    throw new Exception("Error al eliminar la contestación.");
-                }
-            } else {
-                throw new Exception("No se ha encontrado la contestación a eliminar.");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!listaContestacion.contains(c))
+                throw new ProgramException(23);
+            else if (!listaContestacion.remove(c))
+                throw new ProgramException(24);
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+            
+            System.out.println(ex.getMessage());
             return false;
+            
         }
+        
     }
 
     @Override
     public boolean nuevoLocal(Local l) {
+        
         try {
-            if (listaLocal.contains(l)) {
-                throw new Exception("El local ya existe");
-            } else {
-                if (!listaLocal.add(l)) {
-                    throw new Exception("Error al añadir el local");
-                } else {
-                    return true;
-                }
-            }
+            
+            for (Local local:listaLocal) 
+                if (local.equals(l))
+                    throw new ProgramException(25);
+            
+            if (!listaLocal.add(l))
+                throw new ProgramException(26);
+            
+            return true;
+            
+
         } catch (Exception ex) {
+            
             System.out.println(ex.getMessage());
             return false;
         }
+        
     }
 
     @Override
     public boolean eliminarLocal(Local l) {
+        
         try {
-            if (!listaLocal.contains(l)) {
-                throw new Exception("No se puede eliminar un local que no existe.");
-            } else {
-                if (!listaLocal.remove(l)) {
-                    throw new Exception("Error al eliminar el local.");
-                } else {
-                    return true;
-                }
-            }
-        } catch (Exception ex) {
+            
+            if (!listaLocal.contains(l)) 
+                throw new ProgramException(27);
+            else if (!listaLocal.remove(l))
+                throw new ProgramException(29);
+             
+            return true;
+            
+        } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return false;
         }
+        
     }
 
     @Override
     public Local obtenerLocal(Direccion d) {
+        
         try {
-            for (Local local : listaLocal) {
-                if (local.getmDireccion().equals(d)) {
+            
+            for (Local local : listaLocal) 
+                if (local.getmDireccion().equals(d)) 
                     return local;
-                }
-            }
-            throw new Exception("No se ha podido encontrar el local.");
-        } catch (Exception ex) {
+                
+            throw new ProgramException(27);
+            
+        } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return null;
         }
@@ -353,66 +379,72 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
+        
         try {
-            if (!l.propietariosLleno()) {
-                if (listaLocal.contains(l)) {
-                    if (existeNick(p.getNick())) {
-                        l.addPropietario(p);
-                        return true;
-                    } else {
-                        throw new Exception("El usuario no existe.");
-                    }
-                } else {
-                    throw new Exception("El local no existe.");
-                }
-            }
-            throw new Exception("No se puede añadir más propietarios al local.");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!listaLocal.contains(l))
+                throw new ProgramException(27);
+            else if (l.propietariosLleno()) 
+                throw new ProgramException(12);
+            else if (!existeNick(p.getNick()))
+                throw new ProgramException(8);
+            else if (!l.addPropietario(p))
+                throw new ProgramException(30);
+            
+            return true;
+
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() != 8)
+                System.out.println(ex.getMessage());
+            
             return false;
         }
+        
     }
 
     @Override
     public boolean desasociarLocal(Local l, Propietario p) {
         try {
-            if (listaLocal.contains(l)) {
-                if (existeNick(p.getNick())) {
-                    if (l.getListaPropietarios().remove(p)) {
-                        return true;
-                    } else {
-                        throw new Exception("Error al eliminar el propietario");
-                    }
-                } else {
-                    throw new Exception("El usuario no existe.");
-                }
-            } else {
-                throw new Exception("El local no existe.");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!listaLocal.contains(l))
+                throw new ProgramException(27);
+            else if (l.propietariosLleno()) 
+                throw new ProgramException(12);
+            else if (!existeNick(p.getNick()))
+                throw new ProgramException(8);
+            else if (!l.deletePropietario(p))
+                throw new ProgramException(31);
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+            
+            if (ex.getCode() != 8)
+                System.out.println(ex.getMessage());
+
             return false;
         }
     }
 
     @Override
     public boolean actualizarLocal(Local viejoL, Local nuevoL) {
-        //Excepción de que el nuevo local no cumple nombre, dirección....
+        
         try {
-            if (nuevoL.getDescripcion().length() <= 500) {
-                if (listaLocal.contains(viejoL)) {
-                    viejoL = nuevoL;
-                    return true;
-                } else {
-                    throw new Exception("El viejo local no existe.");
-                }
-            } else {
-                throw new Exception("La descripción del nuevo local...");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            
+            if (!eliminarLocal(viejoL))
+                throw new ProgramException(29);
+            else if (!nuevoLocal(nuevoL)) 
+                throw new ProgramException(26);
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+            
+            nuevoLocal(viejoL);
             return false;
         }
+        
     }
     
     @Override
@@ -586,7 +618,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean eliminaContestacion(Review r) {
         try {
-            if (existeRewiew(r.getCliente(), r.getLocal(), r.getFechaReview())) {
+            if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 for (Contestacion contestacion : listaContestacion) {
                     if (contestacion.getReview().equals(r)) {
                         if (listaContestacion.remove(contestacion)) {

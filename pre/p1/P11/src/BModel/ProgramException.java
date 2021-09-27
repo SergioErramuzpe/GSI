@@ -62,6 +62,32 @@ public class ProgramException extends Exception {
                 return "Error: No se ha podido eliminar la Review";
             case 18: 
                 return "Error: No se ha podido verificar el Nick";
+            case 19: 
+                return "Error: No se ha podido obtener el Usuario";
+            case 20:
+                return "Error: No se ha podido añadir la Contestacion";
+            case 21:
+                return "Error: Review no contestada";
+            case 22:
+                return "Error: No se puede obtener la Contestacion de la review";
+            case 23: 
+                return "Error: No se encuentra la Contestacion";
+            case 24: 
+                return "Error: No se pudo eliminar la Contestacion";
+            case 25:
+                return "Error: Hay un Local en la misma Direccion";
+            case 26:
+                return "Error: No se ha podido añadir el Local";
+            case 27:
+                return "Error: El Local no existe";
+            case 28:
+                return "Error: El Local ya existe";
+            case 29:
+                return "Error: No se ha podido eliminar el Local";
+            case 30:
+                return "Error: No se ha podido añadir un nuevo propietario";
+            case 31:
+                return "Error: No se ha podido eliminar un propietario";
             default:
                 return null; 
         }

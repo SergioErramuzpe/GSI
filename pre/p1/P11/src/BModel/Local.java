@@ -64,8 +64,8 @@ public class Local {
         this.listaPropietarios = listaPropietarios;
     }
     
-    public void addPropietario (Propietario p) {
-        this.listaPropietarios.add(p);
+    public boolean addPropietario (Propietario p) {
+        return this.listaPropietarios.add(p);
     }
     
     public boolean propietariosLleno () {
@@ -104,6 +104,10 @@ public class Local {
             return false;
         }
         return true;
+    }
+
+    public boolean deletePropietario(Propietario p) {
+        return listaPropietarios.remove(p);      
     }
 
 }
