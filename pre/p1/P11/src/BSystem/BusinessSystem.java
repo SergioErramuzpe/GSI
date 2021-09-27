@@ -701,6 +701,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             if (!listaLocal.contains(l))
                     throw new ProgramException(27);
+                    //return -1;
             else{
                 for (Review review : listaReviews) {
                     if (l.equals(review.getLocal())){
@@ -709,6 +710,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 }
                 if (pReview.isEmpty()) {
                     throw new Exception("No se han encontrado reviews del local.");
+                    //return 0;
                 }else {
                     media=media/pReview.size();
                     return media;
@@ -722,7 +724,27 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public float obtenerValoracionMedia(Propietario p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (!existeNick(p.getNick()))
+                throw new ProgramException(8);
+            else{
+                float media=0;
+                ArrayList<Local>  locales = new ArrayList<>();
+
+                for (Local local : listaLocal) {
+                        if (local.getListaPropietarios().contains(p)){
+                            media=obtenerValoracionMedia(local);
+                        }                
+                }
+                
+                media=media/locales.size();
+                return media;
+                
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;//Hay que cambiar para que distinga si falla el local o la review
+        }
     }
 
     @Override
