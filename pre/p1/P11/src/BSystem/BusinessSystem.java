@@ -116,6 +116,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         en el caso de que se haya borrado el antiguo usuario, pero no se haya
         podido introducir el nuevo, en la clausula catch se vuelve a añadir al
         hash el antiguo usuario*/
+        
         try {
             if (!eliminaUsuario(u))
                 throw new ProgramException(13);
