@@ -726,7 +726,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             float media=0;
             
-            ArrayList<Review> pReview = new ArrayList<>();
+            ArrayList<Review> reviews = new ArrayList<>();
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
@@ -736,10 +736,10 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 if (l.equals(review.getLocal()))
                     media=media+review.getEstrellas();
   
-            if (pReview.isEmpty()) 
+            if (reviews.isEmpty()) 
                 throw new ProgramException(39);
 
-            return (float)(media/pReview.size());
+            return (float)(media/reviews.size());
                 
         } catch (ProgramException ex) {
             
@@ -762,7 +762,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             float media=0;
             
-            ArrayList<Local>  locales = new ArrayList<>();
+            ArrayList<Local> locales = new ArrayList<>();
 
             for (Local local : listaLocal) 
                 if (local.getListaPropietarios().contains(p))
@@ -784,7 +784,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             float media=0;
             
-            ArrayList<Review> pReview = new ArrayList<>();
+            ArrayList<Review> reviews = new ArrayList<>();
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
@@ -797,10 +797,10 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                         media=media+review.getEstrellas();
 
                 
-            if (pReview.isEmpty()) 
+            if (reviews.isEmpty()) 
                 throw new ProgramException(39);
 
-            return media/pReview.size();
+            return media/reviews.size();
 
         } catch (ProgramException ex) {
             
