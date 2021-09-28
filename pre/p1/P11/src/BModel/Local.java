@@ -108,7 +108,6 @@ public class Local {
      * Función que añade a un propietario a nuestra lista de propietarios
      * @param p
      */
-
     public boolean addPropietario (Propietario p) {
         return this.listaPropietarios.add(p);
     }
@@ -152,7 +151,6 @@ public class Local {
      * @param obj
      * @return true si ambos objetos son iguales.
      */
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -170,14 +168,42 @@ public class Local {
         }
         return true;
     }
-    /**/
+
+    /**
+     * Método para comparar dos Locales por nombre y direccion en la lista
+     * de Locales
+     * 
+     * @param obj
+     * @return true si ambos objetos son iguales.
+     */
+    public boolean equalsInList(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Local other = (Local) obj;
+        if (!Objects.equals(this.nombreLocal, other.nombreLocal)) {
+            return false;
+        }
+        if (!Objects.equals(this.mDireccion, other.mDireccion)) {
+            return false;
+        }
+        return true;      
+    }
+    
+    
+  
 
     /**
      * Función que nos elimina a un propietario de nuestra lista de propietarios
      * @param p
      * @return 
      */
-
     public boolean deletePropietario(Propietario p) {
         return listaPropietarios.remove(p);      
     }
