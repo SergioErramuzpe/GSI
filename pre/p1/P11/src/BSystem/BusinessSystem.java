@@ -400,13 +400,13 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaLocal.contains(l))
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
             else if (l.propietariosLleno()) 
-                throw new ProgramException(12);
+                throw new ProgramException(12);//Si ya hay 3 propietarios da error
             else if (!existeNick(p.getNick()))
-                throw new ProgramException(8);
+                throw new ProgramException(8);//Error si no existe el usuario
             else if (!l.addPropietario(p))
-                throw new ProgramException(30);
+                throw new ProgramException(30);//Error si no se puede añadir propietario
             
             return true;
 
@@ -425,13 +425,13 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaLocal.contains(l))
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
             else if (l.propietariosLleno()) 
-                throw new ProgramException(12);
+                throw new ProgramException(12);//Si ya hay 3 propietarios da error
             else if (!existeNick(p.getNick()))
-                throw new ProgramException(8);
+                throw new ProgramException(8);//Error si no existe el usuario
             else if (!l.deletePropietario(p))
-                throw new ProgramException(31);
+                throw new ProgramException(31);//Error si no se ha podido eliminar a un propietario
             
             return true;
             
@@ -450,9 +450,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!eliminarLocal(viejoL))
-                throw new ProgramException(29);
+                throw new ProgramException(29);//Error si no se ha podido eliminar el local viejo
             else if (!nuevoLocal(nuevoL)) 
-                throw new ProgramException(26);
+                throw new ProgramException(26);//Error si no se pude añadir el nuevo local
             
             return true;
             
@@ -470,7 +470,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaLocal.contains(l)) 
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
             
             List<Review> localReviews = new ArrayList<>();
             
@@ -493,13 +493,13 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeNick(c.getNick())) 
-                throw new ProgramException(8);
+                throw new ProgramException(8);//Error si no existe el nick
             else if (!listaLocal.contains((Reservable) r)) {
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
             } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now())))
-                throw new ProgramException(32);
+                throw new ProgramException(32);//Error si fecha y horario anterior a la actual
             else if (!listaReserva.add(new Reserva(ld,c,r,lt)))
-                throw new ProgramException(33);
+                throw new ProgramException(33);//Error si no se puede añadir una reserva
             
             return true;
             
@@ -518,7 +518,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeNick(c.getNick())) 
-                throw new ProgramException(8);
+                throw new ProgramException(8);//Error si no existe el nick
             
             List<Reserva> reservasCliente = new ArrayList();
             
@@ -542,7 +542,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaLocal.contains((Local)r)) 
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
             
             List<Reserva> reservasLocal = new ArrayList();
             
@@ -580,9 +580,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!listaReserva.contains(r))
-                throw new ProgramException(35);
+                throw new ProgramException(35);//Error si no existe la reserva
             else if (!listaReserva.remove(r))
-                throw new ProgramException(36);
+                throw new ProgramException(36);//Error si no se ha podido eliminar una reserva
             
             return true;
             
@@ -606,7 +606,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     localesFiltrados.add(local);
 
             if (localesFiltrados.isEmpty()) 
-                throw new ProgramException(37);
+                throw new ProgramException(37);//Error si no existen locales con esos datos
 
                 
             return localesFiltrados.toArray(new Local[localesFiltrados.size()]);
@@ -633,7 +633,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     bares.add((Bar)local);
             
             if (bares.isEmpty()) 
-                throw new ProgramException(37);
+                throw new ProgramException(37);//Error si no existen bares con esos datos
             
             return bares.toArray(new Bar[bares.size()]);
             
@@ -658,7 +658,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     restaurantes.add((Restaurante)local);
 
             if (restaurantes.isEmpty())
-                throw new ProgramException(37);
+                throw new ProgramException(37);//Error si no existen restaurantes con esos datos
 
             return restaurantes.toArray(new Restaurante[restaurantes.size()]);
 
@@ -684,7 +684,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                     pubs.add((Pub)local);
 
             if (pubs.isEmpty())
-                throw new ProgramException(37);
+                throw new ProgramException(37);//Error si no existen pubs con esos datos
 
             return pubs.toArray(new Pub[pubs.size()]);
             
@@ -701,16 +701,16 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
-                throw new ProgramException(10);
+                throw new ProgramException(10);//Error si no existe la review
             
             for (Contestacion contestacion : listaContestacion) 
                 if (contestacion.getReview().equals(r)) {
                     if (!listaContestacion.remove(contestacion))
-                        throw new ProgramException(38);
+                        throw new ProgramException(38);//Error si no se ha podido eliminar la contestacion
                     return true;
                 }
            
-            throw new ProgramException(22);
+            throw new ProgramException(22);//Error si no se puede obtener la contestacion de la review
             
         } catch (ProgramException ex) {
             
@@ -732,14 +732,14 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
 
             for (Review review : listaReviews) 
                 if (l.equals(review.getLocal()))
                     media=media+review.getEstrellas();
   
             if (reviews.isEmpty()) 
-                throw new ProgramException(39);
+                throw new ProgramException(39);//Error si no hay reviews para un local
 
             return (float)(media/reviews.size());
                 
@@ -760,7 +760,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             
             if (!existeNick(p.getNick()))
-                throw new ProgramException(8);
+                throw new ProgramException(8);//Error si no existe el usuario
             
             float media=0;
             
@@ -790,7 +790,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             ArrayList<Local>  locales = new ArrayList<>();
             
             if (!listaLocal.contains(l))
-                throw new ProgramException(27);
+                throw new ProgramException(27);//Error si no existe el local
  
 
             for (Review review : listaReviews) 
@@ -800,7 +800,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
                 
             if (reviews.isEmpty()) 
-                throw new ProgramException(39);
+                throw new ProgramException(39);//Error si no hay reviews para un local
 
             return media/reviews.size();
 
@@ -875,11 +875,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             public int compare(Bar b1, Bar b2) {
                 return (int) (obtenerValoracionMedia(b2)-obtenerValoracionMedia(b1));
             }
-            
-            /*
-            public Float compareFloat (Bar b1, Bar b2) {
-                return (Float) (obtenerValoracionMedia(b2)-obtenerValoracionMedia(b1));
-            }*/
+
         }
 
         Collections.sort(bares, new OrdenAscendenteValoracion());
@@ -935,6 +931,4 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         return pubs.toArray(new Pub[pubs.size()]);
     }
     
-    
-    //FLOAT EN COMPARATORS, TOSTRING EN CLASES, PROBAR TODO
 }
