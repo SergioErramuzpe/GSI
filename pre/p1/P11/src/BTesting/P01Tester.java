@@ -71,31 +71,39 @@ public class P01Tester {
         bs.nuevoUsuario(cliente3);
         
         //Prueba 1: buscamos un id de usuario previamente existente para comprobarlo.
+        System.out.println("Prueba 1:");
         Usuario usuario = bs.obtenerUsuario("nick1");
         System.out.println("Nombre de usuario: " + usuario.getNick());
         
         //Prueba 2: buscamos un usuario inexistente para comprobar que nos devuelve null.
+        System.out.println("Prueba 2:");
         System.out.println(bs.obtenerUsuario("Usuario null"));
         
         //Prueba 3: introducimos un local en una dirección previamente asignada a otro local.
+        System.out.println("Prueba 3:");
         Local localNulo = new Local("localnulo", dir1, "");
         bs.nuevoLocal(localNulo);
         
         //Prueba 4: realojamos un local nuevo en la direccion donde antes hubo otro
+        System.out.println("Prueba 4:");
         bs.eliminarLocal(local3);
         Local localPrueba = new Local("Local Prueba", dir3, "");
         bs.nuevoLocal(localPrueba);
         
         //Prueba 5: introducimos un usuario menor de edad para comprobar
+        System.out.println("Prueba 5:");
         Usuario usuarioMenor = new Usuario("prueba 5", "prueba 5", LocalDate.parse("2021-01-01"));
         bs.nuevoUsuario(usuarioMenor);
         
-        //Prueba 6 y 7: 
+        //Prueba 6 y 7: hacemos una reserva para un local reservable que no esta añadido a la lista de BS
+        //este local posee una direccion donde hay un local existente. Asi comprobamos ambas pruebas 6 y 7
+        System.out.println("Prueba 6 y 7:");
         Reservable reservableNulo = new Reservable("Reservable nulo", dir5, "");
         Local local = bs.obtenerLocal(dir5);
         bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
         
-        //Prueba 8: 
+        //Prueba 8: intruducimos una contestacion para una review que no esta a añadida a la lista
+        System.out.println("Prueba 8:");
         Review reviewPrueba = new Review("", 1, LocalDate.now(), cliente1, local1);
         bs.nuevaReview(reviewPrueba);
         Review reviewPrueba2 = new Review("", 1, LocalDate.now(), cliente2, local2);
@@ -104,12 +112,14 @@ public class P01Tester {
         
         //Prueba 9: asignamos un local a 4 propietarios diferentes. 
         //A partir del tercero lanza una excepcion
+        System.out.println("Prueba 9:");
         bs.asociarLocal(local1, propietario1);
         bs.asociarLocal(local1, propietario2);
         bs.asociarLocal(local1, propietario3);
         bs.asociarLocal(local1, propietario4);
         
         //Prueba 10: introducimos una review que conocemos que está en la lista de reviews.
+        System.out.println("Prueba 10:");
         bs.nuevaReview(reviewPrueba);
     }
 }
