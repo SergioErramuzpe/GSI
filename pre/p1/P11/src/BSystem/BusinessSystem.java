@@ -62,6 +62,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         int edad = u.obtenerEdad();
         
         try {
+            
             /*Para eso se creo la clase ProgramException. Para simplificar esta
             clase además de que es más estético
             */
@@ -70,8 +71,8 @@ public class BusinessSystem implements LeisureOffice, LookupService {
                 throw new ProgramException(3); //Error si menor de 14 años 
             } else if (u.getNick().length() < 3) {
                 throw new ProgramException(2); //Error si nick con menos de 3 caracteres
-            } else if (existeNick(u.getNick())) {
-                throw new ProgramException(9); //Error si el usuario ya existe
+            } else if (listaUsuarios.stream().anyMatch((user) -> (u.getNick().equals(user.getNick())))) {
+                throw new ProgramException(9);
             } else if (u.getPassword().isEmpty()) {
                 throw new ProgramException(7); //Error si la contaseña esta vacía
             } else if (!listaUsuarios.add(u)) {
@@ -81,6 +82,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             return true;
             
         } catch (ProgramException ex) {
+            
             System.out.println(ex.getMessage());
             return false;
         }
@@ -131,7 +133,7 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     }
 
     @Override
-    public boolean existeNick(String nick) {
+    public boolean existeNick (String nick) {
         
         /*En el caso de no encontrar el nick salta la excepcion*/
         
@@ -243,10 +245,10 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         
         try {
             
-            if (c.getComentario().length() > 500) 
-                throw new ProgramException(5); //Error s la contestacion supera los 500 caracteres
-            else if (tieneContestacion(r))
-                throw new ProgramException(11);//Error si la review ya esta contestada
+            if (tieneContestacion(r))
+                throw new ProgramException(11);
+            else if (c.getComentario().length() > 500) 
+                throw new ProgramException(5); 
             
             for (Review review : listaReviews) 
                 if (review.equals(r) && listaContestacion.add(c)) 
@@ -336,8 +338,8 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             /*Se hace una busqueda con for y no contains, porque lo interesante es
             saber si hay un local en la misma direccion*/
           
-            for (Local local:listaLocal) 
-                if (local.equals(l))
+            for (Local local : listaLocal) 
+                if (local.equalsInList(l))
                     throw new ProgramException(25);//Error de que ya existe un local en la misma direccion
             
             if (!listaLocal.add(l))
@@ -345,7 +347,6 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             return true;
             
-
         } catch (ProgramException ex) {
             
             System.out.println(ex.getMessage());
@@ -492,9 +493,9 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             
             if (!existeNick(c.getNick())) 
                 throw new ProgramException(8);
-            else if (!listaLocal.contains((Local) r))
+            else if (!listaLocal.contains((Reservable) r)) {
                 throw new ProgramException(27);
-            else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now())))
+            } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now())))
                 throw new ProgramException(32);
             else if (!listaReserva.add(new Reserva(ld,c,r,lt)))
                 throw new ProgramException(33);

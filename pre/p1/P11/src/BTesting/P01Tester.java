@@ -45,9 +45,9 @@ public class P01Tester {
         bs.nuevoLocal(local3);
         
         Reservable reservable1 = new Reservable("Reservable 1", dir4, "");
-        bs.nuevoLocal(reservable1);
+        bs.nuevoLocal((Reservable)reservable1);
         Reservable reservable2 = new Reservable("Reservable 2", dir5, "");
-        bs.nuevoLocal(reservable2);
+        bs.nuevoLocal((Reservable)reservable2);
         
         Usuario usuario1 = new Usuario("nick1", "pw1", LocalDate.parse("2000-01-01"));
         bs.nuevoUsuario(usuario1);
@@ -93,8 +93,8 @@ public class P01Tester {
         //Prueba 6 y 7:
         Reservable reservableNulo = new Reservable("Reservable nulo", dir5, "");
         Local local = bs.obtenerLocal(dir5);
-        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
-        
+        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MAX, LocalTime.MAX);
+
         //Prueba 8:
         Review reviewPrueba = new Review("", 1, LocalDate.now(), cliente1, local1);
         bs.nuevaReview(reviewPrueba);
