@@ -45,9 +45,9 @@ public class P01Tester {
         bs.nuevoLocal(local3);
         
         Reservable reservable1 = new Reservable("Reservable 1", dir4, "");
-        bs.nuevoLocal((Reservable)reservable1);
+        bs.nuevoLocal(reservable1);
         Reservable reservable2 = new Reservable("Reservable 2", dir5, "");
-        bs.nuevoLocal((Reservable)reservable2);
+        bs.nuevoLocal(reservable2);
         
         Usuario usuario1 = new Usuario("nick1", "pw1", LocalDate.parse("2000-01-01"));
         bs.nuevoUsuario(usuario1);
@@ -70,45 +70,46 @@ public class P01Tester {
         Cliente cliente3 = new Cliente("nick10", "pw10", LocalDate.parse("2000-01-01"));
         bs.nuevoUsuario(cliente3);
         
-        //Prueba 1: obtener usuario mediante nick
+        //Prueba 1: buscamos un id de usuario previamente existente para comprobarlo.
         Usuario usuario = bs.obtenerUsuario("nick1");
         System.out.println("Nombre de usuario: " + usuario.getNick());
         
-        //Prueba 2: usuario nulo
+        //Prueba 2: buscamos un usuario inexistente para comprobar que nos devuelve null.
         System.out.println(bs.obtenerUsuario("Usuario null"));
         
-        //Prueba 3: dirección repetida
+        //Prueba 3: introducimos un local en una dirección previamente asignada a otro local.
         Local localNulo = new Local("localnulo", dir1, "");
         bs.nuevoLocal(localNulo);
         
-        //Prueba 4: realojar dirección
+        //Prueba 4: realojamos un local nuevo en la direccion donde antes hubo otro
         bs.eliminarLocal(local3);
         Local localPrueba = new Local("Local Prueba", dir3, "");
         bs.nuevoLocal(localPrueba);
         
-        //Prueba 5: usuario menor de edad
+        //Prueba 5: introducimos un usuario menor de edad para comprobar
         Usuario usuarioMenor = new Usuario("prueba 5", "prueba 5", LocalDate.parse("2021-01-01"));
         bs.nuevoUsuario(usuarioMenor);
         
-        //Prueba 6 y 7:
+        //Prueba 6 y 7: 
         Reservable reservableNulo = new Reservable("Reservable nulo", dir5, "");
         Local local = bs.obtenerLocal(dir5);
-        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MAX, LocalTime.MAX);
-
-        //Prueba 8:
+        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
+        
+        //Prueba 8: 
         Review reviewPrueba = new Review("", 1, LocalDate.now(), cliente1, local1);
         bs.nuevaReview(reviewPrueba);
         Review reviewPrueba2 = new Review("", 1, LocalDate.now(), cliente2, local2);
         Contestacion contestacion = new Contestacion(propietario1, reviewPrueba, ".", LocalDate.now());
         bs.nuevaContestacion(contestacion, reviewPrueba2);
         
-        //Prueba 9:
+        //Prueba 9: asignamos un local a 4 propietarios diferentes. 
+        //A partir del tercero lanza una excepcion
         bs.asociarLocal(local1, propietario1);
         bs.asociarLocal(local1, propietario2);
         bs.asociarLocal(local1, propietario3);
         bs.asociarLocal(local1, propietario4);
         
-        //Prueba 10: 
+        //Prueba 10: introducimos una review que conocemos que está en la lista de reviews.
         bs.nuevaReview(reviewPrueba);
     }
 }
