@@ -6,6 +6,8 @@
 package GSILabs.Misc;
 
 import java.io.File;
+import javax.swing.table.TableModel;
+
 
 
 /**
@@ -26,7 +28,7 @@ public class SSTest01 {
             for(int j=0;j<6;j++)
                 array[i][j] = (int) Math.random();
         
-        
+        //TableModel model = new DefaultTableModel(array);
         
     }
     
