@@ -18,6 +18,8 @@ import BModel.Reservable;
 import BModel.Restaurante;
 import BModel.Review;
 import BModel.Usuario;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,7 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-
+import org.jopendocument.dom.spreadsheet.MutableCell;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 /**
  * Clase BusinessSystem
  * @author Usuario
@@ -929,6 +932,46 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         Collections.sort(pubs, new OrdenAscendenteValoracion());
         
         return pubs.toArray(new Pub[pubs.size()]);
+    }
+    
+    public int importaPubs(File f){
+        int contPubs = 0;
+        SpreadSheet hojaCalculo;
+        try{
+            hojaCalculo = SpreadSheet.createFromFile(f);
+            int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
+            int filaMax = hojaCalculo.getSheet(0).getRowCount();
+            String nombreLocal, localidad, provincia, calle, otro, desc;
+            String[] calleSplit;
+            int numero;
+            Direccion dir;
+            Pub nuevoPub;
+            MutableCell celda = null;
+            //Falta ignorar pub si celda(fila, 0) no existe
+            for(int fila = 0; fila < filaMax; fila++){
+                desc = "";
+                nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
+                calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
+                localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
+                provincia = hojaCalculo.getSheet(0).getCellAt(fila, 3).getTextValue();
+                calle = calleSplit[0]+" "+calleSplit[1];
+                numero = Integer.parseInt(calleSplit[2]); 
+                dir = new Direccion(localidad, provincia, calle, numero);
+                
+                //Informacion de Propietario en columna 4. Tener en cuenta?
+                for(int columna = 4; columna < columnaMax; columna++){
+                    otro = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
+                    desc = desc + otro;
+                }
+                nuevoPub = new Pub(nombreLocal, dir, desc);
+                if(nuevoLocal(nuevoPub))
+                    contPubs++;
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        return contPubs;
     }
     
 }

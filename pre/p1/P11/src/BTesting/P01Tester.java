@@ -31,11 +31,11 @@ public class P01Tester {
         //Creacion
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
         
-        Direccion dir1 = new Direccion ("Prueblo 1", "Provincia 1", "Calle 1", 1);
-        Direccion dir2 = new Direccion ("Prueblo 2", "Provincia 2", "Calle 2", 2);
-        Direccion dir3 = new Direccion ("Prueblo 3", "Provincia 3", "Calle 3", 3);
-        Direccion dir4 = new Direccion ("Prueblo 4", "Provincia 4", "Calle 4", 4);
-        Direccion dir5 = new Direccion ("Prueblo 5", "Provincia 5", "Calle 5", 5);
+        Direccion dir1 = new Direccion ("rueblo 1", "Provincia 1", "Calle 1", 1);
+        Direccion dir2 = new Direccion ("Pueblo 2", "Provincia 2", "Calle 2", 2);
+        Direccion dir3 = new Direccion ("Pueblo 3", "Provincia 3", "Calle 3", 3);
+        Direccion dir4 = new Direccion ("Pueblo 4", "Provincia 4", "Calle 4", 4);
+        Direccion dir5 = new Direccion ("Pueblo 5", "Provincia 5", "Calle 5", 5);
         
         Local local1 = new Local("Local 1", dir1, "");
         bs.nuevoLocal(local1);
