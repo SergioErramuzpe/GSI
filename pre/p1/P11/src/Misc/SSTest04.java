@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GSILabs.Misc;
+package Misc;
+
+import BSystem.BusinessSystem;
 
 /**
  *
@@ -16,6 +18,7 @@ public class SSTest04 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        BusinessSystem bs = BusinessSystem.getBusinessSystem();
     }
     
 }

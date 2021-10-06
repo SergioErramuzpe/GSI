@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GSILabs.Misc;
+package Misc;
 
 /**
  *
  * @author iazca
  */
-public class SSTest02 {
+public class SSTest03 {
 
     /**
      * @param args the command line arguments
