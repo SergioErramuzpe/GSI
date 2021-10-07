@@ -6,7 +6,12 @@
 package Misc;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 
 
@@ -28,8 +33,12 @@ public class SSTest01 {
             for(int j=0;j<6;j++)
                 array[i][j] = (int) Math.random();
         
-        //TableModel model = new DefaultTableModel(array);
-        
+        TableModel model = new DefaultTableModel();
+        try {
+            SpreadSheet.createEmpty(model).saveAs(file);
+        } catch (IOException ex) {
+            Logger.getLogger(SSTest01.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
