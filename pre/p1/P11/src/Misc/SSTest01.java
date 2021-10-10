@@ -28,12 +28,14 @@ public class SSTest01 {
         // TODO code application logic here
         int[][] array = new int[4][6];
         final File file = new File("test01.ods");
+        DefaultTableModel model = new DefaultTableModel(4,6);
         
         for(int i=0;i<4;i++)
-            for(int j=0;j<6;j++)
+            for(int j=0;j<6;j++){
                 array[i][j] = (int) Math.random();
+                model.setValueAt( array[i][j], i, j);
+            }
         
-        TableModel model = new DefaultTableModel();
         try {
             SpreadSheet.createEmpty(model).saveAs(file);
         } catch (IOException ex) {
