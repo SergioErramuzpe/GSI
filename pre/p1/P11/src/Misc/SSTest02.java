@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
@@ -36,19 +38,21 @@ public class SSTest02 {
         //guardar test02.ods
         File file = new File("test02.ods");
         
-        //abrir test02.ods
+        
         try {
+            //crear Sheet
             final Sheet sheet = SpreadSheet.createFromFile(file).getSheet(0);
-                } catch (IOException ex) {
+
+            for(int i=0;i<4;i++){
+                for(int j=0;j<6;j++){
+                    array[i][j] = (int) Math.floor(Math.random()*11);
+                    //edita la celda con el valor de la matriz
+                    sheet.getCellAt(celdas[countcelda]).setValue(array[i][j]);
+                    countcelda++;
+                }
+            }
+        } catch (IOException ex) {
             Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        for(int i=0;i<4;i++)
-            for(int j=0;j<6;j++){
-                array[i][j] = (int) Math.floor(Math.random()*11);
-                sheet.getCellAt(countcelda).setValue(array[i][j]);
-                countcelda++;
-            }
-    }
-    
+    }      
 }
