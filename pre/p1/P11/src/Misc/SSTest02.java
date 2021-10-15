@@ -38,16 +38,16 @@ public class SSTest02 {
         //guardar test02.ods
         File file = new File("test02.ods");
         
-        
+        SpreadSheet hojaCalculo;
         try {
             //crear Sheet
-            final Sheet sheet = SpreadSheet.createFromFile(file).getSheet(0);
+            hojaCalculo = SpreadSheet.createFromFile(file);
 
             for(int i=0;i<4;i++){
                 for(int j=0;j<6;j++){
                     array[i][j] = (int) Math.floor(Math.random()*11);
                     //edita la celda con el valor de la matriz
-                    sheet.getCellAt(celdas[countcelda]).setValue(array[i][j]);
+                    hojaCalculo.getSheet(0).getCellAt(celdas[countcelda]).setValue(array[i][j]);
                     countcelda++;
                 }
             }
