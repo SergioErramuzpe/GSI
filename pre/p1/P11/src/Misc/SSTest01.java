@@ -48,7 +48,7 @@ public class SSTest01 {
                     hojaCalculo.getSheet(0).setValueAt( array[i][j], i, j);
                     
                     //Comprobación de que se ha introducido en la tabla
-                    System.out.println(hojaCalculo.getSheet(0).getCellAt(i, j));
+                    System.out.println(hojaCalculo.getSheet(0).getCellAt(i, j).getValue());
                 } 
         } catch (IOException ex) {
             Logger.getLogger(SSTest01.class.getName()).log(Level.SEVERE, null, ex);

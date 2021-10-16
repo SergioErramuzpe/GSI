@@ -5,6 +5,11 @@
  */
 package Misc;
 
+import java.io.File;
+import java.io.IOException;
+import org.jopendocument.dom.spreadsheet.MutableCell;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
+
 /**
  *
  * @author iazca
@@ -16,6 +21,22 @@ public class SSTest03 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        File file = new File("test02.ods");
+        int array[][] = null;
+        SpreadSheet hojaCalculo;
+        try{
+            hojaCalculo = SpreadSheet.createFromFile(file);
+            int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
+            int filaMax = hojaCalculo.getSheet(0).getRowCount();
+            for(int fila = 0; fila < filaMax; fila++){
+                for(int columna = 4; columna < columnaMax; columna++){
+                    array[fila][columna] = (int) hojaCalculo.getSheet(0).getCellAt(fila, columna).getValue();                  
+                }
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
 }

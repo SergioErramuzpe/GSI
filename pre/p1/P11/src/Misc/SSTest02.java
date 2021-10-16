@@ -30,10 +30,10 @@ public class SSTest02 {
         int array[][] = new int[4][6];
         
         //array para celdas
-        String celdas[] ={"D6","E6","F6","G6","H6","I6","D7","E7","F7","G7","H7","I7","D8","E8","F8","G8","H8","I8","D9","E9","F9","G9","H9","I9"};
+        //String celdas[] ={"D6","E6","F6","G6","H6","I6","D7","E7","F7","G7","H7","I7","D8","E8","F8","G8","H8","I8","D9","E9","F9","G9","H9","I9"};
         
         //contador de celdas
-        int countcelda = 0;
+        //int countcelda = 0;
         
         //guardar test02.ods
         File file = new File("test02.ods");
@@ -47,8 +47,8 @@ public class SSTest02 {
                 for(int j=0;j<6;j++){
                     array[i][j] = (int) Math.floor(Math.random()*11);
                     //edita la celda con el valor de la matriz
-                    hojaCalculo.getSheet(0).getCellAt(celdas[countcelda]).setValue(array[i][j]);
-                    countcelda++;
+                    hojaCalculo.getSheet(0).getCellAt(i,j).setValue(array[i][j]);
+                    //countcelda++;
                 }
             }
         } catch (IOException ex) {
