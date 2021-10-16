@@ -18,6 +18,7 @@ import BModel.Reservable;
 import BModel.Restaurante;
 import BModel.Review;
 import BModel.Usuario;
+import GSILabs.persistence.ODSPersistente;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,13 +28,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import org.jopendocument.dom.spreadsheet.MutableCell;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+
 /**
  * Clase BusinessSystem
+ *
  * @author Usuario
  */
-public class BusinessSystem implements LeisureOffice, LookupService {
+public class BusinessSystem implements LeisureOffice, LookupService, ODSPersistente {
 
     private HashSet<Usuario> listaUsuarios;
     private HashSet<Contestacion> listaContestacion;
@@ -51,25 +57,24 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     /**
      * Getter de la clase BussinessSystem
+     *
      * @return
      */
-
     public static BusinessSystem getBusinessSystem() {
         return new BusinessSystem();
     }
-    
+
     // Función para crear un nuevoUsuario
     @Override
     public boolean nuevoUsuario(Usuario u) {
-        
+
         int edad = u.obtenerEdad();
-        
+
         try {
-            
+
             /*Para eso se creo la clase ProgramException. Para simplificar esta
             clase además de que es más estético
-            */
-            
+             */
             if (edad < 14) {
                 throw new ProgramException(3); //Error si menor de 14 años 
             } else if (u.getNick().length() < 3) {
@@ -81,11 +86,11 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             } else if (!listaUsuarios.add(u)) {
                 throw new ProgramException(15); //Error si no se ha podido añadir el usuario a la lista
             }
-                
+
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
         }
@@ -94,63 +99,63 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminaUsuario(Usuario u) {
-        
+
         try {
-            
-            if (existeNick(u.getNick())) 
-                if (!listaUsuarios.remove(u)) 
+
+            if (existeNick(u.getNick())) {
+                if (!listaUsuarios.remove(u)) {
                     throw new ProgramException(13);//Si no se ha podido eliminar el usuario
-                
+                }
+            }
             return true;
-                        
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
-            
+
         }
 
     }
 
     @Override
     public boolean modificaUsuario(Usuario u, Usuario nuevoU) {
-        
+
         /*Si no se elimina usuario, falla, si no se añade el nuevo, falla, y 
         en el caso de que se haya borrado el antiguo usuario, pero no se haya
         podido introducir el nuevo, en la clausula catch se vuelve a añadir al
         hash el antiguo usuario*/
-        
         try {
-            if (!eliminaUsuario(u))
+            if (!eliminaUsuario(u)) {
                 throw new ProgramException(13);
-            else if (!nuevoUsuario(nuevoU))
+            } else if (!nuevoUsuario(nuevoU)) {
                 throw new ProgramException(15);
+            }
 
             return true;
-        
+
         } catch (ProgramException ex) {
-                
-            nuevoUsuario(u); 
+
+            nuevoUsuario(u);
             return false;
         }
 
     }
 
     @Override
-    public boolean existeNick (String nick) {
-        
+    public boolean existeNick(String nick) {
+
         /*En el caso de no encontrar el nick salta la excepcion*/
-        
         try {
-            
+
             if (listaUsuarios.stream().anyMatch((user) -> (nick.equals(user.getNick())))) {
                 return true;
             }
-            
+
             throw new ProgramException(18);
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
         }
@@ -161,21 +166,23 @@ public class BusinessSystem implements LeisureOffice, LookupService {
         try {
             if (!existeNick(nick)) {
                 throw new ProgramException(18); //Si no se ha podido verificar el nick
-                
+
             } else {
-                
+
                 for (Usuario user : listaUsuarios) {
-                    if (user.getNick().equals(nick)) 
+                    if (user.getNick().equals(nick)) {
                         return user;
+                    }
                 }
-                
+
                 throw new ProgramException(19);
             }
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() == 19)
+
+            if (ex.getCode() == 19) {
                 System.out.println(ex.getMessage());
-            
+            }
+
             return null;
         }
     }
@@ -183,19 +190,17 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean nuevaReview(Review r) {
         try {
-            if (r.getComentario().length() > 500) 
+            if (r.getComentario().length() > 500) {
                 throw new ProgramException(5); //Si supera los 500 caracteres da error
-                
-            else if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) 
+            } else if (existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new ProgramException(14); //Salta el error si existe la review
-                
-            else if (!listaReviews.add(r)) 
+            } else if (!listaReviews.add(r)) {
                 throw new ProgramException(16); //Error si no se puede añadir la review
-
+            }
             return true;
-           
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
         }
@@ -204,90 +209,96 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public boolean eliminaReview(Review r) {
         try {
-            
-            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
+
+            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new ProgramException(10); //Error si no existe la review
-            
-            else if (!listaReviews.remove(r))
+            } else if (!listaReviews.remove(r)) {
                 throw new ProgramException(17); //Si no se ha podido eliminar la review
-                
+            }
             return true;
-             
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() == 17)
+
+            if (ex.getCode() == 17) {
                 System.out.println(ex.getMessage());
-            
+            }
+
             return false;
         }
     }
 
     @Override
     public boolean existeReview(Usuario u, Local l, LocalDate ld) {
-        
+
         try {
-            
-            if (!existeNick(u.getNick())) 
+
+            if (!existeNick(u.getNick())) {
                 throw new ProgramException(18);//Salta si no se puede verificar el Nick
-            
-            if (listaReviews.stream().anyMatch((review) -> (review.getCliente().equals(u) && review.getLocal().equals(l) && review.getFechaReview().equals(ld)))) 
+            }
+            if (listaReviews.stream().anyMatch((review) -> (review.getCliente().equals(u) && review.getLocal().equals(l) && review.getFechaReview().equals(ld)))) {
                 return true;
-            
+            }
+
             throw new ProgramException(10); // Si no existe la review da error
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() == 10)
+
+            if (ex.getCode() == 10) {
                 System.out.println(ex.getMessage());
-            
+            }
+
             return false;
         }
     }
 
     @Override
     public boolean nuevaContestacion(Contestacion c, Review r) {
-        
+
         try {
-            
-            if (tieneContestacion(r))
+
+            if (tieneContestacion(r)) {
                 throw new ProgramException(11);
-            else if (c.getComentario().length() > 500) 
-                throw new ProgramException(5); 
-            
-            for (Review review : listaReviews) 
-                if (review.equals(r) && listaContestacion.add(c)) 
+            } else if (c.getComentario().length() > 500) {
+                throw new ProgramException(5);
+            }
+
+            for (Review review : listaReviews) {
+                if (review.equals(r) && listaContestacion.add(c)) {
                     return true;
-                    
+                }
+            }
+
             throw new ProgramException(20); //Error si no se ha podido añadir la contestacion
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() != 11)
+
+            if (ex.getCode() != 11) {
                 System.out.println(ex.getMessage()); //Se crea la contestacion si la review no esta contestada
-            
+            }
             return false;
         }
-        
+
     }
 
     @Override
     public boolean tieneContestacion(Review r) {
         try {
-            
-            if (!existeReview(r.getCliente(),r.getLocal(),r.getFechaReview()))
+
+            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new ProgramException(10);//Error si no existe la review
-          
-            for (Contestacion contestacion : listaContestacion) 
-                if (contestacion.getReview().equals(r))     
+            }
+            for (Contestacion contestacion : listaContestacion) {
+                if (contestacion.getReview().equals(r)) {
                     throw new ProgramException(11);//Error de que ya esta contestada
-   
+                }
+            }
             return false;
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() == 11)
+
+            if (ex.getCode() == 11) {
                 System.out.println(ex.getMessage());//Solo si sí tiene una contestacion
-            
+            }
             return true;
         }
     }
@@ -295,103 +306,107 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     @Override
     public Contestacion obtenerContestacion(Review r) {
         try {
-            
-            if (!tieneContestacion(r))
+
+            if (!tieneContestacion(r)) {
                 throw new ProgramException(21); //Review no contestada
-            
-            for (Contestacion contestacion : listaContestacion) 
-                if (contestacion.getReview().equals(r)) 
+            }
+            for (Contestacion contestacion : listaContestacion) {
+                if (contestacion.getReview().equals(r)) {
                     return contestacion;
-          
+                }
+            }
+
             throw new ProgramException(22);//No se puede obtener la contestacion de la review
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
-            
+
         }
     }
 
     @Override
     public boolean eliminaContestacion(Contestacion c) {
-        
+
         try {
-            
-            if (!listaContestacion.contains(c))
+
+            if (!listaContestacion.contains(c)) {
                 throw new ProgramException(23);//Error de que no se encuentra la contestacion
-            else if (!listaContestacion.remove(c))
+            } else if (!listaContestacion.remove(c)) {
                 throw new ProgramException(24);//Si no se ha podido eliminar la contestacion, salta error
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
-            
+
         }
-        
+
     }
 
     @Override
     public boolean nuevoLocal(Local l) {
-        
+
         try {
-            
+
             /*Se hace una busqueda con for y no contains, porque lo interesante es
             saber si hay un local en la misma direccion*/
-          
-            for (Local local : listaLocal) 
-                if (local.equalsInList(l))
+            for (Local local : listaLocal) {
+                if (local.equalsInList(l)) {
                     throw new ProgramException(25);//Error de que ya existe un local en la misma direccion
-            
-            if (!listaLocal.add(l))
+                }
+            }
+            if (!listaLocal.add(l)) {
                 throw new ProgramException(26); //No se puede añadir el local
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
         }
-        
+
     }
 
     @Override
     public boolean eliminarLocal(Local l) {
-        
+
         try {
-            
-            if (!listaLocal.contains(l)) 
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//No existe el local
-            else if (!listaLocal.remove(l))
+            } else if (!listaLocal.remove(l)) {
                 throw new ProgramException(29);//Error si no se puede eliminar el local
-             
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
         }
-        
+
     }
 
     @Override
     public Local obtenerLocal(Direccion d) {
-        
+
         try {
-            
-            for (Local local : listaLocal) 
-                if (local.getmDireccion().equals(d)) 
+
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().equals(d)) {
                     return local;
-                
+                }
+            }
+
             throw new ProgramException(27); //El local no existe
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
@@ -399,49 +414,51 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
-        
+
         try {
-            
-            if (!listaLocal.contains(l))
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//Error si no existe el local
-            else if (l.propietariosLleno()) 
+            } else if (l.propietariosLleno()) {
                 throw new ProgramException(12);//Si ya hay 3 propietarios da error
-            else if (!existeNick(p.getNick()))
+            } else if (!existeNick(p.getNick())) {
                 throw new ProgramException(8);//Error si no existe el usuario
-            else if (!l.addPropietario(p))
+            } else if (!l.addPropietario(p)) {
                 throw new ProgramException(30);//Error si no se puede añadir propietario
-            
+            }
             return true;
 
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() != 8)
+
+            if (ex.getCode() != 8) {
                 System.out.println(ex.getMessage());
-            
+            }
+
             return false;
         }
-        
+
     }
 
     @Override
     public boolean desasociarLocal(Local l, Propietario p) {
         try {
-            
-            if (!listaLocal.contains(l))
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//Error si no existe el local
-            else if (l.propietariosLleno()) 
+            } else if (l.propietariosLleno()) {
                 throw new ProgramException(12);//Si ya hay 3 propietarios da error
-            else if (!existeNick(p.getNick()))
+            } else if (!existeNick(p.getNick())) {
                 throw new ProgramException(8);//Error si no existe el usuario
-            else if (!l.deletePropietario(p))
+            } else if (!l.deletePropietario(p)) {
                 throw new ProgramException(31);//Error si no se ha podido eliminar a un propietario
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() != 8)
+
+            if (ex.getCode() != 8) {
                 System.out.println(ex.getMessage());
+            }
 
             return false;
         }
@@ -449,42 +466,44 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean actualizarLocal(Local viejoL, Local nuevoL) {
-        
+
         try {
-            
-            if (!eliminarLocal(viejoL))
+
+            if (!eliminarLocal(viejoL)) {
                 throw new ProgramException(29);//Error si no se ha podido eliminar el local viejo
-            else if (!nuevoLocal(nuevoL)) 
+            } else if (!nuevoLocal(nuevoL)) {
                 throw new ProgramException(26);//Error si no se pude añadir el nuevo local
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             nuevoLocal(viejoL);
             return false;
         }
-        
+
     }
-    
+
     @Override
     public Review[] verReviews(Local l) {
-        
+
         try {
-            
-            if (!listaLocal.contains(l)) 
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//Error si no existe el local
-            
+            }
             List<Review> localReviews = new ArrayList<>();
-            
-            for (Review review: listaReviews) 
-                if (review.getLocal().equals(l))
+
+            for (Review review : listaReviews) {
+                if (review.getLocal().equals(l)) {
                     localReviews.add(review);
-            
+                }
+            }
+
             return localReviews.toArray(new Review[localReviews.size()]);
-          
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
@@ -494,46 +513,48 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
 
         try {
-            
-            if (!existeNick(c.getNick())) 
+
+            if (!existeNick(c.getNick())) {
                 throw new ProgramException(8);//Error si no existe el nick
-            else if (!listaLocal.contains((Reservable) r)) {
+            } else if (!listaLocal.contains((Reservable) r)) {
                 throw new ProgramException(27);//Error si no existe el local
-            } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now())))
+            } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now()))) {
                 throw new ProgramException(32);//Error si fecha y horario anterior a la actual
-            else if (!listaReserva.add(new Reserva(ld,c,r,lt)))
+            } else if (!listaReserva.add(new Reserva(ld, c, r, lt))) {
                 throw new ProgramException(33);//Error si no se puede añadir una reserva
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() != 8)
+
+            if (ex.getCode() != 8) {
                 System.out.println(ex.getMessage());
-            
+            }
+
             return false;
         }
     }
 
     @Override
     public Reserva[] obtenerReservas(Cliente c) {
-        
+
         try {
-            
-            if (!existeNick(c.getNick())) 
+
+            if (!existeNick(c.getNick())) {
                 throw new ProgramException(8);//Error si no existe el nick
-            
+            }
             List<Reserva> reservasCliente = new ArrayList();
-            
-            for (Reserva reserva: listaReserva) 
-                if (reserva.getCliente().equals(c))
+
+            for (Reserva reserva : listaReserva) {
+                if (reserva.getCliente().equals(c)) {
                     reservasCliente.add(reserva);
-            
+                }
+            }
+
             return reservasCliente.toArray(new Reserva[reservasCliente.size()]);
-          
-        
+
         } catch (ProgramException ex) {
-            
+
             return null;
         }
 
@@ -543,79 +564,84 @@ public class BusinessSystem implements LeisureOffice, LookupService {
     public Reserva[] obtenerReservas(Reservable r) {
 
         try {
-            
-            if (!listaLocal.contains((Local)r)) 
+
+            if (!listaLocal.contains((Local) r)) {
                 throw new ProgramException(27);//Error si no existe el local
-            
+            }
             List<Reserva> reservasLocal = new ArrayList();
-            
-            for (Reserva reserva: listaReserva) 
-                if (reserva.getReservable().equals(r))
+
+            for (Reserva reserva : listaReserva) {
+                if (reserva.getReservable().equals(r)) {
                     reservasLocal.add(reserva);
-            
+                }
+            }
+
             return reservasLocal.toArray(new Reserva[reservasLocal.size()]);
-          
-        
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
-    
+
     }
 
     @Override
     public Reserva[] obtenerReservas(LocalDate ld) {
-    
+
         List<Reserva> reservasFecha = new ArrayList();
-            
-        for (Reserva reserva: listaReserva) 
-            if (reserva.getLd().equals(ld))
+
+        for (Reserva reserva : listaReserva) {
+            if (reserva.getLd().equals(ld)) {
                 reservasFecha.add(reserva);
-            
+            }
+        }
+
         return reservasFecha.toArray(new Reserva[reservasFecha.size()]);
-        
+
     }
 
     @Override
     public boolean eliminarReserva(Reserva r) {
-        
+
         try {
-            
-            if (!listaReserva.contains(r))
+
+            if (!listaReserva.contains(r)) {
                 throw new ProgramException(35);//Error si no existe la reserva
-            else if (!listaReserva.remove(r))
+            } else if (!listaReserva.remove(r)) {
                 throw new ProgramException(36);//Error si no se ha podido eliminar una reserva
-            
+            }
             return true;
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return false;
-        }     
+        }
     }
 
     @Override
-    public Local[] listarLocales (String ciudad, String provincia) {
-        
+    public Local[] listarLocales(String ciudad, String provincia) {
+
         try {
-            
+
             List<Local> localesFiltrados = new ArrayList<>();
-            
-            for (Local local : listaLocal) 
+
+            for (Local local : listaLocal) {
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad)) 
+                        && local.getmDireccion().getLocalidad().equals(ciudad)) {
                     localesFiltrados.add(local);
+                }
+            }
 
-            if (localesFiltrados.isEmpty()) 
+            if (localesFiltrados.isEmpty()) {
                 throw new ProgramException(37);//Error si no existen locales con esos datos
+            }
 
-                
             return localesFiltrados.toArray(new Local[localesFiltrados.size()]);
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
@@ -623,25 +649,26 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public Bar[] listarBares(String ciudad, String provincia) {
-        
+
         try {
-            
+
             List<Bar> bares = new ArrayList<>();
-            
-            for (Local local : listaLocal) 
+
+            for (Local local : listaLocal) {
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
-                        local.getClass().equals(Bar.class)) 
-                   
-                    bares.add((Bar)local);
-            
-            if (bares.isEmpty()) 
+                        && local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Bar.class)) {
+                    bares.add((Bar) local);
+                }
+            }
+
+            if (bares.isEmpty()) {
                 throw new ProgramException(37);//Error si no existen bares con esos datos
-            
+            }
             return bares.toArray(new Bar[bares.size()]);
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
@@ -649,50 +676,54 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public Restaurante[] listarRestaurantes(String ciudad, String provincia) {
-        
+
         try {
-            
+
             List<Restaurante> restaurantes = new ArrayList<>();
-            
-            for (Local local : listaLocal) 
+
+            for (Local local : listaLocal) {
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
-                        local.getClass().equals(Restaurante.class)) 
-                    restaurantes.add((Restaurante)local);
+                        && local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Restaurante.class)) {
+                    restaurantes.add((Restaurante) local);
+                }
+            }
 
-            if (restaurantes.isEmpty())
+            if (restaurantes.isEmpty()) {
                 throw new ProgramException(37);//Error si no existen restaurantes con esos datos
-
+            }
             return restaurantes.toArray(new Restaurante[restaurantes.size()]);
 
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
-        
+
     }
 
     @Override
     public Pub[] listarPubs(String ciudad, String provincia) {
-        
+
         try {
-            
+
             List<Pub> pubs = new ArrayList<>();
-            
-            for (Local local : listaLocal) 
+
+            for (Local local : listaLocal) {
                 if (local.getmDireccion().getProvincia().equals(provincia)
-                        && local.getmDireccion().getLocalidad().equals(ciudad) &&
-                        local.getClass().equals(Pub.class)) 
-                    pubs.add((Pub)local);
+                        && local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Pub.class)) {
+                    pubs.add((Pub) local);
+                }
+            }
 
-            if (pubs.isEmpty())
+            if (pubs.isEmpty()) {
                 throw new ProgramException(37);//Error si no existen pubs con esos datos
-
+            }
             return pubs.toArray(new Pub[pubs.size()]);
-            
+
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
             return null;
         }
@@ -700,244 +731,270 @@ public class BusinessSystem implements LeisureOffice, LookupService {
 
     @Override
     public boolean eliminaContestacion(Review r) {
-        
+
         try {
-            
-            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview()))
+
+            if (!existeReview(r.getCliente(), r.getLocal(), r.getFechaReview())) {
                 throw new ProgramException(10);//Error si no existe la review
-            
-            for (Contestacion contestacion : listaContestacion) 
+            }
+            for (Contestacion contestacion : listaContestacion) {
                 if (contestacion.getReview().equals(r)) {
-                    if (!listaContestacion.remove(contestacion))
+                    if (!listaContestacion.remove(contestacion)) {
                         throw new ProgramException(38);//Error si no se ha podido eliminar la contestacion
+                    }
                     return true;
                 }
-           
+            }
+
             throw new ProgramException(22);//Error si no se puede obtener la contestacion de la review
-            
+
         } catch (ProgramException ex) {
-            
-            if (ex.getCode() != 10)
+
+            if (ex.getCode() != 10) {
                 System.out.println(ex.getMessage());
+            }
             return false;
         }
-        
+
     }
 
     @Override
     public float obtenerValoracionMedia(Local l) {
-        
+
         try {
-            
-            float media=0;
-            
+
+            float media = 0;
+
             ArrayList<Review> reviews = new ArrayList<>();
-            ArrayList<Local>  locales = new ArrayList<>();
-            
-            if (!listaLocal.contains(l))
+            ArrayList<Local> locales = new ArrayList<>();
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//Error si no existe el local
+            }
+            for (Review review : listaReviews) {
+                if (l.equals(review.getLocal())) {
+                    media = media + review.getEstrellas();
+                }
+            }
 
-            for (Review review : listaReviews) 
-                if (l.equals(review.getLocal()))
-                    media=media+review.getEstrellas();
-  
-            if (reviews.isEmpty()) 
+            if (reviews.isEmpty()) {
                 throw new ProgramException(39);//Error si no hay reviews para un local
+            }
+            return (float) (media / reviews.size());
 
-            return (float)(media/reviews.size());
-                
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
-            
-            if (ex.getCode() == 27)
+
+            if (ex.getCode() == 27) {
                 return -1;
-            
+            }
+
             return 0;
         }
     }
 
     @Override
     public float obtenerValoracionMedia(Propietario p) {
-        
+
         try {
-            
-            if (!existeNick(p.getNick()))
+
+            if (!existeNick(p.getNick())) {
                 throw new ProgramException(8);//Error si no existe el usuario
-            
-            float media=0;
-            
+            }
+            float media = 0;
+
             ArrayList<Local> locales = new ArrayList<>();
 
-            for (Local local : listaLocal) 
-                if (local.getListaPropietarios().contains(p))
-                    media=obtenerValoracionMedia(local);
+            for (Local local : listaLocal) {
+                if (local.getListaPropietarios().contains(p)) {
+                    media = obtenerValoracionMedia(local);
+                }
+            }
 
-            return media/locales.size();
-                
+            return media / locales.size();
+
         } catch (ProgramException ex) {
-            
+
             return -1;
         }
-        
+
     }
 
     @Override
     public float obtenerValoracionMedia(Local l, int edadEntre, int edadHasta) {
-        
+
         try {
-            
-            float media=0;
-            
+
+            float media = 0;
+
             ArrayList<Review> reviews = new ArrayList<>();
-            ArrayList<Local>  locales = new ArrayList<>();
-            
-            if (!listaLocal.contains(l))
+            ArrayList<Local> locales = new ArrayList<>();
+
+            if (!listaLocal.contains(l)) {
                 throw new ProgramException(27);//Error si no existe el local
- 
+            }
 
-            for (Review review : listaReviews) 
-                if (l.equals(review.getLocal()))
-                    if(review.getCliente().obtenerEdad() > edadEntre && review.getCliente().obtenerEdad() < edadHasta)
-                        media=media+review.getEstrellas();
+            for (Review review : listaReviews) {
+                if (l.equals(review.getLocal())) {
+                    if (review.getCliente().obtenerEdad() > edadEntre && review.getCliente().obtenerEdad() < edadHasta) {
+                        media = media + review.getEstrellas();
+                    }
+                }
+            }
 
-                
-            if (reviews.isEmpty()) 
+            if (reviews.isEmpty()) {
                 throw new ProgramException(39);//Error si no hay reviews para un local
-
-            return media/reviews.size();
+            }
+            return media / reviews.size();
 
         } catch (ProgramException ex) {
-            
+
             System.out.println(ex.getMessage());
-            
-            if (ex.getCode() == 27)
+
+            if (ex.getCode() == 27) {
                 return -1;
-            
+            }
+
             return 0;
         }
-        
+
     }
 
     @Override
     public Local[] obtenerLocalesOrdenados(String ciudad, String provincia) {
-        
+
         List<Local> locales = new ArrayList<>();
-        
-        for (Local local : listaLocal) 
-            if (local.getmDireccion().getProvincia().equals(provincia) &&
-                    local.getmDireccion().getLocalidad().equals(ciudad))
+
+        for (Local local : listaLocal) {
+            if (local.getmDireccion().getProvincia().equals(provincia)
+                    && local.getmDireccion().getLocalidad().equals(ciudad)) {
                 locales.add(local);
-        
+            }
+        }
+
         class OrdenAscendenteValoracion implements Comparator<Local> {
+
             @Override
             public int compare(Local L1, Local L2) {
-                return (int) (obtenerValoracionMedia(L2)-obtenerValoracionMedia(L1));
+                return (int) (obtenerValoracionMedia(L2) - obtenerValoracionMedia(L1));
             }
         }
 
         Collections.sort(locales, new OrdenAscendenteValoracion());
-        
+
         return locales.toArray(new Local[locales.size()]);
     }
 
     @Override
     public Local[] obtenerLocalesOrdenados(String provincia) {
-        
+
         List<Local> locales = new ArrayList<>();
-        
-        for (Local local : listaLocal) 
-            if (local.getmDireccion().getProvincia().equals(provincia))
+
+        for (Local local : listaLocal) {
+            if (local.getmDireccion().getProvincia().equals(provincia)) {
                 locales.add(local);
-        
+            }
+        }
+
         class OrdenAscendenteValoracion implements Comparator<Local> {
+
             @Override
             public int compare(Local L1, Local L2) {
-                return (int) (obtenerValoracionMedia(L2)-obtenerValoracionMedia(L1));
+                return (int) (obtenerValoracionMedia(L2) - obtenerValoracionMedia(L1));
             }
         }
 
         Collections.sort(locales, new OrdenAscendenteValoracion());
-        
+
         return locales.toArray(new Local[locales.size()]);
     }
 
     @Override
     public Bar[] obtenerBaresOrdenados(String ciudad, String provincia) {
-        
+
         List<Bar> bares = new ArrayList<>();
-        
-        for (Local local : listaLocal) 
-            if (local.getmDireccion().getProvincia().equals(provincia) && 
-                    local.getmDireccion().getLocalidad().equals(ciudad) &&
-                    local.getClass().equals(Bar.class))
-                bares.add((Bar)local);
-        
+
+        for (Local local : listaLocal) {
+            if (local.getmDireccion().getProvincia().equals(provincia)
+                    && local.getmDireccion().getLocalidad().equals(ciudad)
+                    && local.getClass().equals(Bar.class)) {
+                bares.add((Bar) local);
+            }
+        }
+
         class OrdenAscendenteValoracion implements Comparator<Bar> {
+
             @Override
             public int compare(Bar b1, Bar b2) {
-                return (int) (obtenerValoracionMedia(b2)-obtenerValoracionMedia(b1));
+                return (int) (obtenerValoracionMedia(b2) - obtenerValoracionMedia(b1));
             }
 
         }
 
         Collections.sort(bares, new OrdenAscendenteValoracion());
-        
+
         return bares.toArray(new Bar[bares.size()]);
-        
+
     }
 
     @Override
     public Restaurante[] obtenerRestaurantesOrdenados(String ciudad, String provincia) {
-        
+
         List<Restaurante> restaurantes = new ArrayList<>();
-        
-        for (Local local : listaLocal) 
-            if (local.getmDireccion().getProvincia().equals(provincia) && 
-                    local.getmDireccion().getLocalidad().equals(ciudad) &&
-                    local.getClass().equals(Restaurante.class))
-                restaurantes.add((Restaurante)local);
-        
+
+        for (Local local : listaLocal) {
+            if (local.getmDireccion().getProvincia().equals(provincia)
+                    && local.getmDireccion().getLocalidad().equals(ciudad)
+                    && local.getClass().equals(Restaurante.class)) {
+                restaurantes.add((Restaurante) local);
+            }
+        }
+
         class OrdenAscendenteValoracion implements Comparator<Restaurante> {
+
             @Override
             public int compare(Restaurante r1, Restaurante r2) {
-                return (int) (obtenerValoracionMedia(r2)-obtenerValoracionMedia(r1));
+                return (int) (obtenerValoracionMedia(r2) - obtenerValoracionMedia(r1));
             }
         }
 
         Collections.sort(restaurantes, new OrdenAscendenteValoracion());
-        
+
         return restaurantes.toArray(new Restaurante[restaurantes.size()]);
-        
+
     }
 
     @Override
     public Pub[] obtenerPubOrdenados(String ciudad, String provincia) {
-        
+
         List<Pub> pubs = new ArrayList<>();
-        
-        for (Local local : listaLocal) 
-            if (local.getmDireccion().getProvincia().equals(provincia) && 
-                    local.getmDireccion().getLocalidad().equals(ciudad) &&
-                    local.getClass().equals(Pub.class))
-                pubs.add((Pub)local);
-        
+
+        for (Local local : listaLocal) {
+            if (local.getmDireccion().getProvincia().equals(provincia)
+                    && local.getmDireccion().getLocalidad().equals(ciudad)
+                    && local.getClass().equals(Pub.class)) {
+                pubs.add((Pub) local);
+            }
+        }
+
         class OrdenAscendenteValoracion implements Comparator<Pub> {
+
             @Override
             public int compare(Pub p1, Pub p2) {
-                return (int) (obtenerValoracionMedia(p2)-obtenerValoracionMedia(p1));
+                return (int) (obtenerValoracionMedia(p2) - obtenerValoracionMedia(p1));
             }
         }
 
         Collections.sort(pubs, new OrdenAscendenteValoracion());
-        
+
         return pubs.toArray(new Pub[pubs.size()]);
     }
-    
-    public int importaPubs(File f){
+
+    public int importaPubs(File f) {
         int contPubs = 0;
         SpreadSheet hojaCalculo;
-        try{
+        try {
             hojaCalculo = SpreadSheet.createFromFile(f);
             int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
@@ -948,30 +1005,55 @@ public class BusinessSystem implements LeisureOffice, LookupService {
             Pub nuevoPub;
             MutableCell celda = null;
             //Falta ignorar pub si celda(fila, 0) no existe
-            for(int fila = 0; fila < filaMax; fila++){
+            for (int fila = 0; fila < filaMax; fila++) {
                 desc = "";
                 nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
                 calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
                 localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
                 provincia = hojaCalculo.getSheet(0).getCellAt(fila, 3).getTextValue();
-                calle = calleSplit[0]+" "+calleSplit[1];
-                numero = Integer.parseInt(calleSplit[2]); 
+                calle = calleSplit[0] + " " + calleSplit[1];
+                numero = Integer.parseInt(calleSplit[2]);
                 dir = new Direccion(localidad, provincia, calle, numero);
-                
+
                 //Informacion de Propietario en columna 4. Tener en cuenta?
-                for(int columna = 4; columna < columnaMax; columna++){
+                for (int columna = 4; columna < columnaMax; columna++) {
                     otro = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
                     desc = desc + otro;
                 }
                 nuevoPub = new Pub(nombreLocal, dir, desc);
-                if(nuevoLocal(nuevoPub))
+                if (nuevoLocal(nuevoPub)) {
                     contPubs++;
+                }
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
         return contPubs;
     }
-    
+
+    @Override
+    public boolean loadFromFile(File f) {
+        try {
+            //TODO
+            SpreadSheet.createFromFile(f);
+            return true;
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (IOException ex) {
+            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveToFile(File f) {
+        try {
+            //TODO
+            SpreadSheet.createEmpty(new DefaultTableModel()).saveAs(f);
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
 }
