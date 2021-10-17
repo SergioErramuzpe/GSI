@@ -5,6 +5,7 @@
  */
 package Misc;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -45,10 +46,16 @@ public class SSTest02 {
 
             for(int i=0;i<4;i++){
                 for(int j=0;j<6;j++){
-                    array[i][j] = (int) Math.floor(Math.random()*11);
+                    array[i][j] = (int) Math.floor(Math.random()*101);
                     //edita la celda con el valor de la matriz
-                    hojaCalculo.getSheet(0).getCellAt(i,j).setValue(array[i][j]);
+                    //hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setValue(array[i][j]);
+                    hojaCalculo.getSheet(0).setValueAt(array[i][j],i+5,j+3);
                     //countcelda++;
+                    if(array[i][j]<10)
+                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.red);
+                    else
+                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.blue);
+
                 }
             }
         } catch (IOException ex) {
