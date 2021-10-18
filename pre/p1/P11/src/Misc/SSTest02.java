@@ -37,11 +37,28 @@ public class SSTest02 {
         //int countcelda = 0;
         
         //guardar test02.ods
-        File file = new File("test02.ods");
         
         SpreadSheet hojaCalculo;
         try {
-            //crear Sheet
+            Object[] firstArray = new Object[6];
+            Object[][] table = new Object[3][6];
+        
+            for(int j=0;j<6;j++)
+                firstArray[j] = (int) Math.floor(Math.random()*11);
+            for(int i=0;i<3;i++) 
+                for(int j=0;j<6;j++)
+                    table[i][j] = (int) Math.floor(Math.random()*11);
+                if(array[i][j]<10)
+                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.red);
+                    else
+                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.blue);
+
+            DefaultTableModel model = new DefaultTableModel(table,firstArray);
+ 
+            final File file = new File("test01.ods");           
+            
+            SpreadSheet.createEmpty(model).saveAs(file);
+            
             hojaCalculo = SpreadSheet.createFromFile(file);
 
             for(int i=0;i<4;i++){
@@ -51,11 +68,7 @@ public class SSTest02 {
                     //hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setValue(array[i][j]);
                     hojaCalculo.getSheet(0).setValueAt(array[i][j],i+5,j+3);
                     //countcelda++;
-                    if(array[i][j]<10)
-                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.red);
-                    else
-                        hojaCalculo.getSheet(0).getCellAt(i+5,j+3).setBackgroundColor(Color.blue);
-
+                    
                 }
             }
         } catch (IOException ex) {
