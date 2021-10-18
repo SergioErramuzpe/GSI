@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.jopendocument.model.OpenDocument;
 
 
 
@@ -26,30 +29,34 @@ public class SSTest01 {
         // TODO code application logic here
         
         //array de datos
-        int array[][] = new int[4][6];
+        Object[] array = new Object[6];
         
-        //nombre del archivo ods
-        final File file = new File("test01.ods");           
         
-        //Declaramos SpreadSheet
-        SpreadSheet hojaCalculo;
         
         try {
-            //Indicamos el fichero de la SpreadSheet
-            hojaCalculo = SpreadSheet.createFromFile(file);
 
-            for(int i=0;i<4;i++)
+            DefaultTableModel model = new DefaultTableModel();
+            
+            for(int i=0;i<4;i++) {
                 for(int j=0;j<6;j++){
                     
                     //rellenamos la matriz
-                    array[i][j] = (int) Math.floor(Math.random()*11);
+                    array[j] = (int) Math.floor(Math.random()*11);
                     
-                    //Añadir el dato a la tabla
-                    hojaCalculo.getSheet(0).setValueAt( array[i][j], i, j);
-                    
-                    //Comprobación de que se ha introducido en la tabla
-                    System.out.println(hojaCalculo.getSheet(0).getCellAt(i, j).getValue());
                 } 
+                
+                model.addRow((Object[])(Object)array);
+
+            }
+            
+            
+            
+            //nombre del archivo ods
+            final File file = new File("test01.ods");           
+            
+            SpreadSheet.createEmpty(model).saveAs(file);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(SSTest01.class.getName()).log(Level.SEVERE, null, ex);
         }
