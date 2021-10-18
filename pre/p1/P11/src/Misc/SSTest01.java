@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.jopendocument.model.OpenDocument;
 
@@ -30,20 +31,16 @@ public class SSTest01 {
     public static void main(String[] args) {
         // TODO code application logic here
         try {
-            Object[] firstArray = new Object[6];
-            Object[][] table = new Object[3][6];
-        
-            for(int j=0;j<6;j++)
-                firstArray[j] = (int) Math.floor(Math.random()*11);
-            for(int i=0;i<3;i++) 
+            SpreadSheet hojaCalculo = SpreadSheet.create(1,20,20);
+            Sheet hoja = hojaCalculo.getSheet(0);
+
+            for(int i=0;i<4;i++) 
                 for(int j=0;j<6;j++)
-                    table[i][j] = (int) Math.floor(Math.random()*11);
+                    hoja.setValueAt((int) Math.floor(Math.random()*11),j,i);
                 
-            DefaultTableModel model = new DefaultTableModel(table,firstArray);
- 
-            final File file = new File("test01.ods");         
             
-            SpreadSheet.createEmpty(model).saveAs(file);
+            final File file = new File("test01.ods");         
+            hojaCalculo.saveAs(file);
             
             
         } catch (IOException ex) {
