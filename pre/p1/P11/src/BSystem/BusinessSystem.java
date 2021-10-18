@@ -63,6 +63,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     public static BusinessSystem getBusinessSystem() {
         return new BusinessSystem();
     }
+    
+    
+    public HashSet<Local> getLocales () {
+        return (HashSet<Local>) listaLocal;
+    }
 
     // Función para crear un nuevoUsuario
     @Override

@@ -42,6 +42,7 @@ public class SSTest02 {
             
             final File file = new File("test02.ods");         
             hojaCalculo.saveAs(file);
+           
         } catch (IOException ex) {
             Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex);
         }
