@@ -107,6 +107,7 @@ public class Local {
     /**
      * Función que añade a un propietario a nuestra lista de propietarios
      * @param p
+     * @return 
      */
     public boolean addPropietario (Propietario p) {
         return this.listaPropietarios.add(p);

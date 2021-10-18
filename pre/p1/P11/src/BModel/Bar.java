@@ -18,6 +18,9 @@ public class Bar extends Reservable {
     /**
      * Cada bar tendrá un nombre, dirección y una breve descripción de esta
      * @param tags
+     * @param nombreLocal
+     * @param mDireccion
+     * @param descripcion
      */
 
     public Bar(String[] tags, String nombreLocal, Direccion mDireccion, String descripcion) {

@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import org.jopendocument.dom.spreadsheet.MutableCell;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
@@ -56,8 +55,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     }
 
     /**
-     * Getter de la clase BussinessSystem
-     *
+     * Getter de la clase BussinessSystem por ser Singleton
      * @return
      */
     public static BusinessSystem getBusinessSystem() {
@@ -65,6 +63,71 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     }
     
     
+    /**
+     * Método que crea una BBDD instantánea para que la clase BusinessSystem se
+     * pruebe en cualquier test
+     */
+    public void crearBBDD () {
+         
+        Direccion dir1 = new Direccion ("rueblo 1", "Provincia 1", "Calle 1", 1);
+        Direccion dir2 = new Direccion ("Pueblo 2", "Provincia 2", "Calle 2", 2);
+        Direccion dir3 = new Direccion ("Pueblo 3", "Provincia 3", "Calle 3", 3);
+        Direccion dir4 = new Direccion ("Pueblo 4", "Provincia 4", "Calle 4", 4);
+        Direccion dir5 = new Direccion ("Pueblo 5", "Provincia 5", "Calle 5", 5);
+        Direccion dir6 = new Direccion ("Pueblo 6", "Provincia 6", "Calle 6", 6);
+        
+        String[] tag1 = {"español","tapas","carnes"};
+        String[] tag2 = {"asiático","ramen"};
+        
+        Propietario propietario1 = new Propietario("nick4", "pw4", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(propietario1);
+        Propietario propietario2 = new Propietario("nick5", "pw5", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(propietario2);
+        Propietario propietario3 = new Propietario("nick6", "pw6", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(propietario3);
+        Propietario propietario4 = new Propietario("nick7", "pw7", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(propietario4);      
+        
+        Local local1 = new Bar(tag1,"Local 1", dir1, "Bar español clásico");
+        local1.addPropietario(propietario4);
+        this.nuevoLocal(local1);
+        Local local2 = new Bar(tag2,"Local 2", dir2, "Bar informal para comer ramen");
+        local2.addPropietario(propietario1);
+        this.nuevoLocal(local2);
+        Local local3 = new Pub("Local 3", dir3, "Pub Irlandés");
+        local3.addPropietario(propietario2);
+        this.nuevoLocal(local3);
+        Local local4 = new Pub("Local 4", dir4, "Disco-Pub");
+        local4.addPropietario(propietario3);
+        this.nuevoLocal(local4);
+        Local local5 = new Restaurante(20,40,6,"Local 5", dir5, "Restaurante francés");
+        local5.addPropietario(propietario1);
+        this.nuevoLocal(local5);
+        Local local6 = new Restaurante(15,80,10,"Local 6", dir6, "Restaurante Italiano");
+        local6.addPropietario(propietario2);
+        this.nuevoLocal(local6);
+        
+        System.out.println(listaLocal.size());
+        
+        Usuario usuario1 = new Usuario("nick1", "pw1", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(usuario1);
+        Usuario usuario2 = new Usuario("nick2", "pw2", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(usuario2);
+        Usuario usuario3 = new Usuario("nick3", "pw3", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(usuario3);
+        Cliente cliente1 = new Cliente("nick8", "pw8", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(cliente1);
+        Cliente cliente2 = new Cliente("nick9", "pw9", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(cliente2);
+        Cliente cliente3 = new Cliente("nick10", "pw10", LocalDate.parse("2000-01-01"));
+        this.nuevoUsuario(cliente3);
+    }
+    
+    
+    /**
+     * Getter de el HashSet de locales (necesario para la práctica 2)
+     * @return 
+     */
     public HashSet<Local> getLocales () {
         return (HashSet<Local>) listaLocal;
     }

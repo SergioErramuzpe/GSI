@@ -22,5 +22,9 @@ public class Reservable extends Local {
     public Reservable(String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);
     }
+    
+    public Reservable(Local local) {
+        super(local.getNombreLocal(), local.getmDireccion(), local.getDescripcion());
+    }
   
 }
