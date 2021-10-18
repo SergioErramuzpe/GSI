@@ -23,13 +23,12 @@ public class SSTest03 {
         // TODO code application logic here
         File file = new File("test02.ods");
         int array[][] = null;
-        SpreadSheet hojaCalculo;
         try{
-            hojaCalculo = SpreadSheet.createFromFile(file);
+            SpreadSheet hojaCalculo = SpreadSheet.createFromFile(file);
             int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
-            for(int fila = 0; fila < filaMax; fila++){
-                for(int columna = 4; columna < columnaMax; columna++){
+            for(int fila = 0; fila < 4; fila++){
+                for(int columna = 4; columna < 6; columna++){
                     array[fila][columna] = (int) hojaCalculo.getSheet(0).getCellAt(fila, columna).getValue();                  
                 }
             }

@@ -1000,9 +1000,13 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         int contPubs = 0;
         SpreadSheet hojaCalculo;
         try {
+            //Obtiene la hoja de calculo del fichero f
             hojaCalculo = SpreadSheet.createFromFile(f);
+            //Numero de columnas
             int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
+            //Numero de filas
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
+            //Declaracion de variables
             String nombreLocal, localidad, provincia, calle, nickPropietario, otro, desc;
             String[] calleSplit;
             int numero;
@@ -1012,6 +1016,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             for (int fila = 0; fila < filaMax; fila++) {
                 desc = "";
                 if(!hojaCalculo.getSheet(0).getCellAt(fila,0).getTextValue().equals("")){
+                    //Se introduce los valores guardados en cada columna en su correspondiente campo
                     nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
                     calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
                     localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
@@ -1019,8 +1024,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     nickPropietario = hojaCalculo.getSheet(0).getCellAt(fila, 4).getTextValue();
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
+                    //Crea la direccion
                     dir = new Direccion(localidad, provincia, calle, numero);
+                    //Almacena la descripcion del pub en la variable desc
                     desc = hojaCalculo.getSheet(0).getCellAt(fila, 5).getTextValue();
+                    //Crea pub
                     nuevoPub = new Pub(nombreLocal, dir, desc);
                     asociarLocal(nuevoPub, (Propietario)obtenerUsuario(nickPropietario));
                     if (nuevoLocal(nuevoPub)) {
@@ -1038,9 +1046,13 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         int contBares = 0;
         SpreadSheet hojaCalculo;
         try {
+            //Obtiene la hoja de calculo del fichero f
             hojaCalculo = SpreadSheet.createFromFile(f);
+            //Numero de columnas
             int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
+            //Numero de filas
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
+            //Declaracion de variables
             String nombreLocal, localidad, provincia, calle, nickPropietario, otro, desc;
             String[] calleSplit;
             String[] tags;
@@ -1052,6 +1064,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 desc = "";
                 tags = null;
                 if(!hojaCalculo.getSheet(0).getCellAt(fila,0).getTextValue().equals("")){
+                    //Se introduce los valores guardados en cada columna en su correspondiente campo
                     nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
                     calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
                     localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
@@ -1060,11 +1073,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
                     dir = new Direccion(localidad, provincia, calle, numero);
-
+                    //Almacena los tags del bar
                     for (int columna = 5; columna < columnaMax; columna++) {
                         tags[columna - 5] = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
                     }
-                    
+                    //Crea bar
                     nuevoBar = new Bar(tags, nombreLocal, dir, desc);
                     asociarLocal(nuevoBar, (Propietario)obtenerUsuario(nickPropietario));
                     if (nuevoLocal(nuevoBar)) {

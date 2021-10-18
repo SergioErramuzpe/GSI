@@ -38,7 +38,7 @@ public class SSTest04 {
         // TODO code application logic here
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
         
-         Direccion dir1 = new Direccion ("rueblo 1", "Provincia 1", "Calle 1", 1);
+        Direccion dir1 = new Direccion ("rueblo 1", "Provincia 1", "Calle 1", 1);
         Direccion dir2 = new Direccion ("Pueblo 2", "Provincia 2", "Calle 2", 2);
         Direccion dir3 = new Direccion ("Pueblo 3", "Provincia 3", "Calle 3", 3);
         Direccion dir4 = new Direccion ("Pueblo 4", "Provincia 4", "Calle 4", 4);
