@@ -5,8 +5,10 @@
  */
 package Misc;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import org.jopendocument.dom.spreadsheet.MutableCell;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
@@ -24,13 +26,18 @@ public class SSTest03 {
         File file = new File("test02.ods");
         int array[][] = null;
         SpreadSheet hojaCalculo;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try{
             hojaCalculo = SpreadSheet.createFromFile(file);
-            int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
-            int filaMax = hojaCalculo.getSheet(0).getRowCount();
-            for(int fila = 0; fila < filaMax; fila++){
-                for(int columna = 4; columna < columnaMax; columna++){
-                    array[fila][columna] = (int) hojaCalculo.getSheet(0).getCellAt(fila, columna).getValue();                  
+            System.out.println("Seleccione la posición donde se encuentra la matriz");
+            System.out.println("Fila:");
+            int fila = Integer.parseInt(reader.readLine());
+            System.out.println("Columna: ");
+            int columna = Integer.parseInt(reader.readLine());
+            for(int i = fila; i < 4 + fila; i++){
+                for(int j = columna; j < 6 + columna; j++){
+                    array[j - columna][i - fila] = (int) hojaCalculo.getSheet(0).getCellAt(j, i).getValue();
+                    System.out.println(hojaCalculo.getSheet(0).getCellAt(j, i).getValue());
                 }
             }
         }
