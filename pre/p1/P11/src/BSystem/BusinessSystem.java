@@ -1003,7 +1003,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             int numero;
             Direccion dir;
             Pub nuevoPub;
-            MutableCell celda = null;
             
             for (int fila = 0; fila < filaMax; fila++) {
                 desc = "";
@@ -1016,11 +1015,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
                     dir = new Direccion(localidad, provincia, calle, numero);
-
-                    for (int columna = 5; columna < columnaMax; columna++) {
-                        otro = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
-                        desc = desc + otro;
-                    }
+                    desc = hojaCalculo.getSheet(0).getCellAt(fila, 5).getTextValue();
                     nuevoPub = new Pub(nombreLocal, dir, desc);
                     asociarLocal(nuevoPub, (Propietario)obtenerUsuario(nickPropietario));
                     if (nuevoLocal(nuevoPub)) {
@@ -1032,6 +1027,51 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             System.out.println(ex.getMessage());
         }
         return contPubs;
+    }
+    
+    public int importaBares(File f) {
+        int contBares = 0;
+        SpreadSheet hojaCalculo;
+        try {
+            hojaCalculo = SpreadSheet.createFromFile(f);
+            int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
+            int filaMax = hojaCalculo.getSheet(0).getRowCount();
+            String nombreLocal, localidad, provincia, calle, nickPropietario, otro, desc;
+            String[] calleSplit;
+            String[] tags;
+            int numero;
+            Direccion dir;
+            Bar nuevoBar;
+            
+            for (int fila = 0; fila < filaMax; fila++) {
+                desc = "";
+                tags = null;
+                if(!hojaCalculo.getSheet(0).getCellAt(fila,0).getTextValue().equals("")){
+                    nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
+                    calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
+                    localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
+                    provincia = hojaCalculo.getSheet(0).getCellAt(fila, 3).getTextValue();
+                    nickPropietario = hojaCalculo.getSheet(0).getCellAt(fila, 4).getTextValue();
+                    calle = calleSplit[0] + " " + calleSplit[1];
+                    numero = Integer.parseInt(calleSplit[2]);
+                    dir = new Direccion(localidad, provincia, calle, numero);
+
+                    for (int columna = 5; columna < columnaMax; columna++) {
+                        tags[columna - 5] = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
+                    }
+                    
+                    nuevoBar = new Bar(tags, nombreLocal, dir, desc);
+                    asociarLocal(nuevoBar, (Propietario)obtenerUsuario(nickPropietario));
+                    if (nuevoLocal(nuevoBar)) {
+                        contBares++;
+                    }
+                    
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return contBares;
     }
 
     @Override
