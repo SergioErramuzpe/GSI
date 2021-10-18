@@ -39,7 +39,7 @@ public class SSTest01 {
             for(int i=0;i<4;i++) 
                 for(int j=0;j<6;j++)
                     //Introducimos el numero aleatorio en la celda correspondiente
-                    hoja.setValueAt((int) Math.floor(Math.random()),j,i);
+                    hoja.setValueAt((int) Math.floor(Math.random()*100),j,i);
                 
             //Guardamos la Hoja de calculo en el archivo
             final File file = new File("test01.ods");         

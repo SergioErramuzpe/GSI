@@ -38,7 +38,7 @@ public class SSTest02 {
             for(int i=0;i<4;i++) 
                 for(int j=0;j<6;j++){
                     
-                    valor = (int) Math.floor(Math.random());
+                    valor = (int) Math.floor(Math.random()*100);
                     
                     //Introducimos el numero aleatorio en la celda correspondiente
                     hoja.setValueAt(valor,j + 3,i + 5);
