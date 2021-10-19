@@ -107,7 +107,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         local6.addPropietario(propietario2);
         this.nuevoLocal(local6);
         
-        System.out.println(listaLocal.size());
         
         Usuario usuario1 = new Usuario("nick1", "pw1", LocalDate.parse("2000-01-01"));
         this.nuevoUsuario(usuario1);
