@@ -45,6 +45,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     private HashSet<Review> listaReviews;
     private HashSet<Reserva> listaReserva;
     private HashSet<Local> listaLocal;
+    private SpreadSheet sp;
 
     private BusinessSystem() {
         listaUsuarios = new HashSet<>();
@@ -1169,7 +1170,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     public boolean loadFromFile(File f) {
         try {
             //TODO
-            SpreadSheet.createFromFile(f);
+            this.sp.createFromFile(f);
             return true;
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (IOException ex) {
@@ -1182,7 +1183,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     public boolean saveToFile(File f) {
         try {
             //TODO
-            SpreadSheet.createEmpty(new DefaultTableModel()).saveAs(f);
+            this.sp.saveAs(f);
             return true;
         } catch (IOException ex) {
             Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
