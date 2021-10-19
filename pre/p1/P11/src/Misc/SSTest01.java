@@ -7,15 +7,10 @@ package Misc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import org.jopendocument.model.OpenDocument;
 
 
 

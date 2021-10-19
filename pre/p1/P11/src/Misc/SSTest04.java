@@ -6,23 +6,13 @@
 package Misc;
 
 import BModel.Bar;
-import BModel.Cliente;
-import BModel.Direccion;
 import BModel.Local;
-import BModel.Propietario;
 import BModel.Pub;
-import BModel.Reservable;
 import BModel.Restaurante;
-import BModel.Usuario;
 import BSystem.BusinessSystem;
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
