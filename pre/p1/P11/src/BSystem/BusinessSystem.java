@@ -1058,42 +1058,41 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
         return pubs.toArray(new Pub[pubs.size()]);
     }
-
+    
     public int importaPubs(File f) {
         int contPubs = 0;
         SpreadSheet hojaCalculo;
         try {
             //Obtiene la hoja de calculo del fichero f
             hojaCalculo = SpreadSheet.createFromFile(f);
-            //Numero de columnas
-            int columnaMax = hojaCalculo.getSheet(0).getColumnCount();
             //Numero de filas
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
             //Declaracion de variables
-            String nombreLocal, localidad, provincia, calle, nickPropietario, otro, desc;
+            String nombreLocal, localidad, provincia, calle, nickPropietario,  desc;
             String[] calleSplit;
             int numero;
             Direccion dir;
             Pub nuevoPub;
             
             for (int fila = 0; fila < filaMax; fila++) {
-                desc = "";
                 if(!hojaCalculo.getSheet(0).getCellAt(fila,0).getTextValue().equals("")){
                     //Se introduce los valores guardados en cada columna en su correspondiente campo
-                    nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
-                    calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
-                    localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
-                    provincia = hojaCalculo.getSheet(0).getCellAt(fila, 3).getTextValue();
-                    nickPropietario = hojaCalculo.getSheet(0).getCellAt(fila, 4).getTextValue();
+                    nombreLocal = hojaCalculo.getSheet(0).getCellAt(0, fila).getTextValue();
+                    calleSplit = hojaCalculo.getSheet(0).getCellAt(1, fila).getTextValue().split(" ");
+                    localidad = hojaCalculo.getSheet(0).getCellAt(2, fila).getTextValue();
+                    provincia = hojaCalculo.getSheet(0).getCellAt(3, fila).getTextValue();
+                    nickPropietario = hojaCalculo.getSheet(0).getCellAt(4, fila).getTextValue();
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
                     //Crea la direccion
                     dir = new Direccion(localidad, provincia, calle, numero);
                     //Almacena la descripcion del pub en la variable desc
-                    desc = hojaCalculo.getSheet(0).getCellAt(fila, 5).getTextValue();
+                    desc = hojaCalculo.getSheet(0).getCellAt(5, fila).getTextValue();
                     //Crea pub
                     nuevoPub = new Pub(nombreLocal, dir, desc);
+                    //Asociar pub con propietario
                     asociarLocal(nuevoPub, (Propietario)obtenerUsuario(nickPropietario));
+                    //Si la creación es correcta contar
                     if (nuevoLocal(nuevoPub)) {
                         contPubs++;
                     }
@@ -1128,17 +1127,20 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 tags = null;
                 if(!hojaCalculo.getSheet(0).getCellAt(fila,0).getTextValue().equals("")){
                     //Se introduce los valores guardados en cada columna en su correspondiente campo
-                    nombreLocal = hojaCalculo.getSheet(0).getCellAt(fila, 0).getTextValue();
-                    calleSplit = hojaCalculo.getSheet(0).getCellAt(fila, 1).getTextValue().split(" ");
-                    localidad = hojaCalculo.getSheet(0).getCellAt(fila, 2).getTextValue();
-                    provincia = hojaCalculo.getSheet(0).getCellAt(fila, 3).getTextValue();
-                    nickPropietario = hojaCalculo.getSheet(0).getCellAt(fila, 4).getTextValue();
+                    nombreLocal = hojaCalculo.getSheet(0).getCellAt(0, fila).getTextValue();
+                    calleSplit = hojaCalculo.getSheet(0).getCellAt(1, fila).getTextValue().split(" ");
+                    localidad = hojaCalculo.getSheet(0).getCellAt(2, fila).getTextValue();
+                    provincia = hojaCalculo.getSheet(0).getCellAt(3, fila).getTextValue();
+                    nickPropietario = hojaCalculo.getSheet(0).getCellAt(4, fila).getTextValue();
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
                     dir = new Direccion(localidad, provincia, calle, numero);
                     //Almacena los tags del bar
                     for (int columna = 5; columna < columnaMax; columna++) {
-                        tags[columna - 5] = hojaCalculo.getSheet(0).getCellAt(fila, columna).getTextValue();
+                        if(!hojaCalculo.getSheet(0).getCellAt(columna, fila).getTextValue().equals(""))
+                            tags[columna - 5] = hojaCalculo.getSheet(0).getCellAt(columna, fila).getTextValue();
+                        else
+                            break;
                     }
                     //Crea bar
                     nuevoBar = new Bar(tags, nombreLocal, dir, desc);
@@ -1146,7 +1148,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     if (nuevoLocal(nuevoBar)) {
                         contBares++;
                     }
-                    
                 }
             }
         } catch (IOException ex) {
