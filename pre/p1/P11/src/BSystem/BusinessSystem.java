@@ -1122,7 +1122,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             //Numero de filas
             int filaMax = hojaCalculo.getSheet(0).getRowCount();
             //Declaracion de variables
-            String nombreLocal, localidad, provincia, calle, nickPropietario, otro, desc;
+            String nombreLocal, localidad, provincia, calle, nickPropietario, desc;
             String[] calleSplit;
             String[] tags;
             int numero;
@@ -1142,7 +1142,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     calle = calleSplit[0] + " " + calleSplit[1];
                     numero = Integer.parseInt(calleSplit[2]);
                     dir = new Direccion(localidad, provincia, calle, numero);
-                    //Almacena los tags del bar
+                    /*Almacena los tags del bar. Todo lo escrito a partir de 
+                    columna 5 se considera un tag
+                    */
                     for (int columna = 5; columna < columnaMax; columna++) {
                         if(!hojaCalculo.getSheet(0).getCellAt(columna, fila).getTextValue().equals(""))
                             tags[columna - 5] = hojaCalculo.getSheet(0).getCellAt(columna, fila).getTextValue();
