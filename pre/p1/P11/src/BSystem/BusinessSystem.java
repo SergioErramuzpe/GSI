@@ -1057,7 +1057,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
         return pubs.toArray(new Pub[pubs.size()]);
     }
-    
+    /*Metodo que abre un fichero ods e introduce su contenido 
+    en la lista de pubs. 
+    Entrada: fichero f de una única página
+    Salida: número de pubs introducidos con éxito, entero.
+    */
     public int importaPubs(File f) {
         int contPubs = 0;
         SpreadSheet hojaCalculo;
@@ -1102,7 +1106,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
         return contPubs;
     }
-    
+    /*Metodo que abre un fichero ods e introduce su contenido 
+    en la lista de bares. 
+    Entrada: fichero f de una única página
+    Salida: número de bares introducidos con éxito, entero.
+    */
     public int importaBares(File f) {
         int contBares = 0;
         SpreadSheet hojaCalculo;
