@@ -39,9 +39,9 @@ public class SSTest04 {
 
         //Se crea el spreadsheet con 3 páginas y se le da nombre a cada página
         SpreadSheet sp = SpreadSheet.create(3, 40, 40);
-        Sheet hojaBares = sp.getSheet("Bares");
-        Sheet hojaPubs = sp.getSheet("Pubs");
-        Sheet hojaRestaurantes = sp.getSheet("Restaurantes");
+        Sheet hojaBares = sp.getSheet(0);
+        Sheet hojaPubs = sp.getSheet(1);
+        Sheet hojaRestaurantes = sp.getSheet(2);
            
         //Se lee el hashset de locales
         HashSet<Local> locales = bs.getLocales();
