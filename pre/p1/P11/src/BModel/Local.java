@@ -5,6 +5,8 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
  * Clase padre tanto de Pub, Bar y Restaurante.
  * @author Usuario
  */
-public class Local {
+public class Local implements XMLRepresentable {
 
     private String nombreLocal;
     private Direccion mDireccion;
@@ -207,6 +209,21 @@ public class Local {
      */
     public boolean deletePropietario(Propietario p) {
         return listaPropietarios.remove(p);      
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

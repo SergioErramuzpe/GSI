@@ -5,6 +5,8 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,7 +15,7 @@ import java.util.Objects;
  * 
  * @author Usuario
  */
-public class Contestacion {
+public class Contestacion implements XMLRepresentable{
 
     private Usuario propietario;
     private Review review;
@@ -167,6 +169,21 @@ public class Contestacion {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
