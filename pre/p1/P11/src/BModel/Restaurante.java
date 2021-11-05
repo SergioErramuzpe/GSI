@@ -5,11 +5,13 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+
 /**
  * Clase hija de Local correspondiente a la respresentación de un Restaurante.
  * @author Usuario
  */
-public class Restaurante extends Reservable {
+public class Restaurante extends Reservable implements XMLRepresentable {
 
     private int precio;
     private int capacidadTotal;

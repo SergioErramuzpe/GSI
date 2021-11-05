@@ -5,6 +5,7 @@
  */
 package BModel;
 
+import java.io.File;
 import java.time.LocalDate;
 
 /**
@@ -24,6 +25,22 @@ public class Propietario extends Usuario {
         super(nick, password, fechaNacimiento);
     }
     
-    
+    @Override
+    public String toXML() {
+        return "<propietario>" +
+                "   <nick="+super.getNick()+">" +
+                "   <password="+super.getPassword()+">" +
+                "   <fechaNacimiento"+super.getFechaNacimiento()+">" +
+               "</propietario>";   
+    }
 
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

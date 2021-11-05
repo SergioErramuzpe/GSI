@@ -15,7 +15,7 @@ import java.util.Objects;
  * 
  * @author Usuario
  */
-public class Contestacion implements XMLRepresentable{
+public class Contestacion implements XMLRepresentable {
 
     private Usuario propietario;
     private Review review;
@@ -173,7 +173,12 @@ public class Contestacion implements XMLRepresentable{
 
     @Override
     public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "<Contestacion>" +
+                "   <propietario="+propietario.getNick()+">" +
+                "   <review="+review.toXML()+">" +
+                "   <comentario="+comentario+">" +
+                "   <fechaContestacion="+fechaContestacion.toString()+">" +
+               "</Contestacion>";
     }
 
     @Override

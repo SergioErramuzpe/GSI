@@ -5,6 +5,7 @@
  */
 package BModel;
 
+import java.io.File;
 import java.sql.Time;
 import java.util.Objects;
 
@@ -68,6 +69,27 @@ public class Pub extends Local {
 
     public void setClausura(Time clausura) {
         this.clausura = clausura;
+    }
+    
+    @Override
+    public String toXML() {
+        return "<Pub>" +
+                "   <nombreLocal="+super.getNombreLocal()+">" +
+                "   <descripcion="+super.getDescripcion()+">" +
+                "   <apertura="+apertura.toString()+">" +
+                "   <clausura="+clausura.toString()+">" +
+                super.getmDireccion().toXML()+
+               "</Pub>";   
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

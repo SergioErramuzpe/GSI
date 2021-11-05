@@ -5,16 +5,17 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+
 /**
  * Clase hija de Local correspondiente a la respresentación de un Bar.
  * @author Usuario
  */
-public class Bar extends Reservable {
+public class Bar extends Reservable implements XMLRepresentable {
 
     private String[] tags;
 
    
-
     /**
      * Cada bar tendrá un nombre, dirección y una breve descripción de esta
      * @param tags

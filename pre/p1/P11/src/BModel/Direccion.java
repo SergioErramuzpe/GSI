@@ -5,6 +5,8 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Objects;
  *
  * @author Usuario
  */
-public class Direccion {
+public class Direccion implements XMLRepresentable {
 
     private String localidad; //ciudad
     private String provincia;
@@ -171,4 +173,23 @@ public class Direccion {
         return true;
     }
 
+    @Override
+    public String toXML() {
+        return "<Direccion>" +
+                "   <localidad="+localidad+">" +
+                "   <provincia="+provincia+">" +
+                "   <calle="+calle+">" +
+                "   <numero="+numero+">" +
+               "</Direccion>";
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

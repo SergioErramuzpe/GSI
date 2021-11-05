@@ -5,6 +5,8 @@
  */
 package BModel;
 
+import GSILabs.Serializable.XMLRepresentable;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,7 +14,7 @@ import java.util.Objects;
  * Clase Review
  * @author Usuario
  */
-public class Review {
+public class Review implements XMLRepresentable {
 
     private String comentario;
     private int estrellas;
@@ -185,6 +187,27 @@ public class Review {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toXML() {
+        return "<Review>" +
+                "   <local="+local.getNombreLocal()+">" +
+                "   <cliente="+cliente.getNick()+">" +
+                "   <fechaReview="+fechaReview.toString()+">" +
+                "   <comentario="+comentario+">" +
+                "   <estrellas="+estrellas+">" +
+               "</Review>";
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
