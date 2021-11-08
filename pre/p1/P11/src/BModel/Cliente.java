@@ -24,7 +24,9 @@ public class Cliente extends Usuario {
     public Cliente(String nick, String password, LocalDate fechaNacimiento) {
         super(nick, password, fechaNacimiento);
     }
-    
+    public Cliente(String fromXML) {
+        super(fromXML);
+    }
     @Override
     public String toXML() {
         return "<cliente>" +
