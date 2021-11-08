@@ -55,6 +55,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         listaReserva = new HashSet<>();
         listaLocal = new HashSet<>();
         listaContestacion = new HashSet<>();
+        
     }
 
     /**
@@ -1192,5 +1193,8 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             return false;
         }
     }
-
+    /*public boolean loadXMLFile(File f){
+    
+    }
+*/
 }
