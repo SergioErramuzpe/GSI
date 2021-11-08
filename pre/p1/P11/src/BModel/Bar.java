@@ -30,8 +30,8 @@ public class Bar extends Reservable implements XMLRepresentable {
     }
     public Bar(String fromXML) {
         super(fromXML);
-        
-        this.tags = tags;
+        String[] atr = fromXML.split(";");
+        this.tags = atr[3].split("$");
     }
 
 
