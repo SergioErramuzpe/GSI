@@ -5,7 +5,9 @@
  */
 package BTesting;
 
+
 import BSystem.BusinessSystem;
+import java.io.File;
 
 /**
  *
@@ -18,6 +20,10 @@ public class P03Tester {
      */
     public static void main(String[] args) {
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
+        final File file = new File("test03.xml");
+        bs.crearBBDD();
+        bs.parseXMLFile(file);
+        bs.loadXMLFile(file);
     }
     
 }
