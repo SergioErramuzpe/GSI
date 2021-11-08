@@ -1214,7 +1214,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             objectOutputStream = xstream.createObjectOutputStream(
                     new FileOutputStream(f));        
             
-            String string = xstream.toXML(listaLocal).;
+            String string = xstream.toXML(listaLocal);
             
             objectOutputStream.writeChars(string);
             
