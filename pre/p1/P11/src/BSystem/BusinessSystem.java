@@ -1199,10 +1199,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
-    /*public boolean loadXMLFile(File f){
-    
-    }
-*/
     public void parseXMLFile(File f) throws IOException {
         XStream xstream = new XStream(new StaxDriver());
 
@@ -1214,7 +1210,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             objectOutputStream = xstream.createObjectOutputStream(
                     new FileOutputStream(f));        
             
-            String string = xstream.toXML(listaLocal).;
+            String string = xstream.toXML(listaLocal);
             
             objectOutputStream.writeChars(string);
             
