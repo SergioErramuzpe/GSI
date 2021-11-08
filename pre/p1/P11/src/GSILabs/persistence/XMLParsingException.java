@@ -24,12 +24,12 @@ public class XMLParsingException extends Exception{
     public String getMessage () {
         
         switch (this.codigoError) {
-            case 1: //
-                return "Error: ";
-            case 2: //
-                return "Error: ";
-            case 3: //
-                return "Error: ";
+            case 1: //ParserConfigurationException
+                return "Error: La configuración para escribir en el archivo XML no es correcta";
+            case 2: //SAXException
+                return "Error: Los controladores de evento XML han dado error";
+            case 3: //IOException
+                return "Error: No se puede acceder al archivo XML";
             default:
                 return null; 
         }
