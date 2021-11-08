@@ -8,6 +8,7 @@ package BTesting;
 
 import BSystem.BusinessSystem;
 import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -18,12 +19,12 @@ public class P03Tester {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
         final File file = new File("test03.xml");
         bs.crearBBDD();
         bs.parseXMLFile(file);
-        bs.loadXMLFile(file);
+        
     }
     
 }

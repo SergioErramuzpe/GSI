@@ -19,8 +19,13 @@ import BModel.Restaurante;
 import BModel.Review;
 import BModel.Usuario;
 import GSILabs.persistence.ODSPersistente;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -1193,8 +1198,37 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             return false;
         }
     }
+    
     /*public boolean loadXMLFile(File f){
     
     }
 */
+    public void parseXMLFile(File f) throws IOException {
+        XStream xstream = new XStream(new StaxDriver());
+
+        xstream.autodetectAnnotations(true);
+
+        ObjectOutputStream objectOutputStream;
+        
+        try {
+            objectOutputStream = xstream.createObjectOutputStream(
+                    new FileOutputStream(f));        
+            
+            objectOutputStream.writeObject(listaUsuarios);
+            objectOutputStream.writeObject(listaReviews);
+            objectOutputStream.writeObject(listaReserva);
+            objectOutputStream.writeObject(listaLocal);
+            objectOutputStream.writeObject(listaContestacion);
+            
+            objectOutputStream.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+    }
+
+    public void loadXMLFile(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
