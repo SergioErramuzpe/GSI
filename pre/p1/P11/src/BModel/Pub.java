@@ -7,7 +7,6 @@ package BModel;
 
 import java.io.File;
 import java.sql.Time;
-import java.util.Objects;
 
 /**
  * Clase hija de Local correspondiente a la respresentación de un Pub.
@@ -79,7 +78,7 @@ public class Pub extends Local {
                 "   <apertura="+apertura.toString()+">" +
                 "   <clausura="+clausura.toString()+">" +
                 super.getmDireccion().toXML()+
-               "</Pub>";   
+               "</Pub>";
     }
 
     @Override

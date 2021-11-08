@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
@@ -48,6 +47,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     private SpreadSheet sp;
 
     private BusinessSystem() {
+        
+        /*carga de datos*/
+        
         listaUsuarios = new HashSet<>();
         listaReviews = new HashSet<>();
         listaReserva = new HashSet<>();
