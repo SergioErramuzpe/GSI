@@ -34,6 +34,14 @@ public class Pub extends Local {
     public Pub(String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);
     }
+    public Pub(String fromXML) {
+        super(fromXML);
+        String[] atr = fromXML.split(";");
+        if(atr.length>3){
+            this.apertura = Time.valueOf(atr[3]);
+            this.clausura = Time.valueOf(atr[4]);
+        }
+    }
     /**
      * El getter de la hora de apertura
      * @return

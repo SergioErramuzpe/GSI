@@ -28,6 +28,11 @@ public class Bar extends Reservable implements XMLRepresentable {
         super(nombreLocal, mDireccion, descripcion);
         this.tags = tags;
     }
+    public Bar(String fromXML) {
+        super(fromXML);
+        
+        this.tags = tags;
+    }
 
 
     /**

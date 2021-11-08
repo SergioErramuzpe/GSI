@@ -35,7 +35,12 @@ public class Usuario implements XMLRepresentable{
         this.password = password;
         this.fechaNacimiento = fechaNacimiento;
     }
-
+    public Usuario(String fromXML) {
+        String[] atr = fromXML.split(";");
+        this.nick = atr[0];
+        this.password = atr[1];
+        this.fechaNacimiento = LocalDate.parse(atr[2]);
+    }
     /**
      * El getter del nick de nuestro usuario
      * @return

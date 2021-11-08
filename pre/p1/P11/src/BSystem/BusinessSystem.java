@@ -19,6 +19,7 @@ import BModel.Restaurante;
 import BModel.Review;
 import BModel.Usuario;
 import GSILabs.persistence.ODSPersistente;
+import GSILabs.persistence.XMLParsingException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.File;
@@ -35,7 +36,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * Clase BusinessSystem
@@ -1199,30 +1206,63 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
-    public void parseXMLFile(File f) throws IOException {
-        XStream xstream = new XStream(new StaxDriver());
-
-        xstream.autodetectAnnotations(true);
-
-        ObjectOutputStream objectOutputStream;
+    public static BusinessSystem parseXMLFile(File f){
+        BusinessSystem bs = new BusinessSystem();
         
-        try {
-            objectOutputStream = xstream.createObjectOutputStream(
-                    new FileOutputStream(f));        
-            
-            String string = xstream.toXML(listaLocal);
-            
-            objectOutputStream.writeChars(string);
-            
-            objectOutputStream.close();
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          
+        return bs;
     }
+    /*public boolean loadXMLFile(File file){
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try{
+          // process XML securely, avoid attacks like XML External Entities (XXE)
+          dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
-    public void loadXMLFile(File file) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          // parse XML file
+          DocumentBuilder db = dbf.newDocumentBuilder();
+          Document doc = db.parse(file);
+          doc.getDocumentElement().normalize();
+          
+           // get <staff>
+          NodeList list = doc.getElementsByTagName("Usuario");
+
+          for (int temp = 0; temp < list.getLength(); temp++) {
+
+              Node node = list.item(temp);
+
+              if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                  Element element = (Element) node;
+
+                  // get staff's attribute
+                  String id = element.getAttribute("id");
+
+                  // get text
+                  String firstname = element.getElementsByTagName("firstname").item(0).getTextContent();
+                  String lastname = element.getElementsByTagName("lastname").item(0).getTextContent();
+                  String nickname = element.getElementsByTagName("nickname").item(0).getTextContent();
+
+                  NodeList salaryNodeList = element.getElementsByTagName("salary");
+                  String salary = salaryNodeList.item(0).getTextContent();
+
+                  // get salary's attribute
+                  String currency = salaryNodeList.item(0).getAttributes().getNamedItem("currency").getTextContent();
+
+                  System.out.println("Current Element :" + node.getNodeName());
+                  System.out.println("Staff Id : " + id);
+                  System.out.println("First Name : " + firstname);
+                  System.out.println("Last Name : " + lastname);
+                  System.out.println("Nick Name : " + nickname);
+                  System.out.printf("Salary [Currency] : %,.2f [%s]%n%n", Float.parseFloat(salary), currency);
+
+              }
+          }
+
+        }
+        catch(ParserConfigurationException | SAXException | IOException ex){
+            return false;
+        }
+        return true;
+
     }
+*/    
 }

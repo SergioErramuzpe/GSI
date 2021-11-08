@@ -24,7 +24,13 @@ public class P03Tester {
         final File file = new File("test03.xml");
         bs.crearBBDD();
         bs.parseXMLFile(file);
-        
+        /*if(bs.loadXMLFile(file)){
+            System.out.println("Datos leidos correctamente");
+        }
+        else{
+            System.out.println("");
+        }
+*/
     }
     
 }

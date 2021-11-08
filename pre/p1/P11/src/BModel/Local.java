@@ -34,7 +34,12 @@ public class Local implements XMLRepresentable {
         this.mDireccion = mDireccion;
         this.descripcion = descripcion;
     }
-
+    public Local(String fromXML) {
+        String[] atr = fromXML.split(";");
+        this.nombreLocal = atr[0];
+        this.mDireccion = ;
+        this.descripcion = atr[2];
+    }
     /**
      * Getter del nombre del local
      * @return

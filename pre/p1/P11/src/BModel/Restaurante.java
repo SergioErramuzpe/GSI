@@ -33,7 +33,12 @@ public class Restaurante extends Reservable implements XMLRepresentable {
         this.capacidadTotal = capacidadTotal;
         this.capacidadMesa = capacidadMesa;
     }
-
+    public Restaurante(String fromXML) {
+        super(fromXML);
+        this.precio = precio;
+        this.capacidadTotal = capacidadTotal;
+        this.capacidadMesa = capacidadMesa;
+    }
     /**
      * El getter del precio
      * @return
