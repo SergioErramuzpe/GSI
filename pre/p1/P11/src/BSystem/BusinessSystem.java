@@ -42,6 +42,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -1211,51 +1213,34 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         
         return bs;
     }
-    /*public boolean loadXMLFile(File file){
+    public boolean loadXMLFile(File file){
+        String fromXML = "";
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try{
-          // process XML securely, avoid attacks like XML External Entities (XXE)
-          dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
-          // parse XML file
-          DocumentBuilder db = dbf.newDocumentBuilder();
-          Document doc = db.parse(file);
-          doc.getDocumentElement().normalize();
-          
-           // get <staff>
-          NodeList list = doc.getElementsByTagName("Usuario");
+            // parse XML file
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(file);
+            doc.getDocumentElement().normalize();
 
-          for (int temp = 0; temp < list.getLength(); temp++) {
+             // get <Usuarios>
+            NodeList list = doc.getElementsByTagName("Cliente");
 
-              Node node = list.item(temp);
+            for (int i = 0; i < list.getLength(); i++) {
 
-              if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Node node = list.item(i);
 
-                  Element element = (Element) node;
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
 
-                  // get staff's attribute
-                  String id = element.getAttribute("id");
+                    Element element = (Element) node;
 
-                  // get text
-                  String firstname = element.getElementsByTagName("firstname").item(0).getTextContent();
-                  String lastname = element.getElementsByTagName("lastname").item(0).getTextContent();
-                  String nickname = element.getElementsByTagName("nickname").item(0).getTextContent();
-
-                  NodeList salaryNodeList = element.getElementsByTagName("salary");
-                  String salary = salaryNodeList.item(0).getTextContent();
-
-                  // get salary's attribute
-                  String currency = salaryNodeList.item(0).getAttributes().getNamedItem("currency").getTextContent();
-
-                  System.out.println("Current Element :" + node.getNodeName());
-                  System.out.println("Staff Id : " + id);
-                  System.out.println("First Name : " + firstname);
-                  System.out.println("Last Name : " + lastname);
-                  System.out.println("Nick Name : " + nickname);
-                  System.out.printf("Salary [Currency] : %,.2f [%s]%n%n", Float.parseFloat(salary), currency);
-
-              }
-          }
+                    fromXML = fromXML + element.getAttribute("nick")+";";
+                    fromXML = fromXML + element.getAttribute("password")+";";
+                    fromXML = fromXML + element.getAttribute("fechaNacimiento");
+                    nuevoUsuario(new Cliente(fromXML));
+                }
+            }
 
         }
         catch(ParserConfigurationException | SAXException | IOException ex){
@@ -1263,6 +1248,5 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
         return true;
 
-    }
-*/    
+    } 
 }
