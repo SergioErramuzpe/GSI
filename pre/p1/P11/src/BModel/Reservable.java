@@ -26,5 +26,8 @@ public class Reservable extends Local {
     public Reservable(Local local) {
         super(local.getNombreLocal(), local.getmDireccion(), local.getDescripcion());
     }
+    public Reservable(String fromXML) {
+        super(fromXML);
+    }
   
 }

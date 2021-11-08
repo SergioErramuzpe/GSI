@@ -40,7 +40,12 @@ public class Contestacion implements XMLRepresentable {
         this.comentario = comentario;
         this.fechaContestacion = fechaContestacion;
     }
-
+    public Contestacion(String fromXML) {
+        this.propietario = propietario;
+        this.review = review;
+        this.comentario = comentario;
+        this.fechaContestacion = fechaContestacion;
+    }
     /**
      * Getter de propietario de la contestación
      * @return
