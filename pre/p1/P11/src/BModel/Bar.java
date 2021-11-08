@@ -14,7 +14,7 @@ import GSILabs.Serializable.XMLRepresentable;
 public class Bar extends Reservable implements XMLRepresentable {
 
     private String[] tags;
-    
+
    
     /**
      * Cada bar tendrá un nombre, dirección y una breve descripción de esta
@@ -28,11 +28,7 @@ public class Bar extends Reservable implements XMLRepresentable {
         super(nombreLocal, mDireccion, descripcion);
         this.tags = tags;
     }
-    public Bar(String fromXML) {
-        super(fromXML);
-        
-        this.tags = tags;
-    }
+
 
     /**
      * Getter de los tags de los bares

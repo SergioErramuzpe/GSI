@@ -24,9 +24,7 @@ public class Propietario extends Usuario {
     public Propietario(String nick, String password, LocalDate fechaNacimiento) {
         super(nick, password, fechaNacimiento);
     }
-     public Propietario(String fromXML) {
-        super(fromXML);
-    }
+    
     @Override
     public String toXML() {
         return "<propietario>" +

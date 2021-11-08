@@ -39,13 +39,6 @@ public class Review implements XMLRepresentable {
         this.cliente = cliente;
         this.local = local;
     }
-    public Review(String fromXML) {
-        this.comentario = comentario;
-        this.estrellas = estrellas;
-        this.fechaReview = fechaReview;
-        this.cliente = cliente;
-        this.local = local;
-    }
 
     /**
      * Getter del comentario de la review
