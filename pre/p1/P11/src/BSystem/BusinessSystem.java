@@ -42,6 +42,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -336,19 +337,18 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
 
-    @Override
-    public boolean nuevaContestacion(Contestacion c, Review r) {
+    public boolean nuevaContestacion(Contestacion c) {
 
         try {
 
-            if (tieneContestacion(r)) {
+            if (tieneContestacion(c.getReview())) {
                 throw new ProgramException(11);
             } else if (c.getComentario().length() > 500) {
                 throw new ProgramException(5);
             }
 
             for (Review review : listaReviews) {
-                if (review.equals(r) && listaContestacion.add(c)) {
+                if (review.equals(c.getReview()) && listaContestacion.add(c)) {
                     return true;
                 }
             }
@@ -594,18 +594,17 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
 
-    @Override
-    public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
+    public boolean nuevaReserva(Reserva r) {
 
         try {
 
-            if (!existeNick(c.getNick())) {
+            if (!existeNick(r.getCliente().getNick())) {
                 throw new ProgramException(8);//Error si no existe el nick
-            } else if (!listaLocal.contains((Reservable) r)) {
+            } else if (!listaLocal.contains((Reservable) r.getReservable())) {
                 throw new ProgramException(27);//Error si no existe el local
-            } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now()))) {
+            } else if (r.getLd().isBefore(LocalDate.now()) || (r.getLd().equals(LocalDate.now()) && r.getLt().isBefore(LocalTime.now()))) {
                 throw new ProgramException(32);//Error si fecha y horario anterior a la actual
-            } else if (!listaReserva.add(new Reserva(ld, c, r, lt))) {
+            } else if (!listaReserva.add(r)) {
                 throw new ProgramException(33);//Error si no se puede añadir una reserva
             }
             return true;
@@ -1215,6 +1214,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     }
     public boolean loadXMLFile(File file){
         String fromXML = "";
+        NodeList list;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try{
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -1224,8 +1224,8 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             Document doc = db.parse(file);
             doc.getDocumentElement().normalize();
 
-             // get <Usuarios>
-            NodeList list = doc.getElementsByTagName("Cliente");
+            // get <Cliente>
+            list = doc.getElementsByTagName("Cliente");
 
             for (int i = 0; i < list.getLength(); i++) {
 
@@ -1239,9 +1239,195 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     fromXML = fromXML + element.getAttribute("password")+";";
                     fromXML = fromXML + element.getAttribute("fechaNacimiento");
                     nuevoUsuario(new Cliente(fromXML));
+                    fromXML = "";
                 }
             }
+            
+            // get <Propietario>
+            list = doc.getElementsByTagName("Propietario");
 
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+
+                    fromXML = fromXML + element.getAttribute("nick")+";";
+                    fromXML = fromXML + element.getAttribute("password")+";";
+                    fromXML = fromXML + element.getAttribute("fechaNacimiento");
+                    nuevoUsuario(new Propietario(fromXML));
+                    fromXML = "";
+                }
+            }
+        
+            // get <Bar>
+            list = doc.getElementsByTagName("Bar");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+
+                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
+                        fromXML = fromXML + element.getAttribute("localidad")+"$";
+                        fromXML = fromXML + element.getAttribute("provincia")+"$";
+                        fromXML = fromXML + element.getAttribute("calle")+"$";
+                        fromXML = fromXML + element.getAttribute("numero")+";";
+                    fromXML = fromXML + element.getAttribute("descripcion")+";";
+                    fromXML = fromXML + element.getAttribute("tags");
+                    nuevoLocal(new Bar(fromXML));
+                    fromXML = "";
+                }
+            }
+            
+            // get <Restaurante>
+            list = doc.getElementsByTagName("Restaurante");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+
+                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
+                        fromXML = fromXML + element.getAttribute("localidad")+"$";
+                        fromXML = fromXML + element.getAttribute("provincia")+"$";
+                        fromXML = fromXML + element.getAttribute("calle")+"$";
+                        fromXML = fromXML + element.getAttribute("numero")+";";
+                    fromXML = fromXML + element.getAttribute("descripcion")+";";
+                    fromXML = fromXML + element.getAttribute("precio")+";";
+                    fromXML = fromXML + element.getAttribute("capacidadTotal")+";";
+                    fromXML = fromXML + element.getAttribute("capacidadMesa");
+                    nuevoLocal(new Restaurante(fromXML));
+                    fromXML = "";
+                }
+            }
+            
+            // get <Pub>
+            list = doc.getElementsByTagName("Pub");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+
+                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
+                        fromXML = fromXML + element.getAttribute("localidad")+"$";
+                        fromXML = fromXML + element.getAttribute("provincia")+"$";
+                        fromXML = fromXML + element.getAttribute("calle")+"$";
+                        fromXML = fromXML + element.getAttribute("numero")+";";
+                    fromXML = fromXML + element.getAttribute("descripcion")+";";
+                    fromXML = fromXML + element.getAttribute("apertura")+";";
+                    fromXML = fromXML + element.getAttribute("clausura");
+                    nuevoLocal(new Pub(fromXML));
+                    fromXML = "";
+                }
+            }
+            
+            // get <Reserva>
+            list = doc.getElementsByTagName("Reserva");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+                    fromXML = fromXML + element.getAttribute("descuento")+";";
+                    fromXML = fromXML + element.getAttribute("ld")+";";
+                        fromXML = fromXML + element.getAttribute("nick")+"$";
+                        fromXML = fromXML + element.getAttribute("password")+"$";
+                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
+                        
+                        fromXML = fromXML + element.getAttribute("nombreLocal")+"$";
+                            fromXML = fromXML + element.getAttribute("localidad")+"%";
+                            fromXML = fromXML + element.getAttribute("provincia")+"%";
+                            fromXML = fromXML + element.getAttribute("calle")+"%";
+                            fromXML = fromXML + element.getAttribute("numero")+"$";
+                        fromXML = fromXML + element.getAttribute("descripcion")+";";
+                        
+                    fromXML = fromXML + element.getAttribute("lt");
+                    nuevaReserva(new Reserva(fromXML));
+                    fromXML = "";
+                }
+            }
+            
+            // get <Review>
+            list = doc.getElementsByTagName("Review");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+
+                    fromXML = fromXML + element.getAttribute("comentario")+";";
+                    fromXML = fromXML + element.getAttribute("estrellas")+";";
+                    fromXML = fromXML + element.getAttribute("fechaReview")+";";
+                        fromXML = fromXML + element.getAttribute("nick")+"$";
+                        fromXML = fromXML + element.getAttribute("password")+"$";
+                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
+                        
+                        fromXML = fromXML + element.getAttribute("nombreLocal")+"$";
+                            fromXML = fromXML + element.getAttribute("localidad")+"%";
+                            fromXML = fromXML + element.getAttribute("provincia")+"%";
+                            fromXML = fromXML + element.getAttribute("calle")+"%";
+                            fromXML = fromXML + element.getAttribute("numero")+"$";
+                        fromXML = fromXML + element.getAttribute("descripcion")+";";
+
+                    nuevaReview(new Review(fromXML));
+                    fromXML = "";
+                }
+            }
+            
+            // get <Contestacion>
+            list = doc.getElementsByTagName("Contestacion");
+
+            for (int i = 0; i < list.getLength(); i++) {
+
+                Node node = list.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element element = (Element) node;
+                        fromXML = fromXML + element.getAttribute("nick")+"$";
+                        fromXML = fromXML + element.getAttribute("password")+"$";
+                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
+                        
+                        fromXML = fromXML + element.getAttribute("comentario")+"$";
+                        fromXML = fromXML + element.getAttribute("estrellas")+"$";
+                        fromXML = fromXML + element.getAttribute("fechaReview")+"$";
+                            fromXML = fromXML + element.getAttribute("nick")+"%";
+                            fromXML = fromXML + element.getAttribute("password")+"%";
+                            fromXML = fromXML + element.getAttribute("fechaNacimiento")+"%";
+                        
+                            fromXML = fromXML + element.getAttribute("nombreLocal")+"%";
+                                fromXML = fromXML + element.getAttribute("localidad")+"~";
+                                fromXML = fromXML + element.getAttribute("provincia")+"~";
+                                fromXML = fromXML + element.getAttribute("calle")+"~";
+                                fromXML = fromXML + element.getAttribute("numero")+"%";
+                            fromXML = fromXML + element.getAttribute("descripcion")+";";
+                        
+                    fromXML = fromXML + element.getAttribute("comentario")+";";                   
+                    fromXML = fromXML + element.getAttribute("fechaContestacion")+";";
+                    nuevaContestacion(new Contestacion(fromXML));
+                    fromXML = "";
+                }
+            }
+            
         }
         catch(ParserConfigurationException | SAXException | IOException ex){
             return false;

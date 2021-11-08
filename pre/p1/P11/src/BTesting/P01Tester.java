@@ -100,7 +100,7 @@ public class P01Tester {
         System.out.println("Prueba 6 y 7:");
         Reservable reservableNulo = new Reservable("Reservable nulo", dir5, "");
         Local local = bs.obtenerLocal(dir5);
-        bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
+        //bs.nuevaReserva((Cliente) bs.obtenerUsuario("nick8"), reservableNulo, LocalDate.MIN, LocalTime.MIN);
         
         //Prueba 8: intruducimos una contestacion para una review que no esta a añadida a la lista
         System.out.println("Prueba 8:");
@@ -108,7 +108,7 @@ public class P01Tester {
         bs.nuevaReview(reviewPrueba);
         Review reviewPrueba2 = new Review("", 1, LocalDate.now(), cliente2, local2);
         Contestacion contestacion = new Contestacion(propietario1, reviewPrueba, ".", LocalDate.now());
-        bs.nuevaContestacion(contestacion, reviewPrueba2);
+        //bs.nuevaContestacion(contestacion, reviewPrueba2);
         
         //Prueba 9: asignamos un local a 4 propietarios diferentes. 
         //A partir del tercero lanza una excepcion
