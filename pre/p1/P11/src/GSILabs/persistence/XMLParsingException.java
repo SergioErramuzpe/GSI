@@ -6,32 +6,17 @@
 package GSILabs.persistence;
 
 /**
- *
+ * Clase que gestiona las excepciones relacionadas con la lectura de XML.
  * @author oihan
  */
 public class XMLParsingException extends Exception{
-    private final int codigoError;
     
-    public XMLParsingException(int codigoError) {
-        super();
-        this.codigoError = codigoError;
-    }
-    public int getCode() {
-        return this.codigoError;
-    }
-    
-    @Override
-    public String getMessage () {
-        
-        switch (this.codigoError) {
-            case 1: //ParserConfigurationException
-                return "Error: La configuración para escribir en el archivo XML no es correcta";
-            case 2: //SAXException
-                return "Error: Los controladores de evento XML han dado error";
-            case 3: //IOException
-                return "Error: No se puede acceder al archivo XML";
-            default:
-                return null; 
-        }
+    /**
+     * Se gestionan todas las excepciones como un error relacionado con la lectura del XML.
+     * @param ex
+     * @return 
+     */
+    public String getMessage (Exception ex) {
+        return "Error: ha habido un problema en el parseo del archivo XML dado.";
     }
 }

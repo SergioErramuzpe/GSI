@@ -21,15 +21,10 @@ import BModel.Usuario;
 import GSILabs.Serializable.XMLRepresentable;
 import GSILabs.persistence.ODSPersistente;
 import GSILabs.persistence.XMLParsingException;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -42,19 +37,11 @@ import java.util.logging.Logger;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Clase BusinessSystem
@@ -390,6 +377,13 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
+    /**
+     * Se obtiene una review existente con la introducción de los parámetros de entrada.
+     * @param u
+     * @param l
+     * @param ld
+     * @return 
+     */
     private Review obtenerReview(Usuario u, Local l, LocalDate ld) {
         try {
 
@@ -573,6 +567,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
+    /**
+     * Se obtiene un local por el nombre del mismo
+     * @param nombreLocal
+     * @return 
+     */
     private Local obtenerLocal(String nombreLocal) {
 
         try {
@@ -689,6 +688,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
 
+    /**
+     * Creación de una reserva por una reserva anteriormente creada
+     * @param r
+     * @return 
+     */
     public boolean nuevaReserva(Reserva r) {
 
         try {
@@ -1169,11 +1173,12 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
         return pubs.toArray(new Pub[pubs.size()]);
     }
-    /*Metodo que abre un fichero ods e introduce su contenido 
-    en la lista de pubs. 
-    Entrada: fichero f de una única página
-    Salida: número de pubs introducidos con éxito, entero.
-    */
+    
+    /**
+     * Metodo que abre un fichero ods e introduce su contenido en la lista de pubs. 
+     * @param f
+     * @return 
+     */
     public int importaPubs(File f) {
         int contPubs = 0;
         SpreadSheet hojaCalculo;
@@ -1218,11 +1223,12 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
         return contPubs;
     }
-    /*Metodo que abre un fichero ods e introduce su contenido 
-    en la lista de bares. 
-    Entrada: fichero f de una única página
-    Salida: número de bares introducidos con éxito, entero.
-    */
+
+    /**
+     * Metodo que abre un fichero ods e introduce su contenido en la lista de bares.
+     * @param f
+     * @return 
+     */
     public int importaBares(File f) {
         int contBares = 0;
         SpreadSheet hojaCalculo;
@@ -1302,6 +1308,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
+    /**
+     * Se devuelve una instancia de BusinessSystem en la que se ha cargado el archivo de entrada.
+     * @param f
+     * @return 
+     */
     public BusinessSystem parseXMLFile(File f){
         BusinessSystem bs = getBusinessSystem();
         if (loadXMLFile(f)) {
@@ -1309,6 +1320,12 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         } 
         return null;
     }
+    
+    /**
+     * Se carga un xml en las listas de la clase BusinessSystem.
+     * @param file
+     * @return 
+     */
     public boolean loadXMLFile(File file){
         String fromXML = "";
         NodeList list;
@@ -1508,13 +1525,18 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 }
             }
             
-        } catch(ParserConfigurationException | SAXException | IOException ex){
+        } catch(Exception ex){
+            System.out.println(new XMLParsingException().getMessage(ex));
             return false;
         }
         return true;
 
     } 
 
+    /**
+     * Se crea un String en Xml con todos los objetos de las listas de la clase.
+     * @return 
+     */
     @Override
     public String toXML() {
         String xmlString = "<list>\n";
@@ -1549,6 +1571,13 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         return xmlString + "</list>";
     }
 
+    
+    
+    /**
+     * Se guarda en un archivo xml con todos los objetos de las listas de la clase.
+     * @param f
+     * @return 
+     */
     @Override
     public boolean saveToXML(File f) {
         BufferedWriter br;
@@ -1564,6 +1593,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         return true;
     }
     
+    /**
+     * Se guarda en un archivo xml con todos los objetos de las listas de la clase.
+     * @param filePath
+     * @return 
+     */
     @Override
     public boolean saveToXML(String filePath) {
         BufferedWriter br;

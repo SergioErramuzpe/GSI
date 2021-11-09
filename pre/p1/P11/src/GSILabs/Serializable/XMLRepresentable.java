@@ -20,10 +20,24 @@ import java.io.File;
  */
 public interface XMLRepresentable {
     
+    /**
+     * Traducción del objeto/clase a XML
+     * @return 
+     */
     public String toXML();
     
+    /**
+     * Guardado de un objeto/clase en un archivo XML
+     * @param f
+     * @return 
+     */
     public boolean saveToXML(File f);
     
+    /**
+     * Guardado de un objeto/clase en un archivo XML
+     * @param filePath
+     * @return 
+     */
     public boolean saveToXML(String filePath);
     
 }
