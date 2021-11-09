@@ -1323,7 +1323,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
                     fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("tags").item(0).getTextContent();
+                    fromXML = fromXML + element.getElementsByTagName("tag").item(0).getTextContent();
                     nuevoLocal(new Bar(fromXML));
                     fromXML = "";
                 }

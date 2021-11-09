@@ -39,6 +39,8 @@ public class Local implements XMLRepresentable {
         String[] direccionSplit;
         this.nombreLocal = atr[0];
         direccionSplit = atr[1].split("$");
+        direccionSplit = direccionSplit[0].split("$");
+        System.out.println("sdfasdf"+direccionSplit[0]);
         this.mDireccion = new Direccion(direccionSplit[0], direccionSplit[1], direccionSplit[2], 
                 Integer.parseInt(direccionSplit[3]));
         this.descripcion = atr[2];
