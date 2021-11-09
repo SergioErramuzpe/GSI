@@ -72,7 +72,7 @@ public class Bar extends Reservable implements XMLRepresentable {
     public String toXML() {
         String tag = "";
         for (String tag1 : tags) {
-            tag = tag +"    <tag>" + tag1 + "</tag>\n" +
+            tag = tag +"   <tag>" + tag1 + "</tag>\n" +
                     "";
         }
         return "<Bar>\n" +
