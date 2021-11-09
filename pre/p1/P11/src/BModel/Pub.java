@@ -38,6 +38,8 @@ public class Pub extends Local {
     }
     public Pub(String nombreLocal, Direccion mDireccion, String descripcion) {
         super(nombreLocal, mDireccion, descripcion);
+        this.apertura = null;
+        this.clausura = null;
     }
     public Pub(String fromXML) {
         super(fromXML);
@@ -85,13 +87,20 @@ public class Pub extends Local {
     
     @Override
     public String toXML() {
-        return "<Pub>" +
-                "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>" +
-                "   <descripcion>"+super.getDescripcion()+"</descripcion>" +
-                "   <apertura>"+apertura.toString()+"</apertura>" +
-                "   <clausura>"+clausura.toString()+"</clausura>" +
-                super.getmDireccion().toXML()+
-               "</Pub>";
+        if (apertura == null || clausura == null) {
+            return "<Pub>\n" +
+                    "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
+                    "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
+                    super.getmDireccion().toXML()+
+                   "</Pub>\n";
+        } else 
+            return "<Pub>\n" +
+                    "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
+                    "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
+                    "   <apertura>"+apertura.toString()+"</apertura>\n" +
+                    "   <clausura>"+clausura.toString()+"</clausura>\n" +
+                    super.getmDireccion().toXML()+
+                   "</Pub>\n";
     }
 
     @Override

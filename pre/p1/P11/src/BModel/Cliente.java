@@ -37,11 +37,11 @@ public class Cliente extends Usuario {
     
     @Override
     public String toXML() {
-        return "<Cliente>" +
-                "   <nick>"+super.getNick()+"<nick>" +
-                "   <password>"+super.getPassword()+"<password>" +
-                "   <fechaNacimiento>"+super.getFechaNacimiento()+"</fechaNacimiento>" +
-               "</Cliente>";   
+        return "<Cliente>\n" +
+                "   <nick>"+super.getNick()+"<nick>\n" +
+                "   <password>"+super.getPassword()+"<password>\n" +
+                "   <fechaNacimiento>"+super.getFechaNacimiento()+"</fechaNacimiento>\n" +
+               "</Cliente>\n";   
     }
 
     @Override

@@ -23,9 +23,11 @@ import GSILabs.persistence.ODSPersistente;
 import GSILabs.persistence.XMLParsingException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
@@ -1445,21 +1447,76 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
     @Override
     public String toXML() {
+        String xmlString = "";
+        for (Usuario usuario: listaUsuarios) {
+            if (usuario instanceof Cliente) {
+                xmlString = xmlString + usuario.toXML();
+            } else if (usuario instanceof Propietario) {
+                xmlString = xmlString + usuario.toXML();
+            } else {
+                xmlString = xmlString + usuario.toXML();
+            }
+        }
+        for (Local local : listaLocal) {       
+            if (local instanceof Bar) {
+                xmlString = xmlString + ((Bar)local).toXML();
+            } else if (local instanceof Restaurante) {
+                xmlString = xmlString + ((Restaurante)local).toXML();
+            } else if (local instanceof Pub){
+                System.out.println(((Pub)local).getNombreLocal());
+                xmlString = xmlString + ((Pub)local).toXML();
+            }
+        }
+        for (Review review: listaReviews) {
+            xmlString = xmlString + review.toXML();
+        }
+        for (Contestacion contestacion : listaContestacion) {       
+            xmlString = xmlString + contestacion.toXML();
+        }
+        for (Reserva reserva: listaReserva) {
+            xmlString = xmlString + reserva.toXML();
+        }
+        return xmlString;
         
     }
 
     @Override
     public boolean saveToXML(File f) {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(f,true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
         
-            
- 
-            
-            
- 
-            
+        return true;
+    }
+    
+    @Override
+    public boolean saveToXML(String filePath) {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(new File(filePath),true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
-    public boolean saveToXML(String filePath) {
+    public boolean nuevaContestacion(Contestacion c, Review r) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

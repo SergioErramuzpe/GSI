@@ -175,12 +175,12 @@ public class Direccion implements XMLRepresentable {
 
     @Override
     public String toXML() {
-        return "    <Direccion>" +
-                "       <localidad="+localidad+">" +
-                "       <provincia="+provincia+">" +
-                "       <calle="+calle+">" +
-                "       <numero="+numero+">" +
-               "    </Direccion>";
+        return "    <Direccion>\n" +
+                "       <localidad>"+localidad+"</localidad>\n" +
+                "       <provincia>"+provincia+"</provincia>\n" +
+                "       <calle>"+calle+"</calle>\n" +
+                "       <numero>"+numero+"</numero>\n" +
+               "    </Direccion>\n";
     }
 
     @Override

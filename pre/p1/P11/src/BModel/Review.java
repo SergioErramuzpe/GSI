@@ -204,13 +204,13 @@ public class Review implements XMLRepresentable {
 
     @Override
     public String toXML() {
-        return "<Review>" +
-                "   <local>"+local.getNombreLocal()+"</local>" +
-                "   <cliente>"+cliente.getNick()+"</cliente>" +
-                "   <fechaReview>"+fechaReview.toString()+"</fechaReview>" +
-                "   <comentario>"+comentario+"</comentario>" +
-                "   <estrellas>"+estrellas+"</estrellas>" +
-               "</Review>";
+        return "<Review>\n" +
+                "   <local>"+local.getNombreLocal()+"</local>\n" +
+                "   <cliente>"+cliente.getNick()+"</cliente>\n" +
+                "   <fechaReview>"+fechaReview.toString()+"</fechaReview>\n" +
+                "   <comentario>"+comentario+"</comentario>\n" +
+                "   <estrellas>"+estrellas+"</estrellas>\n" +
+               "</Review>\n";
     }
 
     @Override

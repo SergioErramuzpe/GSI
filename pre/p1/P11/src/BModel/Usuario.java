@@ -154,11 +154,11 @@ public class Usuario implements XMLRepresentable {
 
     @Override
     public String toXML() {
-        return "<Usuario>" +
-                "   <nick>"+nick+ "</nick>"+
-                "   <password>"+password+"</password>" +
-                "   <fechaNacimiento>"+fechaNacimiento.toString()+"</fechaNacimiento>" +
-               "</Usuario>";   
+        return "<Usuario>\n" +
+                "   <nick>"+nick+ "</nick>\n"+
+                "   <password>"+password+"</password>\n" +
+                "   <fechaNacimiento>"+fechaNacimiento.toString()+"</fechaNacimiento>\n" +
+               "</Usuario>\n";   
     }
 
     @Override

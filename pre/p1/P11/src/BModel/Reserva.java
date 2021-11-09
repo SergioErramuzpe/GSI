@@ -231,13 +231,13 @@ public class Reserva implements XMLRepresentable {
 
     @Override
     public String toXML() {
-        return "<Reserva>" +
-                "   <descuento>"+descuento+"</descuento>" +
-                "   <ld>"+ld+"</ld>" +
-                "   <cliente>"+cliente.getNick()+"</cliente>" +
-                "   <reservable>"+reservable.getNombreLocal()+"</reservable>" +
-                "   <lt>"+lt.toString()+"</lt>" +
-               "</Reserva>";
+        return "<Reserva>\n" +
+                "   <descuento>"+descuento+"</descuento>\n" +
+                "   <ld>"+ld+"</ld>\n" +
+                "   <cliente>"+cliente.getNick()+"</cliente>\n" +
+                "   <reservable>"+reservable.getNombreLocal()+"</reservable>\n" +
+                "   <lt>"+lt.toString()+"</lt>\n" +
+               "</Reserva>\n";
     }
 
     @Override
