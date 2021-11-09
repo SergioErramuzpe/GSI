@@ -339,7 +339,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
-    public Review obtenerReview(Usuario u, Local l, LocalDate ld) {
+    private Review obtenerReview(Usuario u, Local l, LocalDate ld) {
         try {
 
             if (!existeReview(u,l,ld)) {
@@ -522,7 +522,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
     }
     
-    public Local obtenerLocal(String nombreLocal) {
+    private Local obtenerLocal(String nombreLocal) {
 
         try {
 
@@ -1253,7 +1253,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     
     public static BusinessSystem parseXMLFile(File f){
         BusinessSystem bs = new BusinessSystem();
-        
         return bs;
     }
     public boolean loadXMLFile(File file){
@@ -1318,9 +1317,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     Element element = (Element) node;
 
                     fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"%";
                     fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("tag").item(0).getTextContent();
@@ -1341,9 +1340,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     Element element = (Element) node;
 
                     fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"%";
                     fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("precio").item(0).getTextContent()+";";
@@ -1366,13 +1365,12 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     Element element = (Element) node;
 
                     fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
-                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"%";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"%";
                     fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
                     fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("apertura").item(0).getTextContent()+";";
-                    fromXML = fromXML + element.getElementsByTagName("clausura").item(0).getTextContent();
+                    
                     nuevoLocal(new Pub(fromXML));
                     fromXML = "";
                 }
@@ -1456,8 +1454,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 }
             }
             
-        }
-        catch(ParserConfigurationException | SAXException | IOException ex){
+        } catch(ParserConfigurationException | SAXException | IOException ex){
             return false;
         }
         return true;
