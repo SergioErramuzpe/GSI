@@ -38,8 +38,8 @@ public class Cliente extends Usuario {
     @Override
     public String toXML() {
         return "<Cliente>\n" +
-                "   <nick>"+super.getNick()+"<nick>\n" +
-                "   <password>"+super.getPassword()+"<password>\n" +
+                "   <nick>"+super.getNick()+"</nick>\n" +
+                "   <password>"+super.getPassword()+"</password>\n" +
                 "   <fechaNacimiento>"+super.getFechaNacimiento()+"</fechaNacimiento>\n" +
                "</Cliente>\n";   
     }
