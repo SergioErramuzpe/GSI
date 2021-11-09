@@ -350,6 +350,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     return (Review)r;
                 }
             }
+            return null;
         } catch (ProgramException ex) {
 
             if (ex.getCode() == 10) {
