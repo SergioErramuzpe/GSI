@@ -338,6 +338,28 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             return false;
         }
     }
+    
+    public Review obtenerReview(Usuario u, Local l, LocalDate ld) {
+        try {
+
+            if (!existeReview(u,l,ld)) {
+                throw new ProgramException(18);//Salta si no se puede verificar el Nick
+            }
+            for (Review r : listaReviews) {
+                if (r.getCliente().equals(u) && r.getLocal().equals(l) && r.getFechaReview().equals(ld)) {
+                    return (Review)r;
+                }
+            }
+        } catch (ProgramException ex) {
+
+            if (ex.getCode() == 10) {
+                System.out.println(ex.getMessage());
+            }
+
+            return null;
+        }
+        
+    }
 
     public boolean nuevaContestacion(Contestacion c) {
 
@@ -1421,26 +1443,11 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                     
                     Contestacion contestacion = new Contestacion(fromXML);
                     
-                    contestacion.setPropietario(obtenerUsuario(element.getElementsByTagName("nick").item(0).getTextContent()));
-                    contestacion.setReview();
-                    
-                        fromXML = fromXML + element.getAttribute("nick")+"$";
-                        fromXML = fromXML + element.getAttribute("password")+"$";
-                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
-                        
-                        fromXML = fromXML + element.getAttribute("comentario")+"$";
-                        fromXML = fromXML + element.getAttribute("estrellas")+"$";
-                        fromXML = fromXML + element.getAttribute("fechaReview")+"$";
-                            fromXML = fromXML + element.getAttribute("nick")+"%";
-                            fromXML = fromXML + element.getAttribute("password")+"%";
-                            fromXML = fromXML + element.getAttribute("fechaNacimiento")+"%";
-                        
-                            fromXML = fromXML + element.getAttribute("nombreLocal")+"%";
-                                fromXML = fromXML + element.getAttribute("localidad")+"~";
-                                fromXML = fromXML + element.getAttribute("provincia")+"~";
-                                fromXML = fromXML + element.getAttribute("calle")+"~";
-                                fromXML = fromXML + element.getAttribute("numero")+"%";
-                            fromXML = fromXML + element.getAttribute("descripcion")+";";
+                    contestacion.setPropietario(obtenerUsuario(element.getElementsByTagName("propietario").item(0).getTextContent()));
+                    Usuario user = obtenerUsuario(element.getElementsByTagName("nick").item(0).getTextContent());
+                    Local local = obtenerLocal(element.getElementsByTagName("nombreLocal").item(0).getTextContent());
+                    LocalDate date = LocalDate.parse(element.getElementsByTagName("fechaReview").item(0).getTextContent());
+                    contestacion.setReview(obtenerReview(user,local,date));
                         
                     
                     nuevaContestacion(contestacion);
