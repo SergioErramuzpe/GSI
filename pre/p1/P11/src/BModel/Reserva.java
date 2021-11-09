@@ -67,10 +67,8 @@ public class Reserva implements XMLRepresentable {
     }
     public Reserva(String fromXML) {
         String[] atr = fromXML.split(";");
-        this.cliente = new Cliente(atr[0]);
-        this.reservable = new Reservable(atr[1]);
-        this.ld = LocalDate.parse(atr[2]);
-        this.lt = LocalTime.parse(atr[3]);
+        this.ld = LocalDate.parse(atr[0]);
+        this.lt = LocalTime.parse(atr[1]);
     }
     public Reserva () {}
 
