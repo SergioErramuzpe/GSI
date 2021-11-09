@@ -49,8 +49,6 @@ public class Review implements XMLRepresentable {
         this.comentario = atr[0];
         this.estrellas = Integer.parseInt(atr[1]);
         this.fechaReview = LocalDate.parse(atr[2]);
-        this.cliente = new Cliente(atr[3]);
-        this.local = new Local(atr[4]);
     }
 
     /**
