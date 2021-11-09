@@ -70,11 +70,17 @@ public class Bar extends Reservable implements XMLRepresentable {
     
     @Override
     public String toXML() {
+        String tag = "";
+        for (String tag1 : tags) {
+            tag = tag +"    <tag>" + tag1 + "</tag>" +
+                    "";
+        }
         return "<Bar>" +
-                "   <nick="+super.getNick()+">" +
-                "   <password="+super.getPassword()+">" +
-                "   <fechaNacimiento"+super.getFechaNacimiento()+">" +
-               "</Bar>";   
+                "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>" +
+                "   <descripcion>"+super.getDescripcion()+"</descripcion>" +
+                tag +
+                super.getmDireccion().toXML() +
+               "</Bar>";
     }
 
     @Override

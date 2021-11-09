@@ -6,6 +6,12 @@
 package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase hija de Local correspondiente a la respresentación de un Restaurante.
@@ -101,6 +107,48 @@ public class Restaurante extends Reservable implements XMLRepresentable {
     @Override
     public String toString() {
         return "Restaurante{" + "precio=" + precio + ", capacidadTotal=" + capacidadTotal + ", capacidadMesa=" + capacidadMesa + '}';
+    }
+    
+    @Override
+    public String toXML() {
+        return "<Pub>" +
+                "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>" +
+                "   <descripcion>"+super.getDescripcion()+"</descripcion>" +
+                "   <precio>"+precio+"</precio>" +
+                "   <capacidadTotal>"+capacidadTotal+"</capacidadTotal>" +
+                "   <capacidadMesa>"+capacidadMesa+"</capacidadMesa>" +
+                super.getmDireccion().toXML()+
+               "</Pub>";
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(f,true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(new File(filePath),true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
 
 }

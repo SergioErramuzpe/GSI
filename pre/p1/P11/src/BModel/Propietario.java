@@ -5,8 +5,13 @@
  */
 package BModel;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase hija de Usuario correspondiente a la respresentación de un Propietario.
@@ -29,20 +34,40 @@ public class Propietario extends Usuario {
     }
     @Override
     public String toXML() {
-        return "<propietario>" +
-                "   <nick="+super.getNick()+">" +
-                "   <password="+super.getPassword()+">" +
-                "   <fechaNacimiento"+super.getFechaNacimiento()+">" +
-               "</propietario>";   
+        return "<Propietario>" +
+                "   <nick>"+super.getNick()+"<nick>" +
+                "   <password>"+super.getPassword()+"<password>" +
+                "   <fechaNacimiento>"+super.getFechaNacimiento()+"</fechaNacimiento>" +
+               "</Propietario>";   
     }
 
     @Override
     public boolean saveToXML(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(f,true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public boolean saveToXML(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(new File(filePath),true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
 }
