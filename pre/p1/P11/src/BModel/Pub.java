@@ -90,16 +90,16 @@ public class Pub extends Local {
         if (apertura == null || clausura == null) {
             return "<Pub>\n" +
                     "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
-                    "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
                     super.getmDireccion().toXML()+
+                    "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +                 
                    "</Pub>\n";
         } else 
             return "<Pub>\n" +
                     "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
+                    super.getmDireccion().toXML()+
                     "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
                     "   <apertura>"+apertura.toString()+"</apertura>\n" +
-                    "   <clausura>"+clausura.toString()+"</clausura>\n" +
-                    super.getmDireccion().toXML()+
+                    "   <clausura>"+clausura.toString()+"</clausura>\n" +   
                    "</Pub>\n";
     }
 

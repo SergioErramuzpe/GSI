@@ -77,9 +77,9 @@ public class Bar extends Reservable implements XMLRepresentable {
         tag = tag + "</tag>\n";
         return "<Bar>\n" +
                 "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
+                super.getmDireccion().toXML()+
                 "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
                 tag +
-                super.getmDireccion().toXML() +
                "</Bar>\n";
     }
 

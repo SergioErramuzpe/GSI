@@ -35,8 +35,8 @@ public class Propietario extends Usuario {
     @Override
     public String toXML() {
         return "<Propietario>\n" +
-                "   <nick>"+super.getNick()+"<nick>\n" +
-                "   <password>"+super.getPassword()+"<password>\n" +
+                "   <nick>"+super.getNick()+"</nick>\n" +
+                "   <password>"+super.getPassword()+"</password>\n" +
                 "   <fechaNacimiento>"+super.getFechaNacimiento()+"</fechaNacimiento>\n" +
                "</Propietario>\n";   
     }

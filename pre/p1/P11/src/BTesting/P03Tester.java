@@ -20,23 +20,19 @@ public class P03Tester {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        /*BusinessSystem bs = BusinessSystem.getBusinessSystem();
-        final File file = new File("test03.xml");
+        BusinessSystem bs = BusinessSystem.getBusinessSystem();
+        final File file = new File("pruebaXML.xml");
         bs.crearBBDD();
-        bs.parseXMLFile(file);
+        bs.saveToXML(file);
+        bs.loadXMLFile(file);
         /*if(bs.loadXMLFile(file)){
             System.out.println("Datos leidos correctamente");
         }
         else{
             System.out.println("");
         }
-*/
+        */
         
-        BusinessSystem bs = BusinessSystem.getBusinessSystem();
-        
-        final File file = new File("pruebaXML.xml");
-        bs.crearBBDD();
-        bs.saveToXML(file);
         
     }
     

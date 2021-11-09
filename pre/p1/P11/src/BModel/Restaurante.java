@@ -113,11 +113,11 @@ public class Restaurante extends Reservable implements XMLRepresentable {
     public String toXML() {
         return "<Restaurante>\n" +
                 "   <nombreLocal>"+super.getNombreLocal()+"</nombreLocal>\n" +
+                super.getmDireccion().toXML()+
                 "   <descripcion>"+super.getDescripcion()+"</descripcion>\n" +
                 "   <precio>"+precio+"</precio>\n" +
                 "   <capacidadTotal>"+capacidadTotal+"</capacidadTotal>\n" +
                 "   <capacidadMesa>"+capacidadMesa+"</capacidadMesa>\n" +
-                super.getmDireccion().toXML()+
                "</Restaurante>\n";
     }
 
