@@ -22,8 +22,7 @@ public class P03Tester {
     public static void main(String[] args) throws IOException {
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
         final File file = new File("pruebaXML.xml");
-        bs.crearBBDD();
-        bs.saveToXML(file);
+        
         bs.loadXMLFile(file);
         /*if(bs.loadXMLFile(file)){
             System.out.println("Datos leidos correctamente");

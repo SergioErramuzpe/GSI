@@ -498,6 +498,25 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             return null;
         }
     }
+    
+    public Local obtenerLocal(String nombreLocal) {
+
+        try {
+
+            for (Local local : listaLocal) {
+                if (local.getNombreLocal().equals(nombreLocal)) {
+                    return local;
+                }
+            }
+
+            throw new ProgramException(27); //El local no existe
+
+        } catch (ProgramException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 
     @Override
     public boolean asociarLocal(Local l, Propietario p) {
@@ -1236,10 +1255,10 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
-
-                    fromXML = fromXML + element.getAttribute("nick")+";";
-                    fromXML = fromXML + element.getAttribute("password")+";";
-                    fromXML = fromXML + element.getAttribute("fechaNacimiento");
+                    
+                    fromXML = fromXML + element.getElementsByTagName("nick").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("password").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("fechaNacimiento").item(0).getTextContent();
                     nuevoUsuario(new Cliente(fromXML));
                     fromXML = "";
                 }
@@ -1256,9 +1275,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
                     Element element = (Element) node;
 
-                    fromXML = fromXML + element.getAttribute("nick")+";";
-                    fromXML = fromXML + element.getAttribute("password")+";";
-                    fromXML = fromXML + element.getAttribute("fechaNacimiento");
+                    fromXML = fromXML + element.getElementsByTagName("nick").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("password").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("fechaNacimiento").item(0).getTextContent();
                     nuevoUsuario(new Propietario(fromXML));
                     fromXML = "";
                 }
@@ -1275,13 +1294,13 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
                     Element element = (Element) node;
 
-                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
-                        fromXML = fromXML + element.getAttribute("localidad")+"$";
-                        fromXML = fromXML + element.getAttribute("provincia")+"$";
-                        fromXML = fromXML + element.getAttribute("calle")+"$";
-                        fromXML = fromXML + element.getAttribute("numero")+";";
-                    fromXML = fromXML + element.getAttribute("descripcion")+";";
-                    fromXML = fromXML + element.getAttribute("tags");
+                    fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("tags").item(0).getTextContent();
                     nuevoLocal(new Bar(fromXML));
                     fromXML = "";
                 }
@@ -1298,15 +1317,15 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
                     Element element = (Element) node;
 
-                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
-                        fromXML = fromXML + element.getAttribute("localidad")+"$";
-                        fromXML = fromXML + element.getAttribute("provincia")+"$";
-                        fromXML = fromXML + element.getAttribute("calle")+"$";
-                        fromXML = fromXML + element.getAttribute("numero")+";";
-                    fromXML = fromXML + element.getAttribute("descripcion")+";";
-                    fromXML = fromXML + element.getAttribute("precio")+";";
-                    fromXML = fromXML + element.getAttribute("capacidadTotal")+";";
-                    fromXML = fromXML + element.getAttribute("capacidadMesa");
+                    fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("precio").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("capacidadTotal").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("capacidadMesa").item(0).getTextContent();
                     nuevoLocal(new Restaurante(fromXML));
                     fromXML = "";
                 }
@@ -1323,14 +1342,14 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
                     Element element = (Element) node;
 
-                    fromXML = fromXML + element.getAttribute("nombreLocal")+";";
-                        fromXML = fromXML + element.getAttribute("localidad")+"$";
-                        fromXML = fromXML + element.getAttribute("provincia")+"$";
-                        fromXML = fromXML + element.getAttribute("calle")+"$";
-                        fromXML = fromXML + element.getAttribute("numero")+";";
-                    fromXML = fromXML + element.getAttribute("descripcion")+";";
-                    fromXML = fromXML + element.getAttribute("apertura")+";";
-                    fromXML = fromXML + element.getAttribute("clausura");
+                    fromXML = fromXML + element.getElementsByTagName("nombreLocal").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("localidad").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("provincia").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("calle").item(0).getTextContent()+"$";
+                    fromXML = fromXML + element.getElementsByTagName("numero").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("descripcion").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("apertura").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("clausura").item(0).getTextContent();
                     nuevoLocal(new Pub(fromXML));
                     fromXML = "";
                 }
@@ -1346,21 +1365,17 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
-                    fromXML = fromXML + element.getAttribute("descuento")+";";
-                    fromXML = fromXML + element.getAttribute("ld")+";";
-                        fromXML = fromXML + element.getAttribute("nick")+"$";
-                        fromXML = fromXML + element.getAttribute("password")+"$";
-                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
-                        
-                        fromXML = fromXML + element.getAttribute("nombreLocal")+"$";
-                            fromXML = fromXML + element.getAttribute("localidad")+"%";
-                            fromXML = fromXML + element.getAttribute("provincia")+"%";
-                            fromXML = fromXML + element.getAttribute("calle")+"%";
-                            fromXML = fromXML + element.getAttribute("numero")+"$";
-                        fromXML = fromXML + element.getAttribute("descripcion")+";";
-                        
-                    fromXML = fromXML + element.getAttribute("lt");
-                    nuevaReserva(new Reserva(fromXML));
+                   
+                    
+                    fromXML = fromXML + element.getElementsByTagName("descuento").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("ld").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("lt").item(0).getTextContent();
+                            
+                    Reserva reserva = new Reserva(fromXML);
+                    reserva.setCliente(obtenerUsuario(element.getElementsByTagName("nick").item(0).getTextContent()));
+                    reserva.setReservable((Reservable)obtenerLocal(element.getElementsByTagName("nombreLocal").item(0).getTextContent()));
+                                    
+                    nuevaReserva(reserva);
                     fromXML = "";
                 }
             }
@@ -1376,21 +1391,16 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
                     Element element = (Element) node;
 
-                    fromXML = fromXML + element.getAttribute("comentario")+";";
-                    fromXML = fromXML + element.getAttribute("estrellas")+";";
-                    fromXML = fromXML + element.getAttribute("fechaReview")+";";
-                        fromXML = fromXML + element.getAttribute("nick")+"$";
-                        fromXML = fromXML + element.getAttribute("password")+"$";
-                        fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
-                        
-                        fromXML = fromXML + element.getAttribute("nombreLocal")+"$";
-                            fromXML = fromXML + element.getAttribute("localidad")+"%";
-                            fromXML = fromXML + element.getAttribute("provincia")+"%";
-                            fromXML = fromXML + element.getAttribute("calle")+"%";
-                            fromXML = fromXML + element.getAttribute("numero")+"$";
-                        fromXML = fromXML + element.getAttribute("descripcion")+";";
+                    fromXML = fromXML + element.getElementsByTagName("comentario").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("estrellas").item(0).getTextContent()+";";
+                    fromXML = fromXML + element.getElementsByTagName("fechaReview").item(0).getTextContent();
+                    
+                    
+                    Review review = new Review(fromXML);
+                    review.setCliente(obtenerUsuario(element.getElementsByTagName("nick").item(0).getTextContent()));
+                    review.setLocal(obtenerLocal(element.getElementsByTagName("nombreLocal").item(0).getTextContent()));
 
-                    nuevaReview(new Review(fromXML));
+                    nuevaReview(review);
                     fromXML = "";
                 }
             }
@@ -1405,6 +1415,15 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
+                    
+                    fromXML = fromXML + element.getElementsByTagName("comentario").item(0).getTextContent()+";";                   
+                    fromXML = fromXML + element.getElementsByTagName("fechaContestacion").item(0).getTextContent();
+                    
+                    Contestacion contestacion = new Contestacion(fromXML);
+                    
+                    contestacion.setPropietario(obtenerUsuario(element.getElementsByTagName("nick").item(0).getTextContent()));
+                    contestacion.setReview();
+                    
                         fromXML = fromXML + element.getAttribute("nick")+"$";
                         fromXML = fromXML + element.getAttribute("password")+"$";
                         fromXML = fromXML + element.getAttribute("fechaNacimiento")+";";
@@ -1423,9 +1442,8 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
                                 fromXML = fromXML + element.getAttribute("numero")+"%";
                             fromXML = fromXML + element.getAttribute("descripcion")+";";
                         
-                    fromXML = fromXML + element.getAttribute("comentario")+";";                   
-                    fromXML = fromXML + element.getAttribute("fechaContestacion")+";";
-                    nuevaContestacion(new Contestacion(fromXML));
+                    
+                    nuevaContestacion(contestacion);
                     fromXML = "";
                 }
             }
@@ -1440,7 +1458,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
     @Override
     public String toXML() {
-        String xmlString = "";
+        String xmlString = "<list>\n";
         for (Usuario usuario: listaUsuarios) {
             if (usuario instanceof Cliente) {
                 xmlString = xmlString + usuario.toXML();
@@ -1469,7 +1487,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         for (Reserva reserva: listaReserva) {
             xmlString = xmlString + reserva.toXML();
         }
-        return xmlString;
+        return xmlString + "</list>";
     }
 
     @Override

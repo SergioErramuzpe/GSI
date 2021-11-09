@@ -187,7 +187,7 @@ public class Contestacion implements XMLRepresentable {
     public String toXML() {
         return "<Contestacion>\n" +
                 "   <propietario>"+propietario.getNick()+"<propietario>\n" +
-                "   <review>"+review.toXML()+"<review>\n" +
+                "   "+review.toXML() +
                 "   <comentario>"+comentario+"<comentario>\n" +
                 "   <fechaContestacion>"+fechaContestacion.toString()+"<fechaContestacion>\n" +
                "</Contestacion>\n";
