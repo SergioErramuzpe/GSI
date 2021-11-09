@@ -135,13 +135,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         local6.addPropietario(propietario2);
         this.nuevoLocal(local6);
         
-        
-        Usuario usuario1 = new Usuario("nick1", "pw1", LocalDate.parse("2000-01-01"));
-        this.nuevoUsuario(usuario1);
-        Usuario usuario2 = new Usuario("nick2", "pw2", LocalDate.parse("2000-01-01"));
-        this.nuevoUsuario(usuario2);
-        Usuario usuario3 = new Usuario("nick3", "pw3", LocalDate.parse("2000-01-01"));
-        this.nuevoUsuario(usuario3);
         Cliente cliente1 = new Cliente("nick8", "pw8", LocalDate.parse("2000-01-01"));
         this.nuevoUsuario(cliente1);
         Cliente cliente2 = new Cliente("nick9", "pw9", LocalDate.parse("2000-01-01"));
@@ -1477,7 +1470,6 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
             xmlString = xmlString + reserva.toXML();
         }
         return xmlString;
-        
     }
 
     @Override
