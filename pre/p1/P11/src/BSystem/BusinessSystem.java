@@ -1504,11 +1504,57 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
     @Override
     public boolean nuevaContestacion(Contestacion c, Review r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            if (tieneContestacion(r)) { 
+                throw new ProgramException(11);
+            } else if (c.getComentario().length() > 500) {
+                throw new ProgramException(5);
+            }
+            
+            for (Review review : listaReviews) {
+                if (review.equals(r) && listaContestacion.add(c)) {
+                    return true;
+                }
+            }
+            throw new ProgramException(20); //Error si no se ha podido añadir la contestacion
+
+        } catch (ProgramException ex) {
+
+            if (ex.getCode() != 11) {
+                System.out.println(ex.getMessage()); //Se crea la contestacion si la review no esta contestada
+            }
+            return false;
+        }
+
     }
 
     @Override
     public boolean nuevaReserva(Cliente c, Reservable r, LocalDate ld, LocalTime lt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            if (!existeNick(c.getNick())) {
+                throw new ProgramException(8);//Error si no existe el nick
+            } else if (!listaLocal.contains((Reservable) r)) {
+                throw new ProgramException(27);//Error si no existe el local
+            } else if (ld.isBefore(LocalDate.now()) || (ld.equals(LocalDate.now()) && lt.isBefore(LocalTime.now()))) {
+                throw new ProgramException(32);//Error si fecha y horario anterior a la actual
+            } else if (!listaReserva.add(new Reserva(ld, c, r, lt))) {
+                throw new ProgramException(33);//Error si no se puede añadir una reserva
+            }
+            
+            return true;
+            
+        } catch (ProgramException ex) {
+
+            if (ex.getCode() != 8) {
+                System.out.println(ex.getMessage());
+            }
+
+            return false;
+        }
     }
+
+        
 }
+
