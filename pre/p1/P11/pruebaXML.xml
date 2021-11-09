@@ -1,0 +1,121 @@
+<Cliente>
+   <nick>nick9<nick>
+   <password>pw9<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Cliente>
+<Cliente>
+   <nick>nick8<nick>
+   <password>pw8<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Cliente>
+<Propietario>
+   <nick>nick7<nick>
+   <password>pw7<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Propietario>
+<Propietario>
+   <nick>nick6<nick>
+   <password>pw6<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Propietario>
+<Propietario>
+   <nick>nick5<nick>
+   <password>pw5<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Propietario>
+<Propietario>
+   <nick>nick4<nick>
+   <password>pw4<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Propietario>
+<Usuario>
+   <nick>nick3</nick>
+   <password>pw3</password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Usuario>
+<Usuario>
+   <nick>nick2</nick>
+   <password>pw2</password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Usuario>
+<Usuario>
+   <nick>nick1</nick>
+   <password>pw1</password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Usuario>
+<Cliente>
+   <nick>nick10<nick>
+   <password>pw10<password>
+   <fechaNacimiento>2000-01-01</fechaNacimiento>
+</Cliente>
+<Bar>
+   <nombreLocal>Local 2</nombreLocal>
+   <descripcion>Bar informal para comer ramen</descripcion>
+    <tag>asiático</tag>
+    <tag>ramen</tag>
+    <Direccion>
+       <localidad>Pueblo 2</localidad>
+       <provincia>Provincia 2</provincia>
+       <calle>Calle 2</calle>
+       <numero>2</numero>
+    </Direccion>
+</Bar>
+<Restaurante>
+   <nombreLocal>Local 5</nombreLocal>
+   <descripcion>Restaurante francés</descripcion>
+   <precio>20</precio>
+   <capacidadTotal>40</capacidadTotal>
+   <capacidadMesa>6</capacidadMesa>
+    <Direccion>
+       <localidad>Pueblo 5</localidad>
+       <provincia>Provincia 5</provincia>
+       <calle>Calle 5</calle>
+       <numero>5</numero>
+    </Direccion>
+</Restaurante>
+<Restaurante>
+   <nombreLocal>Local 6</nombreLocal>
+   <descripcion>Restaurante Italiano</descripcion>
+   <precio>15</precio>
+   <capacidadTotal>80</capacidadTotal>
+   <capacidadMesa>10</capacidadMesa>
+    <Direccion>
+       <localidad>Pueblo 6</localidad>
+       <provincia>Provincia 6</provincia>
+       <calle>Calle 6</calle>
+       <numero>6</numero>
+    </Direccion>
+</Restaurante>
+<Bar>
+   <nombreLocal>Local 1</nombreLocal>
+   <descripcion>Bar español clásico</descripcion>
+    <tag>español</tag>
+    <tag>tapas</tag>
+    <tag>carnes</tag>
+    <Direccion>
+       <localidad>rueblo 1</localidad>
+       <provincia>Provincia 1</provincia>
+       <calle>Calle 1</calle>
+       <numero>1</numero>
+    </Direccion>
+</Bar>
+<Pub>
+   <nombreLocal>Local 4</nombreLocal>
+   <descripcion>Disco-Pub</descripcion>
+    <Direccion>
+       <localidad>Pueblo 4</localidad>
+       <provincia>Provincia 4</provincia>
+       <calle>Calle 4</calle>
+       <numero>4</numero>
+    </Direccion>
+</Pub>
+<Pub>
+   <nombreLocal>Local 3</nombreLocal>
+   <descripcion>Pub Irlandés</descripcion>
+    <Direccion>
+       <localidad>Pueblo 3</localidad>
+       <provincia>Provincia 3</provincia>
+       <calle>Calle 3</calle>
+       <numero>3</numero>
+    </Direccion>
+</Pub>
