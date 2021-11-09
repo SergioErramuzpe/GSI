@@ -6,6 +6,7 @@
 package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
+import java.io.File;
 
 /**
  * Clase hija de Local correspondiente a la respresentación de un Bar.
@@ -60,6 +61,28 @@ public class Bar extends Reservable implements XMLRepresentable {
     @Override
     public String toString() {
         return "Bar{nombreLocal="+super.getNombreLocal() + "mDireccion="+super.getmDireccion()+"tags=" + tags + '}';
+    }
+    
+    @Override
+    public String toXML() {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(f,true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        }
+        
+        return true;
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+    
+            
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
     }
     
     

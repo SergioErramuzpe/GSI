@@ -5,8 +5,13 @@
  */
 package BModel;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase hija de Usuario correspondiente a la respresentación de un Cliente.
@@ -24,27 +29,10 @@ public class Cliente extends Usuario {
     public Cliente(String nick, String password, LocalDate fechaNacimiento) {
         super(nick, password, fechaNacimiento);
     }
+    
     public Cliente(String fromXML) {
         super(fromXML);
     }
-    @Override
-    public String toXML() {
-        return "<cliente>" +
-                "   <nick="+super.getNick()+">" +
-                "   <password="+super.getPassword()+">" +
-                "   <fechaNacimiento"+super.getFechaNacimiento()+">" +
-               "</cliente>";   
-    }
-
-    @Override
-    public boolean saveToXML(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean saveToXML(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+ 
 
 }

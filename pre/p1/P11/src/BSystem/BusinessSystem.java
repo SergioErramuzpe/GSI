@@ -18,6 +18,7 @@ import BModel.Reservable;
 import BModel.Restaurante;
 import BModel.Review;
 import BModel.Usuario;
+import GSILabs.Serializable.XMLRepresentable;
 import GSILabs.persistence.ODSPersistente;
 import GSILabs.persistence.XMLParsingException;
 import com.thoughtworks.xstream.XStream;
@@ -40,7 +41,13 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -52,7 +59,7 @@ import org.xml.sax.SAXException;
  *
  * @author Usuario
  */
-public class BusinessSystem implements LeisureOffice, LookupService, ODSPersistente {
+public class BusinessSystem implements LeisureOffice, LookupService, ODSPersistente, XMLRepresentable {
 
     private HashSet<Usuario> listaUsuarios;
     private HashSet<Contestacion> listaContestacion;
@@ -1435,4 +1442,24 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         return true;
 
     } 
+
+    @Override
+    public String toXML() {
+        
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        
+            
+ 
+            
+            
+ 
+            
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+    }
 }

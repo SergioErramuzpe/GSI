@@ -6,15 +6,20 @@
 package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase padre tanto de Cliente como de Propietario.
  * @author Usuario
  */
-public class Usuario implements XMLRepresentable{
+public class Usuario implements XMLRepresentable {
 
     private String nick;
     private String password;
@@ -149,17 +154,42 @@ public class Usuario implements XMLRepresentable{
 
     @Override
     public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "<usuario>" +
+                "   <nick>"+nick+ "</nick>"+
+                "   <password>"+password+"</password>" +
+                "   <fechaNacimiento>"+fechaNacimiento.toString()+"</fechaNacimiento>" +
+               "</usuario>";   
     }
 
     @Override
     public boolean saveToXML(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(f,true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
-
+    
     @Override
     public boolean saveToXML(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(new File(filePath),true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
+
 
 }
