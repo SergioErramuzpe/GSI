@@ -6,7 +6,12 @@
 package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase hija de Local correspondiente a la respresentación de un Bar.
@@ -65,24 +70,41 @@ public class Bar extends Reservable implements XMLRepresentable {
     
     @Override
     public String toXML() {
+        return "<Bar>" +
+                "   <nick="+super.getNick()+">" +
+                "   <password="+super.getPassword()+">" +
+                "   <fechaNacimiento"+super.getFechaNacimiento()+">" +
+               "</Bar>";   
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
         BufferedWriter br;
         try (FileWriter myWriter = new FileWriter(f,true)) {
             br = new BufferedWriter(myWriter);
             br.write(this.toXML());
             br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         
         return true;
     }
 
     @Override
-    public boolean saveToXML(File f) {
-    
-            
-    }
-
-    @Override
     public boolean saveToXML(String filePath) {
+        BufferedWriter br;
+        try (FileWriter myWriter = new FileWriter(new File(filePath),true)) {
+            br = new BufferedWriter(myWriter);
+            br.write(this.toXML());
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
     }
     
     

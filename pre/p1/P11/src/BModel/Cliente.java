@@ -5,13 +5,8 @@
  */
 package BModel;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * Clase hija de Usuario correspondiente a la respresentación de un Cliente.
@@ -33,6 +28,6 @@ public class Cliente extends Usuario {
     public Cliente(String fromXML) {
         super(fromXML);
     }
- 
-
+    
+    
 }
