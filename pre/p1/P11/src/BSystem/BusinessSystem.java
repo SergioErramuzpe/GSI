@@ -603,7 +603,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
      * @param nombreLocal
      * @return 
      */
-    private Local obtenerLocal(String nombreLocal) {
+    public Local obtenerLocal(String nombreLocal) {
 
         try {
 
@@ -1128,15 +1128,23 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
     public Bar[] obtenerBaresOrdenados(String ciudad, String provincia) {
 
         List<Bar> bares = new ArrayList<>();
-
-        for (Local local : listaLocal) {
-            if (local.getmDireccion().getProvincia().equals(provincia)
-                    && local.getmDireccion().getLocalidad().equals(ciudad)
-                    && local.getClass().equals(Bar.class)) {
-                bares.add((Bar) local);
+        
+        if (!"".equals(provincia)) {
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Bar.class)) {
+                    bares.add((Bar) local);
+                }
+            }
+        } else { //Solo por ciudad para publicbusinesssystem
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Bar.class)) {
+                    bares.add((Bar) local);
+                }
             }
         }
-
         class OrdenAscendenteValoracion implements Comparator<Bar> {
 
             @Override
@@ -1157,11 +1165,20 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
         List<Restaurante> restaurantes = new ArrayList<>();
 
-        for (Local local : listaLocal) {
-            if (local.getmDireccion().getProvincia().equals(provincia)
-                    && local.getmDireccion().getLocalidad().equals(ciudad)
-                    && local.getClass().equals(Restaurante.class)) {
-                restaurantes.add((Restaurante) local);
+        if (!"".equals(provincia)) {
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getProvincia().equals(provincia)
+                        && local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Restaurante.class)) {
+                    restaurantes.add((Restaurante) local);
+                }
+            }
+        } else { //Solo por ciudad para publicbusinesssystem
+            for (Local local : listaLocal) {
+                if (local.getmDireccion().getLocalidad().equals(ciudad)
+                        && local.getClass().equals(Restaurante.class)) {
+                    restaurantes.add((Restaurante) local);
+                }
             }
         }
 
