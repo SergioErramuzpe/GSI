@@ -184,10 +184,10 @@ public class Contestacion implements XMLRepresentable {
     @Override
     public String toXML() {
         return "<Contestacion>\n" +
-                "   <propietario>"+propietario.getNick()+"<propietario>\n" +
-                "   "+review.toXML() +
-                "   <comentario>"+comentario+"<comentario>\n" +
-                "   <fechaContestacion>"+fechaContestacion.toString()+"<fechaContestacion>\n" +
+                "   <propietario>"+propietario.getNick()+"</propietario>\n" +
+                review.toXMLCont() +
+                "   <comentario>"+comentario+"</comentario>\n" +
+                "   <fechaContestacion>"+fechaContestacion.toString()+"</fechaContestacion>\n" +
                "</Contestacion>\n";
     }
 

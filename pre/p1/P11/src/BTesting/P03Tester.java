@@ -6,10 +6,12 @@
 package BTesting;
 
 
+import BModel.Local;
 import BSystem.BusinessSystem;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -50,6 +52,17 @@ public class P03Tester {
         
         
         //Si no hay ningún tipo de excepción en la carga del archivo, significa que todo ha sido correcto
+        System.out.println(bs.existeNick("nick4"));
+        System.out.println(bs.existeNick("nick6"));
+        System.out.println(bs.existeNick("nick9"));
+        System.out.println(bs.existeNick("nick10"));
+        
+        HashSet<Local> locales = bs.getLocales();
+        
+        for (Local l : locales )
+            System.out.println(l.getNombreLocal());
+        
+        
         
         
         

@@ -17,6 +17,7 @@ public class XMLParsingException extends Exception{
      * @return 
      */
     public String getMessage (Exception ex) {
-        return "Error: ha habido un problema en el parseo del archivo XML dado.";
+        //return "Error: ha habido un problema en el parseo del archivo XML dado.";
+        return "";
     }
 }

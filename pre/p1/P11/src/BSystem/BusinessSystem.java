@@ -84,7 +84,7 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
      */
     public void crearBBDD () {
          
-        Direccion dir1 = new Direccion ("rueblo 1", "Provincia 1", "Calle 1", 1);
+        Direccion dir1 = new Direccion ("Prueblo 1", "Provincia 1", "Calle 1", 1);
         Direccion dir2 = new Direccion ("Pueblo 2", "Provincia 2", "Calle 2", 2);
         Direccion dir3 = new Direccion ("Pueblo 3", "Provincia 3", "Calle 3", 3);
         Direccion dir4 = new Direccion ("Pueblo 4", "Provincia 4", "Calle 4", 4);
@@ -126,8 +126,39 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         this.nuevoUsuario(cliente1);
         Cliente cliente2 = new Cliente("nick9", "pw9", LocalDate.parse("2000-01-01"));
         this.nuevoUsuario(cliente2);
-        Cliente cliente3 = new Cliente("nick10", "pw10", LocalDate.parse("2000-01-01"));
+        Cliente cliente3 = new Cliente("nick10", "pw10", LocalDate.parse("1978-05-01"));
         this.nuevoUsuario(cliente3);
+        Cliente cliente4 = new Cliente("nick11", "pw11", LocalDate.parse("1998-01-01"));
+        this.nuevoUsuario(cliente3);
+        
+        Review review1 = new Review("Estaba todo bueno", 4, LocalDate.parse("2021-10-01"),cliente3,local4);
+        this.nuevaReview(review1);
+        Review review2 = new Review("Rico pero el local estaba sucio", 2, LocalDate.parse("2021-08-01"),cliente2,local2);
+        this.nuevaReview(review2);
+        Review review3 = new Review("No esta mal", 3, LocalDate.parse("2021-02-01"),cliente1,local1);
+        this.nuevaReview(review3);
+        Review review4 = new Review("El arroz esta duro", 1, LocalDate.parse("2021-09-01"),cliente1,local5);
+        this.nuevaReview(review4);
+        
+        Float descuento = 10.2f;
+        
+        
+        Reserva reserva1 = new Reserva(descuento,LocalDate.parse("2021-12-23"),cliente4,(Reservable)local6,LocalTime.parse("10:45"));
+        this.nuevaReserva(reserva1);
+        Reserva reserva2 = new Reserva(descuento,LocalDate.parse("2021-12-04"),cliente1,(Reservable)local1,LocalTime.parse("21:00"));
+        this.nuevaReserva(reserva2);
+        Reserva reserva3 = new Reserva(descuento,LocalDate.parse("2021-12-01"),cliente3,(Reservable)local5,LocalTime.parse("22:00"));
+        this.nuevaReserva(reserva3);
+        Reserva reserva4 = new Reserva(descuento,LocalDate.parse("2021-12-01"),cliente2,(Reservable)local2,LocalTime.parse("21:30"));
+        this.nuevaReserva(reserva4);
+        
+        
+        Contestacion contestacion1 = new Contestacion(propietario4,review3,"Gracias, esperamos que la siguiente vaya mejor",LocalDate.parse("2021-05-23"));
+        this.nuevaContestacion(contestacion1);
+        Contestacion contestacion2 = new Contestacion(propietario1,review4,"Y tu eres feo :)",LocalDate.parse("2021-10-02"));
+        this.nuevaContestacion(contestacion2);
+        Contestacion contestacion3 = new Contestacion(propietario1,review2,"Lo limpias con la lengua :)",LocalDate.parse("2021-10-23"));
+        this.nuevaContestacion(contestacion3);
     }
     
     
