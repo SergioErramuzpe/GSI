@@ -437,6 +437,33 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
         }
         
     }
+    
+    public boolean eliminaReviewsDeLocal(Local local) {
+        try {
+            for (Review r: listaReviews) {
+                if (r.getLocal().equals(local))
+                    this.eliminaReview(r);
+            }
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
+    public Integer eliminaReviewsDeCliente (Cliente cliente) {
+        try {
+            int i = 0;
+            for (Review r: listaReviews) {
+                if (r.getCliente().equals(cliente)) {
+                    this.eliminaReview(r);
+                    i++;
+                }
+            }
+            return i;
+        } catch (Exception ex) {
+            return -1;
+        }
+    } 
 
     public boolean nuevaContestacion(Contestacion c) {
 
@@ -1105,6 +1132,9 @@ public class BusinessSystem implements LeisureOffice, LookupService, ODSPersiste
 
         List<Local> locales = new ArrayList<>();
 
+        if (provincia.equals(""))
+            return (Local[]) listaLocal.toArray();
+        
         for (Local local : listaLocal) {
             if (local.getmDireccion().getProvincia().equals(provincia)) {
                 locales.add(local);

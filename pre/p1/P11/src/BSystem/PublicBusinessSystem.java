@@ -106,10 +106,16 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
     @Override
     public Local[] getLocals(String name) {
         try {
-            
+            Local[] locales = bs.obtenerLocalesOrdenados("");
+            List<Local> listaLocales = new ArrayList<>();
+            for (int i = 0; i<locales.length; i++) {
+                if (locales[i].getNombreLocal().contains(name))
+                    listaLocales.add(locales[i]);
+            }
+            return (Local[]) listaLocales.toArray();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return false;
+            return null;
         }
     }
 
@@ -126,7 +132,7 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
     @Override
     public Boolean eliminaReviewsDeLocal(Local l) throws RemoteException {
         try {
-            
+            return bs.eliminaReviewsDeLocal(l);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
@@ -146,10 +152,14 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
     @Override
     public Integer eliminaReviewsDeUsuario(Cliente c) throws RemoteException {
         try {
-            
+            if (bs.existeNick(c.getNick())) {
+                return bs.eliminaReviewsDeCliente(c);
+            } else {
+                throw new Exception("No existe el cliente");
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return false;
+            return -1;
         }
     }
 
@@ -158,6 +168,7 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
         try {
             Cliente clienteFalso = new Cliente("clienteFalso","passFalsa",LocalDate.MIN);
             bs.nuevaReview(new Review("",puntuacion,LocalDate.now(),clienteFalso,l));
+            return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
