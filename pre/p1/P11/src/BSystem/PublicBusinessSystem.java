@@ -13,6 +13,7 @@ import BModel.Restaurante;
 import BModel.Review;
 import GSILabs.connect.AdminGateway;
 import GSILabs.connect.ClientGateway;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,9 +27,10 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
 
     BusinessSystem bs;
 
-    private PublicBusinessSystem() {
+    public PublicBusinessSystem() {
         
         bs = BusinessSystem.getBusinessSystem();
+        bs.loadXMLFile(new File("bbdd.xml"));
         
     }
 
@@ -36,9 +38,21 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
      * Getter de la clase BussinessSystem por ser Singleton
      * @return
      */
-    public static PublicBusinessSystem getPublicBusinessSystem() {
+    public static PublicBusinessSystem getPublicBusinessSystemUp() {
         return new PublicBusinessSystem();
     }
+    
+    public void getPublicBusinessSystemDown() {
+        try {
+            File file = new File("bbdd.xml");
+            if (!bs.saveToXML(file))
+                throw new Exception("Fallo en el guardado de los datos");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
 
     @Override
     public boolean insertaReview(Review r) {

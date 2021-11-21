@@ -5,7 +5,11 @@
  */
 package GSILabs.connect;
 
-import BSystem.BusinessSystem;
+import BSystem.PublicBusinessSystem;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
@@ -13,11 +17,28 @@ import BSystem.BusinessSystem;
  */
 public class BusinessServer {
     
-    //Instancia de BusinessSystem
-    BusinessSystem bs = BusinessSystem.getBusinessSystem();
+    private static final int ADMIN_PORT = 1099;
+    private static final int CLIENT_PORT = 1100;
     
-    /*Se va a crear una good BBDD y la vamos a 
-    almacenar en un XML, luego se borra el pedazo de código 
-    correspondiente a la creación del XML. Posteriormente se crea una carga
-    y guardado del XML para siempre, que corresponde a la BBDD*/
+    //Instancia de BusinessSystem
+    
+    
+    /*Se debe almacenar la bbdd en un registro RMI puerto 1099*/
+    public static void main(String[] args) {
+        try {
+            PublicBusinessSystem bs = PublicBusinessSystem.getPublicBusinessSystemUp();
+            PublicBusinessSystem adminStub = (PublicBusinessSystem) UnicastRemoteObject.exportObject(bs, ADMIN_PORT);
+            PublicBusinessSystem clientStub = (PublicBusinessSystem) UnicastRemoteObject.exportObject(bs, CLIENT_PORT);
+            Registry adminRegistry = LocateRegistry.createRegistry(ADMIN_PORT);
+            Registry clientRegistry = LocateRegistry.createRegistry(CLIENT_PORT);
+            adminRegistry.rebind("adminGateway", adminStub);
+            clientRegistry.rebind("clientGateway", clientStub);
+            while (true) {}
+        } catch (RemoteException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        
+    }
+    
 }
