@@ -26,7 +26,7 @@ public class ClientHub {
         System.out.println("Tag del objeto romoto a contactar: ");
         String tag = scan.nextLine();
         
-        Registry registry = LocateRegistry.getRegistry("localhost");
+        Registry registry = LocateRegistry.getRegistry("localhost",1100);
                    
         ClientGateway pbs = (ClientGateway) registry.lookup("clientGateway");  
         
