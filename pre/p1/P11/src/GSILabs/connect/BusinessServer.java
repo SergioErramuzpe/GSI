@@ -27,8 +27,8 @@ public class BusinessServer {
     public static void main(String[] args) {
         try {
             PublicBusinessSystem bs = PublicBusinessSystem.getPublicBusinessSystemUp();
-            PublicBusinessSystem adminStub = (PublicBusinessSystem) UnicastRemoteObject.exportObject(bs, ADMIN_PORT);
-            PublicBusinessSystem clientStub = (PublicBusinessSystem) UnicastRemoteObject.exportObject(bs, CLIENT_PORT);
+            AdminGateway adminStub = (AdminGateway) UnicastRemoteObject.exportObject(bs, ADMIN_PORT);
+            ClientGateway clientStub = (ClientGateway) UnicastRemoteObject.exportObject(bs, CLIENT_PORT);
             Registry adminRegistry = LocateRegistry.createRegistry(ADMIN_PORT);
             Registry clientRegistry = LocateRegistry.createRegistry(CLIENT_PORT);
             adminRegistry.rebind("adminGateway", adminStub);

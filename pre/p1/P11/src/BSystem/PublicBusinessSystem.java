@@ -28,10 +28,9 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
     BusinessSystem bs;
 
     public PublicBusinessSystem() {
-        
-        bs = BusinessSystem.getBusinessSystem();
-        bs.loadXMLFile(new File("bbdd.xml"));
-        
+        super();
+        //bs = BusinessSystem.getBusinessSystem();
+        //bs.loadXMLFile(new File("bbdd.xml"));
     }
 
     /**

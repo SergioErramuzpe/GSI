@@ -27,9 +27,9 @@ public class AdminHub {
         System.out.println("Tag del objeto romoto a contactar: ");
         String tag = scan.nextLine();
         
-        Registry registry = LocateRegistry.getRegistry(serverIp);
+        Registry registry = LocateRegistry.getRegistry("localhost");
             
-        PublicBusinessSystem pbs = (PublicBusinessSystem) registry.lookup(tag);
+        PublicBusinessSystem pbs = (PublicBusinessSystem) registry.lookup("adminGateway");
         
     }
 }

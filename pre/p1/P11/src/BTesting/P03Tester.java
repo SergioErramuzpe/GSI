@@ -61,15 +61,7 @@ public class P03Tester {
         
         for (Local l : locales )
             System.out.println(l.getNombreLocal());
-        
-        
-        
-        
-        
-        
-        
-        
-        
+         
     }
     
 }
