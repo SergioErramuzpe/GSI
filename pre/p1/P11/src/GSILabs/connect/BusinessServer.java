@@ -26,10 +26,16 @@ public class BusinessServer {
     /*Se debe almacenar la bbdd en un registro RMI puerto 1099*/
     public static void main(String[] args) {
         try {
+<<<<<<< HEAD
             PublicBusinessSystem bsAdmin = new PublicBusinessSystem();
             PublicBusinessSystem bsClient = new PublicBusinessSystem();
             AdminGateway adminStub = (AdminGateway) UnicastRemoteObject.exportObject(bsAdmin, 0);
             ClientGateway clientStub = (ClientGateway) UnicastRemoteObject.exportObject(bsClient, 0);
+=======
+            PublicBusinessSystem bs = PublicBusinessSystem.getPublicBusinessSystemUp();
+            AdminGateway adminStub = (AdminGateway) UnicastRemoteObject.exportObject(bs, 0);
+            ClientGateway clientStub = (ClientGateway) UnicastRemoteObject.exportObject(bs, 0);
+>>>>>>> 7ad5a02ff5d93ad40b08315ea3f8122617438a83
             Registry adminRegistry = LocateRegistry.createRegistry(ADMIN_PORT);
             Registry clientRegistry = LocateRegistry.createRegistry(CLIENT_PORT);
             adminRegistry.rebind("adminGateway", adminStub);
