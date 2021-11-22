@@ -23,14 +23,14 @@ import java.util.List;
  *
  * @author Erra
  */
-public class PublicBusinessSystem implements ClientGateway, AdminGateway {
+public class PublicBusinessSystem implements AdminGateway, ClientGateway {
 
     BusinessSystem bs;
 
     public PublicBusinessSystem() {
         super();
-        //bs = BusinessSystem.getBusinessSystem();
-        //bs.loadXMLFile(new File("bbdd.xml"));
+        bs = BusinessSystem.getBusinessSystem();
+        bs.loadXMLFile(new File("bbdd.xml"));
     }
 
     /**
@@ -40,6 +40,7 @@ public class PublicBusinessSystem implements ClientGateway, AdminGateway {
     public static PublicBusinessSystem getPublicBusinessSystemUp() {
         return new PublicBusinessSystem();
     }
+    
     
     public void getPublicBusinessSystemDown() {
         try {

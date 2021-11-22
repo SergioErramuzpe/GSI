@@ -29,7 +29,7 @@ public class AdminHub {
         
         Registry registry = LocateRegistry.getRegistry("localhost");
             
-        PublicBusinessSystem pbs = (PublicBusinessSystem) registry.lookup("adminGateway");
+        AdminGateway pbs = (AdminGateway) (Object) registry.lookup("adminGateway");
         
     }
 }
