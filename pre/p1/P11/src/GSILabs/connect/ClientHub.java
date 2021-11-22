@@ -27,11 +27,8 @@ public class ClientHub {
         String tag = scan.nextLine();
         
         Registry registry = LocateRegistry.getRegistry("localhost");
-        
-        //System.out.println(registry.lookup("clientGateway").toString());
-            
-        PublicBusinessSystem pbs = (PublicBusinessSystem) registry.lookup("clientGateway");
-        
+                   
+        ClientGateway pbs = (ClientGateway) registry.lookup("clientGateway");  
         
     }
 }

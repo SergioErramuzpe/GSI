@@ -20,7 +20,7 @@ import java.rmi.RemoteException;
  * @author carlos.lopez
  * @version 1.0 (12/08/2016)
  */
-public interface AdminGateway extends Remote,LocalFinder{
+public interface AdminGateway extends Remote, LocalFinder{
     
     /**
      * Elimina un local del sistema
