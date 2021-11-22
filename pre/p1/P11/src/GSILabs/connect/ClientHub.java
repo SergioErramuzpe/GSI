@@ -30,7 +30,7 @@ public class ClientHub {
         
         //System.out.println(registry.lookup("clientGateway").toString());
             
-        PublicBusinessSystem pbs = (PublicBusinessSystem) registry.lookup("clientGateway");
+        ClientGateway pbs = (ClientGateway) registry.lookup("clientGateway");
         
         
     }
