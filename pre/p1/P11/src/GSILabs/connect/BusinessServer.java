@@ -20,13 +20,9 @@ public class BusinessServer {
     private static final int ADMIN_PORT = 1099;
     private static final int CLIENT_PORT = 1100;
     
-    //Instancia de BusinessSystem
-    
-    
     /*Se debe almacenar la bbdd en un registro RMI puerto 1099*/
     public static void main(String[] args) {
         try {
-
             PublicBusinessSystem bsAdmin = new PublicBusinessSystem();
             PublicBusinessSystem bsClient = new PublicBusinessSystem();
             AdminGateway adminStub = (AdminGateway) UnicastRemoteObject.exportObject(bsAdmin, 0);
