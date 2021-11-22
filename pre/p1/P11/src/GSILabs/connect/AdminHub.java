@@ -5,7 +5,6 @@
  */
 package GSILabs.connect;
 
-import BSystem.PublicBusinessSystem;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -27,9 +26,9 @@ public class AdminHub {
         System.out.println("Tag del objeto romoto a contactar: ");
         String tag = scan.nextLine();
         
-        Registry registry = LocateRegistry.getRegistry("localhost");
+        Registry registry = LocateRegistry.getRegistry(serverIp, port);
             
-        AdminGateway pbs = (AdminGateway) (Object) registry.lookup("adminGateway");
-        
+        AdminGateway pbs = (AdminGateway) (Object) registry.lookup(tag);
+        pbs.eliminaLocal(pbs.getLocal("Local 1"));
     }
 }
