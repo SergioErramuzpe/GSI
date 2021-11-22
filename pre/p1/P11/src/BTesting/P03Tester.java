@@ -27,7 +27,7 @@ public class P03Tester {
         
         //Se instancia un BS
         BusinessSystem bs = BusinessSystem.getBusinessSystem();
-        final File file = new File("pruebaXML.xml");
+        final File file = new File("bbdd.xml");
         
         //Se rellena la clase con ejemplos
         bs.crearBBDD();
