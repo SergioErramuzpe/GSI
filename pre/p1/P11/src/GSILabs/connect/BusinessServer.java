@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Scanner;
 
 /**
  *
@@ -31,11 +32,21 @@ public class BusinessServer {
             Registry clientRegistry = LocateRegistry.createRegistry(CLIENT_PORT);
             adminRegistry.rebind("adminGateway", adminStub);
             clientRegistry.rebind("clientGateway", clientStub);
-            while (true) {}
+            
+            Scanner scan = new Scanner(System.in);
+            
+            while (true) {
+                System.out.println("Escribe algo cuando quieras que se finalice la ejecución del servidor");
+                scan.nextLine();
+                break;
+            }
+            
+            bsAdmin.getPublicBusinessSystemDown();
+            bsClient.getPublicBusinessSystemDown();
+            
         } catch (RemoteException ex){
             System.out.println(ex.getMessage());
         }
-        
         
     }
     

@@ -27,6 +27,7 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
 
     BusinessSystem bs;
 
+    
     public PublicBusinessSystem() {
         super();
         bs = BusinessSystem.getBusinessSystem();
