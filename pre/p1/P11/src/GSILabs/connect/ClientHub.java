@@ -25,10 +25,14 @@ public class ClientHub {
         System.out.println("Tag del objeto romoto a contactar: ");
         String tag = scan.nextLine();
         
-        Registry registry = LocateRegistry.getRegistry(serverIp,port);
-                  
-        ClientGateway pbs = (ClientGateway) registry.lookup(tag);
-        pbs.getLocal("Local 1");
-        pbs.mejorBar("Pueblo 2");
+        try {
+            Registry registry = LocateRegistry.getRegistry(serverIp,port);
+
+            ClientGateway pbs = (ClientGateway) registry.lookup(tag);
+            pbs.getLocal("Local 1");
+            pbs.mejorBar("Pueblo 2");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

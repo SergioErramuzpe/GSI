@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class AdminHub {
     
-    public static void main(String[] args) throws RemoteException, NotBoundException {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Direccion del servidor:");
         String serverIp = scan.nextLine();
@@ -26,9 +26,14 @@ public class AdminHub {
         System.out.println("Tag del objeto romoto a contactar: ");
         String tag = scan.nextLine();
         
-        Registry registry = LocateRegistry.getRegistry(serverIp, port);
-            
-        AdminGateway pbs = (AdminGateway) (Object) registry.lookup(tag);
-        pbs.eliminaLocal(pbs.getLocal("Local 1"));
+        try {
+            Registry registry = LocateRegistry.getRegistry(serverIp, port);
+
+            AdminGateway pbs = (AdminGateway) (Object) registry.lookup(tag);
+            pbs.eliminaLocal(pbs.getLocal("Local 1"));
+        
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
