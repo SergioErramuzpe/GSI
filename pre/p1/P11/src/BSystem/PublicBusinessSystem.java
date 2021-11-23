@@ -43,8 +43,8 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método empleado para almacenar los datos de cache en xml desde acceso
-    remoto
+    * Método empleado para almacenar los datos de cache en xml desde acceso
+    * remoto
     */
     public void getPublicBusinessSystemDown() {
         try {
@@ -57,9 +57,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método insertaReview: inserta review
-    Entrada: r, Review
-    Salida: booleano éxito o fallo
+    * Método insertaReview: inserta review
+    * Entrada: r, Review
+    * Salida: booleano éxito o fallo
     */
     @Override
     public boolean insertaReview(Review r) {
@@ -75,9 +75,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método quitaReview: elimina una review
-    Entrada: r, Review 
-    Salida: booleano éxito o fallo
+    * Método quitaReview: elimina una review
+    * Entrada: r, Review 
+    * Salida: booleano éxito o fallo
     */
     @Override
     public boolean quitaReview(Review r) {
@@ -93,9 +93,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método mejorBar: obtiene el bar con mejor puntuación
-    Entrada:  String ciudad, lugar en que se desea buscar
-    Salida: objeto Bar, bar con mejor puntuación
+    * Método mejorBar: obtiene el bar con mejor puntuación
+    * Entrada:  String ciudad, lugar en que se desea buscar
+    * Salida: objeto Bar, bar con mejor puntuación
     */
     @Override
     public Bar mejorBar(String ciudad) {
@@ -111,10 +111,10 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método mejoresRestaurantes: obtiene los N mejores restaurantes del lugar
-    seleccionado
-    Entrada: String ciudad, Integer num, lugar de búsqueda y longitud de lista
-    Salida: Lista de objeto Restaurante
+    * Método mejoresRestaurantes: obtiene los N mejores restaurantes del lugar
+    * seleccionado
+    * Entrada: String ciudad, Integer num, lugar de búsqueda y longitud de lista
+    * Salida: Lista de objeto Restaurante
     */
     @Override
     public Restaurante[] mejoresRestaurantes(String ciudad, Integer num) {
@@ -137,9 +137,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método getLocal: devuelve local correspondiente al nombre de inserción 
-    Entrada: String name, nombre del local
-    Salida: Local objeto, local que corresponde a dicho nombre 
+    * Método getLocal: devuelve local correspondiente al nombre de inserción 
+    * Entrada: String name, nombre del local
+    * Salida: Local objeto, local que corresponde a dicho nombre 
     */
     @Override
     public Local getLocal(String name) {
@@ -154,11 +154,11 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método getLocals: devuelve una lista de locales cuyo nombre contenga la 
-    String introducida
-    Entrada: String name, palabra(s) que contenga el nombre de los locales a 
-    buscar
-    Salida: lista de Locales
+    * Método getLocals: devuelve una lista de locales cuyo nombre contenga la 
+    * String introducida
+    * Entrada: String name, palabra(s) que contenga el nombre de los locales a 
+    * buscar
+    * Salida: lista de Locales
     */
     @Override
     public Local[] getLocals(String name) {
@@ -179,9 +179,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método eliminaLocal: elimina Local l
-    Entrada: Local l
-    Salida: booleano, éxito o fallo
+    * Método eliminaLocal: elimina Local l
+    * Entrada: Local l
+    * Salida: booleano, éxito o fallo
     */
     @Override
     public Boolean eliminaLocal(Local l) throws RemoteException {
@@ -196,10 +196,10 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método eliminaReviewsDeLocal: elimina todas las reviews del Local 
-    seleccionado
-    Entrada: Local l
-    Salida: booleano, éxito o fallo
+    * Método eliminaReviewsDeLocal: elimina todas las reviews del Local 
+    * seleccionado
+    * Entrada: Local l
+    * Salida: booleano, éxito o fallo
     */
     @Override
     public Boolean eliminaReviewsDeLocal(Local l) throws RemoteException {
@@ -214,9 +214,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método eliminaReview: elimina una Review
-    Entrada: Review r
-    Salida: booleano, éxito o fallo
+    * Método eliminaReview: elimina una Review
+    * Entrada: Review r
+    * Salida: booleano, éxito o fallo
     */
     @Override
     public Boolean eliminaReview(Review r) throws RemoteException {
@@ -231,9 +231,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método eliminaReviewDeUsuario: elimina las Reviews creadas por un usuario
-    Entrada: Cliente c, usuario seleccionado
-    Salida: Integer, número de reviews eliminadas
+    * Método eliminaReviewDeUsuario: elimina las Reviews creadas por un usuario
+    * Entrada: Cliente c, usuario seleccionado
+    * Salida: Integer, número de reviews eliminadas
     */
     @Override
     public Integer eliminaReviewsDeUsuario(Cliente c) throws RemoteException {
@@ -253,9 +253,9 @@ public class PublicBusinessSystem implements AdminGateway, ClientGateway {
     }
     
     /*
-    Método insertaReviewFalsa: inserta na review falsa
-    Entrada: Local l, Integer puntuacion
-    Salida: booleano, éxito o fallo
+    * Método insertaReviewFalsa: inserta na review falsa
+    * Entrada: Local l, Integer puntuacion
+    * Salida: booleano, éxito o fallo
     */
     @Override
     public Boolean insertaReviewFalsa(Local l, Integer puntuacion) throws RemoteException {
