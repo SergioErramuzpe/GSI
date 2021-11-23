@@ -18,7 +18,7 @@ import java.time.LocalTime;
  * @version 1.0
  * @since 09.08.2016
  */
-public interface LeisureOffice {
+public interface LeisureOffice  {
 
     /**
      * Usuarios *

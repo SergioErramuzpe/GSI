@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * Clase Reserva
  * @author Usuario
  */
-public class Reserva implements XMLRepresentable {
+public class Reserva implements XMLRepresentable, Serializable {
 
     private Float descuento;
     private LocalDate ld;

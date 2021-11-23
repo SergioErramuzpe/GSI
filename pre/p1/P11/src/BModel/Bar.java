@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * Clase hija de Local correspondiente a la respresentación de un Bar.
  * @author Usuario
  */
-public class Bar extends Reservable implements XMLRepresentable {
+public class Bar extends Reservable implements XMLRepresentable, Serializable {
 
     private String[] tags;
 

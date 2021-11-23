@@ -7,6 +7,7 @@ package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
  * Clase padre tanto de Pub, Bar y Restaurante.
  * @author Usuario
  */
-public class Local implements XMLRepresentable {
+public class Local implements XMLRepresentable, Serializable {
 
     private String nombreLocal;
     private Direccion mDireccion;

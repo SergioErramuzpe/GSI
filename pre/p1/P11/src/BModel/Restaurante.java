@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * Clase hija de Local correspondiente a la respresentación de un Restaurante.
  * @author Usuario
  */
-public class Restaurante extends Reservable implements XMLRepresentable {
+public class Restaurante extends Reservable implements XMLRepresentable, Serializable {
 
     private int precio;
     private int capacidadTotal;

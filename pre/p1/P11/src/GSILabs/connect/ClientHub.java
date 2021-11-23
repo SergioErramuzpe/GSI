@@ -49,7 +49,7 @@ public class ClientHub {
         } catch (NotBoundException | RemoteException ex) {
             System.out.println(ex.getMessage());
             try {
-                Thread.sleep(3);
+                Thread.sleep(1000);
                 tryRegistry(i+1,tag,port,serverIp);
             } catch (InterruptedException ex1) {
                 Logger.getLogger(ClientHub.class.getName()).log(Level.SEVERE, null, ex1);

@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * 
  * @author Usuario
  */
-public class Contestacion implements XMLRepresentable {
+public class Contestacion implements XMLRepresentable, Serializable {
 
     private Usuario propietario;
     private Review review;

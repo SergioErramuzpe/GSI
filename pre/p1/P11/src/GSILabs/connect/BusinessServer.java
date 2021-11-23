@@ -41,8 +41,6 @@ public class BusinessServer {
                 break;
             }
             
-            bsAdmin.getPublicBusinessSystemDown();
-            bsClient.getPublicBusinessSystemDown();
             
         } catch (RemoteException ex){
             System.out.println(ex.getMessage());

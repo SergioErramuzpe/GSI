@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  * Clase padre tanto de Cliente como de Propietario.
  * @author Usuario
  */
-public class Usuario implements XMLRepresentable {
+public class Usuario implements XMLRepresentable, Serializable {
 
     private String nick;
     private String password;

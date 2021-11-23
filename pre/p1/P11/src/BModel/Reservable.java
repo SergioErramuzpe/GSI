@@ -5,11 +5,13 @@
  */
 package BModel;
 
+import java.io.Serializable;
+
 /**
  * Clase hija de Local correspondiente a la respresentación de Reservable.
  * @author Usuario
  */
-public class Reservable extends Local {
+public class Reservable extends Local implements Serializable {
 
     /**
      * Constructor de la clase Reservable

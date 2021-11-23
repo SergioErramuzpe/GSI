@@ -7,6 +7,7 @@ package BModel;
 
 import GSILabs.Serializable.XMLRepresentable;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Objects;
  *
  * @author Usuario
  */
-public class Direccion implements XMLRepresentable {
+public class Direccion implements XMLRepresentable, Serializable {
 
     private String localidad; //ciudad
     private String provincia;
