@@ -29,8 +29,7 @@ public class ClientHub {
             Registry registry = LocateRegistry.getRegistry(serverIp,port);
 
             ClientGateway pbs = (ClientGateway) registry.lookup(tag);
-            pbs.getLocal("Local 1");
-            pbs.mejorBar("Pueblo 2");
+            System.out.println(pbs.mejorBar("Pueblo 2").getNombreLocal());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

@@ -30,8 +30,11 @@ public class AdminHub {
             Registry registry = LocateRegistry.getRegistry(serverIp, port);
 
             AdminGateway pbs = (AdminGateway) (Object) registry.lookup(tag);
-            pbs.eliminaLocal(pbs.getLocal("Local 1"));
-        
+            if(pbs.eliminaLocal(pbs.getLocal("Local 1")))
+                System.out.println("Local eliminado correctamente");
+            else
+                System.out.println("El local seleccionado no ha podido ser"
+                        + "eliminado");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
