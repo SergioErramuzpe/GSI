@@ -14,6 +14,7 @@ import BModel.Review;
 import GSILabs.connect.AdminGateway;
 import GSILabs.connect.ClientGateway;
 import java.io.File;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  * @author Erra
  */
-public class PublicBusinessSystem implements AdminGateway, ClientGateway {
+public class PublicBusinessSystem implements AdminGateway, ClientGateway, Serializable {
 
     BusinessSystem bs;
 

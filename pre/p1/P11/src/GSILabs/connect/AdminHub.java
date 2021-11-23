@@ -46,7 +46,7 @@ public class AdminHub {
             if (i > 3)
                 throw new Exception("Se han superado los intentos de conexion");
             Registry registry = LocateRegistry.getRegistry(serverIp, port);
-            AdminGateway pbs = (AdminGateway) (Object) registry.lookup(tag);
+            AdminGateway pbs = (AdminGateway) registry.lookup(tag);
             if(pbs.eliminaLocal(pbs.getLocal("Local 1")))
                 System.out.println("Local eliminado correctamente");
             else
