@@ -28,36 +28,16 @@ public class MenuPropietario extends javax.swing.JFrame {
     private void initComponents() {
 
         ListaLocales = new javax.swing.JButton();
-        Contestacion = new javax.swing.JButton();
-        Valoraciones = new javax.swing.JButton();
         AgregarLocal = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        CuentaMenu = new javax.swing.JMenu();
-        CambiarDatos = new javax.swing.JMenuItem();
-        EliminarCuenta = new javax.swing.JMenuItem();
         SesionMenu = new javax.swing.JMenu();
         CerrarSesion = new javax.swing.JMenuItem();
+        ModificarDatos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ListaLocales.setText("Lista Locales");
         ListaLocales.setActionCommand("");
-
-        Contestacion.setText("Dar Contestaciones");
-        Contestacion.setActionCommand("");
-        Contestacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContestacionActionPerformed(evt);
-            }
-        });
-
-        Valoraciones.setText("Valoraciones");
-        Valoraciones.setActionCommand("");
-        Valoraciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValoracionesActionPerformed(evt);
-            }
-        });
 
         AgregarLocal.setText("Agregar Local");
         AgregarLocal.setActionCommand("");
@@ -67,20 +47,13 @@ public class MenuPropietario extends javax.swing.JFrame {
             }
         });
 
-        CuentaMenu.setText("Cuenta");
-
-        CambiarDatos.setText("Cambiar Datos");
-        CuentaMenu.add(CambiarDatos);
-
-        EliminarCuenta.setText("Eliminar Cuenta");
-        CuentaMenu.add(EliminarCuenta);
-
-        jMenuBar1.add(CuentaMenu);
-
         SesionMenu.setText("Sesión");
 
         CerrarSesion.setText("Cerrar Sesión");
         SesionMenu.add(CerrarSesion);
+
+        ModificarDatos.setText("Modificar Datos");
+        SesionMenu.add(ModificarDatos);
 
         jMenuBar1.add(SesionMenu);
 
@@ -91,44 +64,28 @@ public class MenuPropietario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(AgregarLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Contestacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81)
+                .addComponent(AgregarLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ListaLocales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Valoraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addComponent(ListaLocales, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ListaLocales, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AgregarLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Contestacion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Valoraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGap(115, 115, 115)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(AgregarLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(ListaLocales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ContestacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContestacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ContestacionActionPerformed
-
     private void AgregarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarLocalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AgregarLocalActionPerformed
-
-    private void ValoracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValoracionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ValoracionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,14 +124,10 @@ public class MenuPropietario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AgregarLocal;
-    private javax.swing.JMenuItem CambiarDatos;
     private javax.swing.JMenuItem CerrarSesion;
-    private javax.swing.JButton Contestacion;
-    private javax.swing.JMenu CuentaMenu;
-    private javax.swing.JMenuItem EliminarCuenta;
     private javax.swing.JButton ListaLocales;
+    private javax.swing.JMenuItem ModificarDatos;
     private javax.swing.JMenu SesionMenu;
-    private javax.swing.JButton Valoraciones;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,16 +29,15 @@ public class MenuCliente extends javax.swing.JFrame {
 
         jMenuItem4 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        Hacer_Reserva = new javax.swing.JButton();
-        Lista_Reservas = new javax.swing.JButton();
-        Dar_Review = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        Reservas_Reviews = new javax.swing.JComboBox<>();
+        Listas_Reservas_Reviews = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
-        CuentaMenu = new javax.swing.JMenu();
-        CambiarDatos = new javax.swing.JMenuItem();
-        EliminarCuenta = new javax.swing.JMenuItem();
         SesionMenu = new javax.swing.JMenu();
         CerrarSesion = new javax.swing.JMenuItem();
+        ModificarDatos = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -46,33 +45,36 @@ public class MenuCliente extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Hacer_Reserva.setText("Reservar");
-
-        Lista_Reservas.setText("Mis Reservas");
-        Lista_Reservas.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Locales");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Lista_ReservasActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        Dar_Review.setText("Escribir Review");
+        jButton2.setText("Reviews");
 
-        jButton4.setText("Mis Reviews");
+        Reservas_Reviews.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mis Reservas", "Mis Reviews" }));
+        Reservas_Reviews.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Reservas_ReviewsActionPerformed(evt);
+            }
+        });
 
-        CuentaMenu.setText("Cuenta");
-
-        CambiarDatos.setText("Cambiar Datos");
-        CuentaMenu.add(CambiarDatos);
-
-        EliminarCuenta.setText("Eliminar Cuenta");
-        CuentaMenu.add(EliminarCuenta);
-
-        jMenuBar1.add(CuentaMenu);
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        Listas_Reservas_Reviews.setViewportView(jList1);
 
         SesionMenu.setText("Sesión");
 
         CerrarSesion.setText("Cerrar Sesión");
         SesionMenu.add(CerrarSesion);
+
+        ModificarDatos.setText("Modificar Datos");
+        SesionMenu.add(ModificarDatos);
 
         jMenuBar1.add(SesionMenu);
 
@@ -82,44 +84,51 @@ public class MenuCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Dar_Review, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Hacer_Reserva, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(72, 72, 72)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Lista_Reservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(116, 116, 116)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Listas_Reservas_Reviews)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Reservas_Reviews, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 148, Short.MAX_VALUE)))
+                .addGap(78, 78, 78)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Reservas_Reviews, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Listas_Reservas_Reviews))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Lista_Reservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Hacer_Reserva, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                            .addComponent(Dar_Review, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Lista_ReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Lista_ReservasActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Lista_ReservasActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void Reservas_ReviewsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reservas_ReviewsActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_Reservas_ReviewsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,15 +166,14 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem CambiarDatos;
     private javax.swing.JMenuItem CerrarSesion;
-    private javax.swing.JMenu CuentaMenu;
-    private javax.swing.JButton Dar_Review;
-    private javax.swing.JMenuItem EliminarCuenta;
-    private javax.swing.JButton Hacer_Reserva;
-    private javax.swing.JButton Lista_Reservas;
+    private javax.swing.JScrollPane Listas_Reservas_Reviews;
+    private javax.swing.JMenuItem ModificarDatos;
+    private javax.swing.JComboBox<String> Reservas_Reviews;
     private javax.swing.JMenu SesionMenu;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
