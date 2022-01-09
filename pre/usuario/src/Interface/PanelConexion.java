@@ -49,19 +49,19 @@ public class PanelConexion extends javax.swing.JFrame {
 
         UsuarioLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         UsuarioLabel.setText("Usuario:");
-        jPanel1.add(UsuarioLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 130, -1));
+        jPanel1.add(UsuarioLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 130, -1));
 
         ContraseñaLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ContraseñaLabel.setText("Contraseña:");
-        jPanel1.add(ContraseñaLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
+        jPanel1.add(ContraseñaLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, -1, -1));
 
         jTextFieldUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 340, 30));
-        jPanel1.add(jTextFieldContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 340, 30));
+        jPanel1.add(jTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 340, 30));
+        jPanel1.add(jTextFieldContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 340, 30));
 
         Restore.setText("No recuerdo mi contraseña");
         Restore.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -70,7 +70,7 @@ public class PanelConexion extends javax.swing.JFrame {
                 RestoreActionPerformed(evt);
             }
         });
-        jPanel1.add(Restore, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 260, 30));
+        jPanel1.add(Restore, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 340, 30));
 
         Login1.setText("Iniciar sesión");
         Login1.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +78,7 @@ public class PanelConexion extends javax.swing.JFrame {
                 Login1ActionPerformed(evt);
             }
         });
-        jPanel1.add(Login1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 120, 30));
+        jPanel1.add(Login1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 120, 30));
 
         Register.setText("Registrar Usuario");
         Register.addActionListener(new java.awt.event.ActionListener() {
@@ -86,17 +86,17 @@ public class PanelConexion extends javax.swing.JFrame {
                 RegisterActionPerformed(evt);
             }
         });
-        jPanel1.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 120, 30));
+        jPanel1.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 120, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
